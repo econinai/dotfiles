@@ -91,6 +91,8 @@ if apperance_mode == "blur" then
     inactive_opacityvalue = 0.8
     hl.exec_cmd("sed -i 's/^background_opacity.*/background_opacity 0.5/' ~/.config/kitty/kitty.conf")
     hl.exec_cmd("perl -0777 -pi -e 's/(<rect[^>]*?id=\"window-normal\"[^>]*?style=\"[^\"]*?opacity:)[0-9.]*/${1}0.5/s' ~/.config/noctalia/templates/kvantum/noctalia.svg")
+    hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\10.5\\2/g\" ~/.config/noctalia/templates/gtk/gtk4.css ")
+    hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\10.5\\2/g\" ~/.config/noctalia/templates/gtk/gtk3.css ")
 elseif apperance_mode == "liquid" then
     hyprglassenabled = true
     blurenabled = false
@@ -98,6 +100,8 @@ elseif apperance_mode == "liquid" then
     inactive_opacityvalue = 0.8
     hl.exec_cmd("sed -i 's/^background_opacity.*/background_opacity 0.5/' ~/.config/kitty/kitty.conf")
     hl.exec_cmd("perl -0777 -pi -e 's/(<rect[^>]*?id=\"window-normal\"[^>]*?style=\"[^\"]*?opacity:)[0-9.]*/${1}0.5/s' ~/.config/noctalia/templates/kvantum/noctalia.svg")
+    hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\10.5\\2/g\" ~/.config/noctalia/templates/gtk/gtk4.css ")
+    hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\10.5\\2/g\" ~/.config/noctalia/templates/gtk/gtk3.css ")
 else
     local file = io.open(os.getenv("HOME") .. "/.config/hypr/noctalia/noctalia-colors.conf", "r")
     if file then
@@ -122,9 +126,10 @@ else
     end
     hl.exec_cmd("sed -i 's/^background_opacity.*/background_opacity 1.0/' ~/.config/kitty/kitty.conf")
     hl.exec_cmd("perl -0777 -pi -e 's/(<rect[^>]*?id=\"window-normal\"[^>]*?style=\"[^\"]*?opacity:)[0-9.]*/${1}1.0/s' ~/.config/noctalia/templates/kvantum/noctalia.svg")
-    
+    hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\11.0\\2/g\" ~/.config/noctalia/templates/gtk/gtk4.css ")
+    hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\11.0\\2/g\" ~/.config/noctalia/templates/gtk/gtk3.css ")
 end
-
+transparentenabled = false
 -----------------
 ---- PLUGINS ----
 -----------------

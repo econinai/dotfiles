@@ -1,0 +1,40 @@
+[config]
+
+[templates.kvantumconf]
+
+input_path = "~/.config/noctalia/templates/kvantum/noctalia.kvconfig"
+output_path = "~/.config/Kvantum/noctalia/noctalia.kvconfig"
+post_hook = ""
+
+[templates.kvantumsvg]
+
+input_path = "~/.config/noctalia/templates/kvantum/noctalia.svg"
+output_path = "~/.config/Kvantum/noctalia/noctalia.svg"
+post_hook = "kvantummanager --set noctalia"
+
+[templates.gtk3]
+
+input_path = "~/.config/noctalia/templates/gtk/gtk3.css"
+output_path = "~/.config/gtk-3.0/noctalia.css"
+post_hook = ""
+
+[templates.gtk4]
+
+input_path = "~/.config/noctalia/templates/gtk/gtk4.css"
+output_path = "~/.config/gtk-4.0/noctalia.css"
+post_hook = "~/.config/noctalia/templates/gtk/apply.sh"
+
+
+# User-defined templates
+# Add your custom templates below
+# Example:
+# [templates.myapp]
+# input_path = "~/.config/noctalia/templates/myapp.css"
+# output_path = "~/.config/myapp/theme.css"
+# post_hook = "myapp --reload-theme"
+
+# Remove this section and add your own templates
+#[templates.placeholder]
+#input_path = "/etc/xdg/quickshell/noctalia-shell/Assets/Templates/noctalia.json"
+#output_path = "/home/interia/.cache/noctalia/placeholder.json"
+

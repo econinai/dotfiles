@@ -1,0 +1,1100 @@
+{
+  "wallpapersFolder": "~/.local/share/Steam/steamapps/workshop/content/431960",
+  "iconColor": "none",
+  "enableExtraPropertiesEditor": true,
+  "defaultScaling": "fill",
+  "defaultClamp": "clamp",
+  "defaultFps": 35,
+  "defaultVolume": 100,
+  "defaultMuted": true,
+  "defaultAudioReactiveEffects": true,
+  "defaultNoAutomute": false,
+  "defaultDisableMouse": false,
+  "defaultDisableParallax": false,
+  "applyWallpaperColorsOnApply": false,
+  "wallpaperColorScreenshots": {
+    "eDP-1": {
+      "path": "/home/interia/.cache/noctalia/plugins/linux-wallpaperengine-controller/eDP-1-2948665061-theme-shot.png",
+      "wallpaperPath": "/home/interia/.local/share/Steam/steamapps/workshop/content/431960/2948665061",
+      "scaling": "fill",
+      "updatedAt": 1779484117797
+    }
+  },
+  "defaultNoFullscreenPause": false,
+  "defaultFullscreenPauseOnlyActive": true,
+  "showSidebarDescription": false,
+  "badgeOrder": [
+    "type",
+    "dynamic",
+    "music",
+    "reactive",
+    "approved",
+    "resolution",
+    "compatibility"
+  ],
+  "badgeEnabled": {
+    "type": true,
+    "dynamic": true,
+    "music": true,
+    "reactive": true,
+    "approved": true,
+    "resolution": true,
+    "compatibility": true
+  },
+  "autoApplyOnStartup": true,
+  "panelPageSize": 24,
+  "wallpaperScanCacheMinutes": 10,
+  "panelLastSelectedPath": "",
+  "screens": {
+    "eDP-1": {
+      "path": "/home/interia/.local/share/Steam/steamapps/workshop/content/431960/2948665061",
+      "scaling": "fill"
+    },
+    "DP-1": {
+      "path": "/home/interia/.local/share/Steam/steamapps/workshop/content/431960/2976057265",
+      "scaling": "default"
+    },
+    "HDMI-A-2": {
+      "path": "/home/interia/.local/share/Steam/steamapps/workshop/content/431960/2976057265",
+      "scaling": "default"
+    }
+  },
+  "wallpaperProperties": {
+    "786782443": {},
+    "821269088": {
+      "schemecolor": "0,0,0"
+    },
+    "837440254": {},
+    "861933876": {},
+    "883945381": {},
+    "893418273": {},
+    "1130026474": {
+      "schemecolor": "0,0,0"
+    },
+    "1235691433": {
+      "schemecolor": "0,0,0"
+    },
+    "1238176950": {},
+    "1268450042": {
+      "schemecolor": "38,38,38"
+    },
+    "1310081752": {
+      "schemecolor": "22,111,255"
+    },
+    "1372048508": {
+      "schemecolor": "12,33,59"
+    },
+    "1396475780": {},
+    "1403160205": {},
+    "1474793590": {
+      "schemecolor": "0,0,0"
+    },
+    "1509243786": {},
+    "1523702216": {
+      "schemecolor": "124,1,1"
+    },
+    "1601641706": {
+      "schemecolor": "16,23,30"
+    },
+    "1619352213": {
+      "schemecolor": "0,0,0"
+    },
+    "1672649097": {
+      "schemecolor": "0,0,0"
+    },
+    "1729688833": {
+      "schemecolor": "74,39,45"
+    },
+    "1730777486": {},
+    "1733041423": {
+      "schemecolor": "0,210,255"
+    },
+    "1748506393": {},
+    "1756357008": {
+      "schemecolor": "0,0,0"
+    },
+    "1799765682": {
+      "schemecolor": "0,0,0"
+    },
+    "1832458746": {
+      "gondola_chilling_at_the_tree": "1",
+      "live_cloud_color": "1,0,0",
+      "live_sky": "1",
+      "schemecolor": "173,216,230",
+      "static_orange_sky": "0"
+    },
+    "1837476658": {
+      "schemecolor": "1,1,1"
+    },
+    "1850294968": {
+      "schemecolor": "0,0,0"
+    },
+    "1888636115": {
+      "alpha": "0.25",
+      "particle_color": "1,1,1",
+      "schemecolor": "71,255,231",
+      "tint": "1"
+    },
+    "1894957840": {
+      "bloom": "1",
+      "camera_shake": "1",
+      "color": "255,0,255",
+      "contrast": "0",
+      "debug_information": "0",
+      "edge_detection": "1",
+      "fog_effects": "1",
+      "god_rays": "0",
+      "magic_effects": "1",
+      "motion_blur": "0",
+      "particle_effects": "1",
+      "rainbow": "0",
+      "schemecolor": "0,0,0",
+      "shine": "1",
+      "tint": "0"
+    },
+    "1966422828": {},
+    "1966492368": {
+      "schemecolor": "0,3,0"
+    },
+    "2019670941": {
+      "schemecolor": "113,174,254"
+    },
+    "2071366191": {},
+    "2100068795": {
+      "amountofstarspassingby": "1",
+      "backgroundimage": "2",
+      "schemecolor": "0,0,0",
+      "shakeeffect": "0",
+      "shakespeed": "0.1",
+      "speedofstarspassingby": "1",
+      "staticcolor": "1,0,0",
+      "staticcolor1": "0"
+    },
+    "2103728730": {
+      "schemecolor": "0,0,0"
+    },
+    "2104069061": {
+      "_": "0.5",
+      "schemecolor": "21,24,28"
+    },
+    "2134765860": {},
+    "2146535254": {
+      "schemecolor": "25,25,25"
+    },
+    "2158218692": {},
+    "2162917651": {
+      "schemecolor": "0,0,0"
+    },
+    "2255864414": {
+      "schemecolor": "92,61,64"
+    },
+    "2292075934": {
+      "schemecolor": "0,0,0"
+    },
+    "2337707023": {
+      "schemecolor": "170,0,210"
+    },
+    "2356300818": {
+      "schemecolor": "0,0,0"
+    },
+    "2387661629": {
+      "schemecolor": "0,0,0"
+    },
+    "2398148082": {
+      "schemecolor": "0,0,0"
+    },
+    "2433803875": {},
+    "2436725160": {
+      "schemecolor": "37,0,195"
+    },
+    "2445563148": {
+      "background": "28,31,38",
+      "cloudeffect": "1",
+      "electriceffect": "1",
+      "logoartcolor1": "32,64,255",
+      "logoartcolor2": "0,0,1",
+      "logocolor": "64,128,255",
+      "multiply": "2",
+      "newproperty": "2",
+      "rays": "1",
+      "schemecolor": "64,128,255"
+    },
+    "2456962217": {},
+    "2476882475": {
+      "schemecolor": "54,189,195"
+    },
+    "2490152635": {
+      "schemecolor": "61,148,198"
+    },
+    "2498268570": {
+      "schemecolor": "25,5,53"
+    },
+    "2568658643": {
+      "audioresponsivedots": "0",
+      "background": "255,255,255",
+      "chromaticaberration": "0",
+      "color1": "255,255,255",
+      "color2": "75,74,74",
+      "dotscolor": "255,255,255",
+      "newproperty": "0.08",
+      "parallaxdelay": "0.11",
+      "schemecolor": "0,0,0"
+    },
+    "2593546122": {},
+    "2620623306": {
+      "schemecolor": "0,0,0"
+    },
+    "2659342351": {
+      "blackholemovementenabled": "1",
+      "chromaticaberration": "0.18",
+      "gridfloortintcolor": "0,233,255",
+      "ledsaudiovisualizerenabled": "1",
+      "ledsavcolor": "255,229,31",
+      "ledsavopacity": "0.5",
+      "nebulabackgcontrast": "1.4",
+      "nebulabackgspinmovement": "1",
+      "nebulasbackgroundintensity": "1",
+      "schemecolor": "0,0,0",
+      "showdateandclock": "1",
+      "slightbroken": "1",
+      "vignetteintensity": "0.35"
+    },
+    "2669822511": {
+      "schemecolor": "34,68,115"
+    },
+    "2712901593": {
+      "schemecolor": "144,35,35"
+    },
+    "2741066767": {
+      "schemecolor": "236,12,199"
+    },
+    "2753312072": {
+      "schemecolor": "5,5,2"
+    },
+    "2754749609": {
+      "customgradientcolor1": "255,150,0",
+      "customgradientcolor2": "0,117,255",
+      "hdriterations": "8",
+      "hdrscatter": "2",
+      "hdrstrength": "5",
+      "hueshift": "1",
+      "motionblur": "0",
+      "motionbluraccumulationrate": "0.5",
+      "mouseparallaxdelay": "1",
+      "mouseparallaxinfluence": "0.1",
+      "particlecount": "1",
+      "particlehdrbrightness": "2",
+      "particlesize": "0.5",
+      "peripheralblur": "0",
+      "schemecolor": "0,0,0",
+      "wavecolor": "167,255,177",
+      "wavescale": "2"
+    },
+    "2786979796": {
+      "schemecolor": "33,94,47"
+    },
+    "2810183871": {
+      "cameraparallax": "1",
+      "hdroffformorefps": "1",
+      "huealpha": "0",
+      "huechangecolor": "255,255,255",
+      "schemecolor": "0,0,0"
+    },
+    "2832197658": {},
+    "2832821640": {
+      "schemecolor": "55,73,92"
+    },
+    "2839137182": {
+      "schemecolor": "139,148,161"
+    },
+    "2858284176": {
+      "schemecolor": "91,110,107"
+    },
+    "2883312700": {
+      "_3dwave": "2",
+      "artistfontsize": "10",
+      "audioreactivebokeh": "5",
+      "backgroundstyle": "1",
+      "barcount": "60",
+      "barspacing": "0.8",
+      "basspulse": "0",
+      "basspulseamount": "0.2",
+      "blurredalbumarttint": "0",
+      "blurredalbumartwave": "1",
+      "clock": "3",
+      "clock1": "4",
+      "clock24hourformat": "0",
+      "clockbackground": "0",
+      "clockcolormode": "2",
+      "clockdarklightmode": "3",
+      "colorize": "0",
+      "colorizeplaybackclock": "0",
+      "colorizetaskbar": "0",
+      "colorizevisualizer": "0",
+      "customambientcolor1": "0,255,25",
+      "customambientcolor2": "0,109,129",
+      "customambientcolor3": "0,69,255",
+      "darkenbackground": "0.2",
+      "darkmodelightmode": "1",
+      "extrablur": "0",
+      "hr": "1",
+      "hrh3miscsettingsh3hr": "1",
+      "hrh3playbacksettingsh3hr": "1",
+      "hrh3trackinformationsettingsh3hr": "1",
+      "idlebackground": "3",
+      "idlebackgrounddarken": "0",
+      "idlebackgroundvignette": "0",
+      "idlebokehcolor1": "1,1,1",
+      "idlebokehcolor2": "1,1,1",
+      "idlebokehcolor3": "1,1,1",
+      "idleparticlecount": "1",
+      "idleparticleeffects": "4",
+      "idleparticlescolor1": "1,1,1",
+      "idleparticlescolor2": "1,1,1",
+      "idleparticlescolor3": "1,1,1",
+      "idleparticlesize": "2",
+      "introsequence": "1",
+      "lensdistortion": "0",
+      "lpcoloropacity": "0.2",
+      "newproperty": "0,255,25",
+      "nomusicambientcolor1": "0,109,129",
+      "nomusicambientcolor3": "0,69,255",
+      "nomusicgradientcolor1": "0,255,25",
+      "nomusicgradientcolor2": "0,69,255",
+      "particlecount": "1",
+      "particlesize": "2",
+      "playbackclocklightdarkmode": "3",
+      "ps5bokehcolor": "255,211,186",
+      "ps5bokehcolor1": "255,211,186",
+      "ps5bokehcolor3": "255,211,186",
+      "removeminivisualizer": "1",
+      "removemusicclockbackground": "0",
+      "roundedalbumart": "1",
+      "schemecolor": "0,0,0",
+      "titlefontsize": "12",
+      "trackinformationvisualizer": "0",
+      "vignette": "0.5",
+      "visualizer": "10",
+      "visualizerdarklightmode": "2",
+      "visualizeropacity": "1",
+      "visualstyle": "9"
+    },
+    "2927107167": {
+      "chromatic": "0",
+      "grain": "0",
+      "hidemisclayersreccomendfor219": "1",
+      "hue": "24,151,255",
+      "postprocessing": "1",
+      "schemecolor": "1,1,1",
+      "timeofday": "0",
+      "vignette": "0"
+    },
+    "2940177842": {
+      "audiovisualizer": "1",
+      "camerashake": "0",
+      "flare": "1",
+      "schemecolor": "20,34,70"
+    },
+    "2942043905": {},
+    "2943394289": {
+      "audiobars": "1",
+      "basebg": "0",
+      "basebgcolor": "255,255,255",
+      "glitteropacity": "0.3",
+      "primaryvisualizercolor": "255,0,0",
+      "schemecolor": "255,0,0",
+      "secondaryvisualizercolor": "255,0,0",
+      "topographicbg": "1"
+    },
+    "2947603578": {},
+    "2948665061": {
+      "color": "61,167,255",
+      "schemecolor": "52,154,255"
+    },
+    "2956215523": {
+      "schemecolor": "30,75,101"
+    },
+    "2957630911": {
+      "schemecolor": "25,3,64"
+    },
+    "2958949662": {},
+    "2976057265": {
+      "schemecolor": "255,255,255"
+    },
+    "2976061357": {
+      "schemecolor": "0,0,0"
+    },
+    "2976071377": {
+      "schemecolor": "0,0,65"
+    },
+    "2998520726": {
+      "schemecolor": "65,69,75"
+    },
+    "3012694124": {
+      "_24hsformat": "0",
+      "animation": "1",
+      "architecture": "",
+      "audiobar": "1",
+      "audiobar1": "74,0,146",
+      "audiobarback": "34,1,58",
+      "backgroundtype": "1",
+      "backgrounttint": "1,1,1",
+      "barsback": "34,1,58",
+      "barsfront": "74,0,146",
+      "blur": "2.2",
+      "calendareventsfont": "42,42,42",
+      "calendaropacity": "1",
+      "calendarydata": "",
+      "clickanimation": "1",
+      "clock1": "61,60,60",
+      "clock2": "1",
+      "clockwindowopacity": "1",
+      "color": "0,0,0",
+      "color1": "1,1,1",
+      "color2": "52,32,70",
+      "color3": "1,1,1",
+      "consolecolor": "16,16,16",
+      "contact": "",
+      "coords": "74,0,146",
+      "corners": "74,0,146",
+      "corners1": "0",
+      "corners2": "1",
+      "cornersb": "148,4,254",
+      "currentday": "148,4,254",
+      "currentweek": "148,4,254",
+      "customfontpath": "",
+      "customfontpath2": "",
+      "customtext": "",
+      "date1": "42,42,42",
+      "dateformat": "1",
+      "daynightbackground1": "1,1,1",
+      "daynightopacity": "1",
+      "emptywindowbuttonsize": "0.13542",
+      "emptywindowopacity": "1",
+      "eventscolor": "98,24,90",
+      "font1": "42,42,42",
+      "fontcolor": "74,0,146",
+      "gradientposition": "0.01",
+      "gradientrotation": "0.01",
+      "hands": "1",
+      "hands1": "1,1,1",
+      "hands1opacity": "0.63",
+      "hands2": "1,0,1",
+      "hands2opacity": "0.43",
+      "hands3": "1,0,1",
+      "hands3opacity": "0.08",
+      "handspulse": "1",
+      "height": "0.59225",
+      "hiddemainhud": "0",
+      "host": "",
+      "hostimage1": "2",
+      "hudopacity": "1",
+      "iconcrosshair": "0",
+      "lighteffect": "0",
+      "lightnoise": "0.106",
+      "lightnoise1": "0.61",
+      "lightsintensity": "1.01",
+      "lightslimit": "0.11",
+      "lightspeed": "0.13",
+      "line": "1",
+      "line1": "74,0,146",
+      "location": "",
+      "maintext": "",
+      "maintextanimation": "1",
+      "mediacolor": "148,4,254",
+      "mediaimage": "2",
+      "mediaopacity": "1",
+      "month": "1",
+      "monthcolor": "59,6,97",
+      "mousecoords": "0",
+      "mousetrail": "1",
+      "newproperty": "1",
+      "opacity": "0.18",
+      "opacity1": "1",
+      "opacity2": "1",
+      "os": "",
+      "particles": "1",
+      "particles1": "1",
+      "particlescolor": "148,4,254",
+      "positionx": "2805",
+      "positionx1": "943",
+      "positionx2": "3003.699951",
+      "positiony": "1045.864136",
+      "positiony1": "1240",
+      "positiony2": "821",
+      "positiony3": "1442.486694",
+      "posx": "1",
+      "posx1": "2797.933594",
+      "posy": "0",
+      "qr1": "61,60,60",
+      "qr3": "1,0,1",
+      "qrcode": "1",
+      "qrcodefront": "1",
+      "repeattitle": "1",
+      "satsun": "74,0,146",
+      "schemecolor": "74,0,146",
+      "secondarycolor": "148,4,254",
+      "showcalendar": "1",
+      "showdescription": "0",
+      "showdividerlines": "0",
+      "showemptywindow": "0",
+      "showfps": "1",
+      "showlocation": "1",
+      "showmediawindow": "1",
+      "shownotescommand": "42,42,42",
+      "showpastevents": "1",
+      "showwindowclock": "0",
+      "size": "0.38",
+      "size1": "3",
+      "songfont": "42,42,42",
+      "songname": "1",
+      "test": "961",
+      "textcolor": "74,0,146",
+      "trail": "180,0,255",
+      "weekdays": "42,42,42",
+      "weekenddays": "74,0,146",
+      "weeksdays": "61,60,60",
+      "weight": "0.55165",
+      "windowline": "84,81,81",
+      "windowminimizeclose": "84,81,81",
+      "y": "853",
+      "zoob": "49.974499",
+      "zoom": "1.45",
+      "zoomy": "28.97912"
+    },
+    "3027516353": {
+      "schemecolor": "64,106,137"
+    },
+    "3043669425": {
+      "schemecolor": "41,26,99"
+    },
+    "3060174737": {},
+    "3071135377": {
+      "_24hformatclock": "1",
+      "audiovisualizer": "1",
+      "autocolorchange": "0",
+      "blackandwhite": "0",
+      "chromatic": "0",
+      "colorchangedefault1": "1",
+      "date": "1",
+      "day": "1",
+      "schemecolor": "0,0,0",
+      "time": "1"
+    },
+    "3074009782": {
+      "schemecolor": "195,72,7"
+    },
+    "3122339805": {
+      "_24hourtime": "1",
+      "accentcolourdefault800080": "128,0,128",
+      "backgroundcolour": "0,0,0",
+      "basecolor": "254,25,255",
+      "city1": "TYO",
+      "city2": "NYC",
+      "countdown1": "2024-02-28",
+      "countdown1name": "Birthday",
+      "countdown2": "2024-05-09",
+      "countdown2name": "Vacation",
+      "disablealbumtint": "0",
+      "hideeyeswindow": "0",
+      "hidenumberswindow": "0",
+      "leftimagewindowheader": "NIGHTLIFE",
+      "logheadercolour": "1,1,1",
+      "middleimagewindowheader": "EYES",
+      "middlewindowtint": "1",
+      "notepadalignment": "0",
+      "notepadtext": "-",
+      "notepadtextopacity": "0.5",
+      "replaceaudiowithwords": "0",
+      "replacelogswithnotepad": "0",
+      "replacewordswithcountdowns": "1",
+      "rightimagewindowheader": "CITY",
+      "schemecolor": "0,0,0",
+      "showdaynighticon": "1",
+      "textcolourdefaultffffff": "1,1,1",
+      "timedifference1": "+1",
+      "timedifference2": "-13"
+    },
+    "3126895274": {
+      "schemecolor": "18,6,6"
+    },
+    "3136351729": {},
+    "3140318938": {
+      "godrays": "1",
+      "jellyfishcount": "1",
+      "jellyfishopacity": "1",
+      "jellyfishspeed": "1.2",
+      "schemecolor": "0,35,124",
+      "wateropacity": "0.8",
+      "waterparticles": "1",
+      "waterripple": "1"
+    },
+    "3141421197": {
+      "schemecolor": "163,0,0"
+    },
+    "3156355685": {
+      "schemecolor": "63,42,157"
+    },
+    "3167464115": {
+      "schemecolor": "199,201,197"
+    },
+    "3201885253": {
+      "schemecolor": "88,144,192"
+    },
+    "3202133024": {
+      "schemecolor": "22,68,154"
+    },
+    "3225111901": {
+      "schemecolor": "0,0,0"
+    },
+    "3255661584": {
+      "schemecolor": "0,0,0"
+    },
+    "3270668579": {
+      "schemecolor": "133,130,124"
+    },
+    "3283914636": {
+      "schemecolor": "134,38,73"
+    },
+    "3293156956": {
+      "petals": "0",
+      "schemecolor": "0,0,0"
+    },
+    "3335092670": {
+      "additonalemberbackground": "1",
+      "arcircle": "1",
+      "arcirclecolor": "255,0,165",
+      "arheart": "0",
+      "audiobarcolor": "255,148,255",
+      "audiobars": "1",
+      "audiobarsonborder": "1",
+      "backgroundcolor": "59,6,66",
+      "blinking": "1",
+      "blinkingstars": "1",
+      "blurr": "1",
+      "borderbackground": "3",
+      "borderbackgroundcolor": "203,121,203",
+      "borderbackgroundfilmgrain": "1",
+      "borderbackgroundopacity": "0.33",
+      "butterflies": "1",
+      "butterflycolor": "255,107,255",
+      "butterflyopacity": "0.63",
+      "camerashake": "1",
+      "changebackgroundcolor": "0",
+      "changeeyecolor": "0",
+      "changescleracolor": "0",
+      "changeswordcolor": "0",
+      "clockfpscolor": "1,1,1",
+      "clocktime": "0",
+      "clouds": "1",
+      "colorshifteyesandsword": "0",
+      "cyberborder": "0",
+      "ember1color": "255,71,71",
+      "ember2color": "1,0,0",
+      "ember3color": "255,0,112",
+      "emberbackground": "1",
+      "embersword": "1",
+      "emberswordcolor": "255,143,255",
+      "evenmoreemberbackground": "1",
+      "eyecolor": "58,255,217",
+      "fireeffectcolor": "196,0,255",
+      "fireeffectsword": "1",
+      "fireopacity": "0.64",
+      "flowsword": "1",
+      "fps": "0",
+      "glowingonborder": "1",
+      "glowingstars": "1",
+      "irisfollowcursor": "1",
+      "lensflare": "0",
+      "lighteffect": "0",
+      "lightshaftseyes": "1",
+      "lightshaftseyescolor": "246,54,247",
+      "mediaintegration": "0",
+      "movingstars": "1",
+      "nitroeffect": "0",
+      "schemecolor": "29,17,37",
+      "scleracolor": "81,18,18",
+      "sharpenborder": "0",
+      "sharpenstrength": "3",
+      "shimmermask": "1",
+      "sinewaveeffect": "0",
+      "swordcolor": "0,1,1",
+      "use24system": "1",
+      "vhsonborder": "1"
+    },
+    "3357402729": {
+      "color": "1,1,1",
+      "day": "0",
+      "depthparallax": "1",
+      "mediaplayer": "1",
+      "schemecolor": "1,1,1",
+      "stars": "1",
+      "vignette": "1"
+    },
+    "3357724124": {
+      "schemecolor": "112,80,62"
+    },
+    "3372982009": {
+      "schemecolor": "168,15,15"
+    },
+    "3379132582": {
+      "schemecolor": "0,0,0"
+    },
+    "3384583118": {
+      "backgroundcolor": "0,0,0",
+      "chromaticabberation": "0",
+      "schemecolor": "0,255,11"
+    },
+    "3385272677": {
+      "audioresponsivebg": "1",
+      "audiovisualizer": "1",
+      "barcolor": "255,255,255",
+      "barcount": "25",
+      "barpositionx": "1920",
+      "barpositiony": "1080",
+      "barscalex": "7",
+      "barscaley": "7",
+      "barspacing": "0",
+      "chromaticabberation1": "1",
+      "ihateascii": "1",
+      "maxintensity": "1",
+      "minintensity": "0.8",
+      "perlin": "0",
+      "rainbowbars": "0",
+      "rainbowmode": "0",
+      "schemecolor": "255,255,255",
+      "scrollx": "0.25",
+      "scrolly": "0.25",
+      "transparency": "0",
+      "voronoi": "1",
+      "worley": "0"
+    },
+    "3406756925": {},
+    "3414319820": {
+      "schemecolor": "152,44,66",
+      "toggleclock": "1"
+    },
+    "3416158024": {
+      "schemecolor": "188,207,80"
+    },
+    "3439384193": {
+      "schemecolor": "9,34,102"
+    },
+    "3447074364": {
+      "schemecolor": "0,0,0"
+    },
+    "3461093051": {},
+    "3481966650": {
+      "schemecolor": "83,114,122"
+    },
+    "3489756630": {
+      "schemecolor": "22,35,80"
+    },
+    "3494637950": {
+      "birds": "1",
+      "blinkingstars": "0",
+      "car": "0",
+      "clock": "0",
+      "clouds": "1",
+      "colorgradient": "1",
+      "daydatetime": "0",
+      "fog": "1",
+      "mediainfo": "0",
+      "music": "0.6",
+      "rain": "1",
+      "rainsound": "0.5",
+      "schemecolor": "28,70,122",
+      "shootingstar": "0",
+      "soundbar": "1"
+    },
+    "3537671609": {
+      "_24hformat": "1",
+      "_clockinromannumbers": "0",
+      "_showseconds": "0",
+      "audiochromaaberration": "0",
+      "audiooscilloscope": "0",
+      "audiovisualizerbars": "1",
+      "backgroundstyle": "holo1",
+      "blurelements": "0.1",
+      "colorgradient1": "184,255,255",
+      "colorgradient2": "219,153,255",
+      "colorgradient3": "255,255,255",
+      "colorgradient4": "181,158,255",
+      "colorgradient5": "184,255,255",
+      "crazyholobehavior": "0",
+      "curvedlensdistortion": "0",
+      "enableblurness": "1",
+      "extrabrightness": "0",
+      "fixedchromaaberration": "1",
+      "glassopacity": "0.8",
+      "movementsonelemr": "1",
+      "movementsonelems": "1",
+      "noisefxintensity": "0.06",
+      "onesolidcolor": "204,204,204",
+      "scanlinesintensity": "0.01",
+      "schemecolor": "0,0,0",
+      "shadows": "0.35",
+      "shadowsizq": "1",
+      "shimmerlightson": "1",
+      "showclock": "1",
+      "showdate": "1",
+      "showday": "1",
+      "showelements": "1",
+      "showrotatingcircle": "1",
+      "showyear": "1",
+      "tintcolorelements": "0,0,0",
+      "tintcolorelementsr": "255,255,255",
+      "tintcolorglass": "12,24,79",
+      "vignetteintensity": "0.3"
+    },
+    "3538952114": {
+      "schemecolor": "19,33,73"
+    },
+    "3544504788": {},
+    "3562086244": {
+      "_1": "1,1,1",
+      "_2": "255,120,184",
+      "_24hourformat": "1",
+      "_3": "103,152,255",
+      "_4": "102,191,255",
+      "appdockalpha": "0.35",
+      "appdockapplyusertexture1": "0",
+      "appdockapplyusertexture10": "0",
+      "appdockapplyusertexture11": "0",
+      "appdockapplyusertexture12": "0",
+      "appdockapplyusertexture13": "0",
+      "appdockapplyusertexture14": "0",
+      "appdockapplyusertexture15": "0",
+      "appdockapplyusertexture16": "0",
+      "appdockapplyusertexture17": "0",
+      "appdockapplyusertexture18": "0",
+      "appdockapplyusertexture19": "0",
+      "appdockapplyusertexture2": "0",
+      "appdockapplyusertexture20": "0",
+      "appdockapplyusertexture21": "0",
+      "appdockapplyusertexture22": "0",
+      "appdockapplyusertexture23": "0",
+      "appdockapplyusertexture24": "0",
+      "appdockapplyusertexture3": "0",
+      "appdockapplyusertexture4": "0",
+      "appdockapplyusertexture5": "0",
+      "appdockapplyusertexture6": "0",
+      "appdockapplyusertexture7": "0",
+      "appdockapplyusertexture8": "0",
+      "appdockapplyusertexture9": "0",
+      "appdockautohide": "0",
+      "appdockcolor": "0,0,0",
+      "appdockedgethreshold": "10",
+      "appdockenable1": "1",
+      "appdockenable10": "0",
+      "appdockenable11": "0",
+      "appdockenable12": "0",
+      "appdockenable13": "0",
+      "appdockenable14": "0",
+      "appdockenable15": "0",
+      "appdockenable16": "0",
+      "appdockenable17": "0",
+      "appdockenable18": "0",
+      "appdockenable19": "0",
+      "appdockenable2": "1",
+      "appdockenable20": "0",
+      "appdockenable21": "0",
+      "appdockenable22": "0",
+      "appdockenable23": "0",
+      "appdockenable24": "0",
+      "appdockenable3": "1",
+      "appdockenable4": "1",
+      "appdockenable5": "1",
+      "appdockenable6": "1",
+      "appdockenable7": "1",
+      "appdockenable8": "1",
+      "appdockenable9": "0",
+      "appdockenabled": "0",
+      "appdockframespacing": "0.2",
+      "appdockgridsnapping": "0",
+      "appdocknotchsize": "0.5",
+      "appdockradius": "0.2",
+      "appdockscale": "0.8",
+      "appdockscalemultiplier": "2",
+      "appdocksettings": "0",
+      "appdocksetup": "0",
+      "appdockspacing": "0.3",
+      "blurring": "0.7",
+      "clock": "0",
+      "clockcolor": "1,1,1",
+      "coloring": "0",
+      "colors": "5",
+      "draganddrop": "1",
+      "draganddropdock": "0",
+      "enableclock": "0",
+      "frame": "1",
+      "grainstrength": "0.7",
+      "grainy": "1",
+      "gridsnapping": "1",
+      "launcher1": "",
+      "launcher10": "",
+      "launcher11": "",
+      "launcher12": "",
+      "launcher13": "",
+      "launcher14": "",
+      "launcher15": "",
+      "launcher16": "",
+      "launcher17": "",
+      "launcher18": "",
+      "launcher19": "",
+      "launcher2": "",
+      "launcher20": "",
+      "launcher21": "",
+      "launcher22": "",
+      "launcher23": "",
+      "launcher24": "",
+      "launcher3": "",
+      "launcher4": "",
+      "launcher5": "",
+      "launcher6": "",
+      "launcher7": "",
+      "launcher8": "",
+      "launcher9": "",
+      "parallax": "0.7",
+      "schemecolor": "0,0,0",
+      "size": "0.3",
+      "stylesettings": "0"
+    },
+    "3562672741": {},
+    "3583234472": {
+      "appdockalpha": "0.35",
+      "appdockapplyusertexture1": "0",
+      "appdockapplyusertexture10": "0",
+      "appdockapplyusertexture11": "0",
+      "appdockapplyusertexture12": "0",
+      "appdockapplyusertexture13": "0",
+      "appdockapplyusertexture14": "0",
+      "appdockapplyusertexture15": "0",
+      "appdockapplyusertexture16": "0",
+      "appdockapplyusertexture17": "0",
+      "appdockapplyusertexture18": "0",
+      "appdockapplyusertexture19": "0",
+      "appdockapplyusertexture2": "0",
+      "appdockapplyusertexture20": "0",
+      "appdockapplyusertexture21": "0",
+      "appdockapplyusertexture22": "0",
+      "appdockapplyusertexture23": "0",
+      "appdockapplyusertexture24": "0",
+      "appdockapplyusertexture3": "0",
+      "appdockapplyusertexture4": "0",
+      "appdockapplyusertexture5": "0",
+      "appdockapplyusertexture6": "0",
+      "appdockapplyusertexture7": "0",
+      "appdockapplyusertexture8": "0",
+      "appdockapplyusertexture9": "0",
+      "appdockautohide": "0",
+      "appdockcolor": "0,0,0",
+      "appdockedgethreshold": "10",
+      "appdockenable1": "1",
+      "appdockenable10": "0",
+      "appdockenable11": "0",
+      "appdockenable12": "0",
+      "appdockenable13": "0",
+      "appdockenable14": "0",
+      "appdockenable15": "0",
+      "appdockenable16": "0",
+      "appdockenable17": "0",
+      "appdockenable18": "0",
+      "appdockenable19": "0",
+      "appdockenable2": "1",
+      "appdockenable20": "0",
+      "appdockenable21": "0",
+      "appdockenable22": "0",
+      "appdockenable23": "0",
+      "appdockenable24": "0",
+      "appdockenable3": "1",
+      "appdockenable4": "1",
+      "appdockenable5": "1",
+      "appdockenable6": "1",
+      "appdockenable7": "1",
+      "appdockenable8": "1",
+      "appdockenable9": "0",
+      "appdockenabled": "1",
+      "appdockframespacing": "0.2",
+      "appdocknotchsize": "0.5",
+      "appdockradius": "0.2",
+      "appdockscale": "0.4",
+      "appdockscalemultiplier": "2",
+      "appdocksettings": "0",
+      "appdocksetup": "0",
+      "appdockspacing": "0.3",
+      "background": "0",
+      "bloom": "0",
+      "bloomopacity": "1",
+      "blur": "0",
+      "color": "222,0,255",
+      "color1": "1,1,1",
+      "colorbackground": "220,226,216",
+      "draganddropdock": "1",
+      "effects": "0",
+      "escalalayers": "1.13",
+      "habilitarcambiodecolor": "0",
+      "ismovable": "1",
+      "ismovable1": "1",
+      "launcher1": "",
+      "launcher10": "",
+      "launcher11": "",
+      "launcher12": "",
+      "launcher13": "",
+      "launcher14": "",
+      "launcher15": "",
+      "launcher16": "",
+      "launcher17": "",
+      "launcher18": "",
+      "launcher19": "",
+      "launcher2": "",
+      "launcher20": "",
+      "launcher21": "",
+      "launcher22": "",
+      "launcher23": "",
+      "launcher24": "",
+      "launcher3": "",
+      "launcher4": "",
+      "launcher5": "",
+      "launcher6": "",
+      "launcher7": "",
+      "launcher8": "",
+      "launcher9": "",
+      "layer1": "1",
+      "layer2": "1",
+      "layer3": "1",
+      "layerssetings": "0",
+      "mediavisualizer": "0",
+      "newproperty": "130",
+      "newproperty1": "3",
+      "paralajedecamara": "0.05",
+      "proceduralnoiseopacity": "1",
+      "schemecolor": "80,138,98",
+      "speed": "4",
+      "time": "4",
+      "timesettings": "0"
+    },
+    "3585415540": {
+      "activatecrteffect": "1",
+      "schemecolor": "50,82,172"
+    },
+    "3705438650": {
+      "schemecolor": "12,15,30"
+    }
+  },
+  "lastKnownGoodScreens": {
+    "eDP-1": {
+      "path": "/home/interia/.local/share/Steam/steamapps/workshop/content/431960/2948665061",
+      "scaling": "fill"
+    },
+    "DP-1": {
+      "path": "/home/interia/.local/share/Steam/steamapps/workshop/content/431960/2976057265",
+      "scaling": "default"
+    },
+    "HDMI-A-2": {
+      "path": "/home/interia/.local/share/Steam/steamapps/workshop/content/431960/2976057265",
+      "scaling": "default"
+    }
+  },
+  "runtimeRecoveryPending": false
+}
