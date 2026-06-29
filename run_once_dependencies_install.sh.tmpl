@@ -4,6 +4,14 @@
 {{ template "pkg_install.tmpl" . }}
 
 if [[ $PKG_MGR == "pacman" ]]; then
+  ### multilib
+  if [[ $(awk 'prev == "#[multilib]" && $0 == "#Include = /etc/pacman.d/mirrorlist" {print "0"; exit 0} {prev = $0} END {exit 1}' /etc/pacman.conf ) == "0" ]]; then
+    sudo sed -i -z 's/#\[multilib\]\n#Include = \/etc\/pacman.d\/mirrorlist/\[multilib\]\nInclude = \/etc\/pacman.d\/mirrorlist/g' /etc/pacman.conf
+  elif [[ $(awk 'prev == "[multilib]" && $0 == "Include = /etc/pacman.d/mirrorlist" {print "0"; exit 0} {prev = $0} END {exit 1}' /etc/pacman.conf ) != "0" ]]; then 
+    echo "[multilib]" | sudo tee -a /etc/pacman.conf > /dev/null
+    echo "Include = /etc/pacman.d/mirrorlist" | sudo tee -a /etc/pacman.conf > /dev/null
+  fi;
+  sudo pacman -Sy
   ### yay install
   if [[ $(pacman -Qe yay 2>&1 | awk '{print $1}') == "error:" ]]; then
     sudo pacman -S --needed --noconfirm base-devel git || true
@@ -15,14 +23,6 @@ if [[ $PKG_MGR == "pacman" ]]; then
     makepkg -D /tmp/yay -si --noconfirm
     rm -rf /tmp/yay
   fi;
-  ### multilib
-  if [[ $(awk 'prev == "#[multilib]" && $0 == "#Include = /etc/pacman.d/mirrorlist" {print "0"; exit 0} {prev = $0} END {exit 1}' /etc/pacman.conf ) == "0" ]]; then
-    sudo sed -i -z 's/#\[multilib\]\n#Include = \/etc\/pacman.d\/mirrorlist/\[multilib\]\nInclude = \/etc\/pacman.d\/mirrorlist/g' /etc/pacman.conf
-  elif [[ $(awk 'prev == "[multilib]" && $0 == "Include = /etc/pacman.d/mirrorlist" {print "0"; exit 0} {prev = $0} END {exit 1}' /etc/pacman.conf ) != "0" ]]; then 
-    echo "[multilib]" | sudo tee -a /etc/pacman.conf > /dev/null
-    echo "Include = /etc/pacman.d/mirrorlist" | sudo tee -a /etc/pacman.conf > /dev/null
-  fi;
-  sudo pacman -Sy
   ### flatpak install
   sudo pacman -S --needed --noconfirm flatpak
   flatpak remote-add --if-not-exists flathub https://flathub.org
