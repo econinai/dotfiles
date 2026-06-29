@@ -1,0 +1,31 @@
+for PKG_MGR in pacman apt dnf zypper apk; do command -v $PKG_MGR &>/dev/null && break; done
+
+diff_words() {
+    local list1=$(echo "$1" | tr ' ' '\n' | sort -u)
+    local list2=$(echo "$2" | tr ' ' '\n' | sort -u)
+    comm -3 <(echo "$list1") <(echo "$list2") | tr -d '\t' | tr '\n' ' ' | xargs
+}
+
+pkg_install() {
+  echo "Installing packages:"
+  if [[ $PKG_MGR == "pacman" ]]; then
+    notfound=$1
+
+    ### pacman
+    local pacmanpkgs=$(pacman -Si $notfound 2>/dev/null | awk '/^Name/ { print $3 }') || true
+    sudo pacman -S --needed --noconfirm $pacmanpkgs || true
+    notfound=$(diff_words "$notfound" "$pacmanpkgs")
+
+    ### yay
+    if [[ $notfound != "" ]]; then
+      local yaypkgs=$(yay -Si $notfound 2>/dev/null | awk '/^Name/ { print $3 }') || true
+      yay -S --needed --noconfirm $yaypkgs || true
+      notfound=$(diff_words "$notfound" "$yaypkgs")
+    fi;
+    
+    ### flathak
+    if [[ $notfound != "" ]]; then
+      flatpak install flathub -y --or-update $notfound
+    fi;
+  fi;
+}
