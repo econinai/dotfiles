@@ -21,8 +21,8 @@ if [[ $PKG_MGR == "pacman" ]]; then
   elif [[ $(awk 'prev == "[multilib]" && $0 == "Include = /etc/pacman.d/mirrorlist" {print "0"; exit 0} {prev = $0} END {exit 1}' /etc/pacman.conf ) != "0" ]]; then 
     echo "[multilib]" | sudo tee -a /etc/pacman.conf > /dev/null
     echo "Include = /etc/pacman.d/mirrorlist" | sudo tee -a /etc/pacman.conf > /dev/null
-    sudo pacman -Sy
   fi;
+  sudo pacman -Sy
   ### flatpak install
   sudo pacman -S --needed --noconfirm flatpak
   flatpak remote-add --if-not-exists flathub https://flathub.org
