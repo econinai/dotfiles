@@ -56,10 +56,6 @@ user_pref("extensions.ui.mlmodel.hidden", true);
 user_pref("extensions.ui.sitepermission.hidden", true);
 
 user_pref("general.smoothScroll", true);
-user_pref("gfx.blacklist.dmabuf", 4);
-user_pref("gfx.blacklist.dmabuf.failureid", "FEATURE_FAILURE_DL_BLOCKLIST_NO_ID");
-user_pref("gfx.blacklist.gl.threadsafe", 4);
-user_pref("gfx.blacklist.gl.threadsafe.failureid", "FEATURE_FAILURE_DL_BLOCKLIST_NO_ID");
 user_pref("sidebar.visibility", "hide-sidebar");
 user_pref("zen.view.compact.enable-at-startup", false);
 user_pref("zen.view.compact.hide-toolbar", true);
