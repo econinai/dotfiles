@@ -10,6 +10,13 @@ hl.monitor({
 })
 
 hl.monitor({
+    output   = "eDP-1",
+    mode     = "2560x1600@60",
+    position = "0x0",
+    scale    = "1",
+})
+
+hl.monitor({
     output   = "HDMI-A-1",
     mode     = "3840x2160@60",
     mirror   = "DP-1",
@@ -237,6 +244,7 @@ hl.config({
     },
 
     decoration = {
+    	
         rounding       = 10,
         rounding_power = 2,
 
@@ -250,6 +258,8 @@ hl.config({
             render_power = 3,
             color        = 0x00000055,
         },
+
+        
 
         blur = {
             enabled            = blurenabled,
@@ -352,13 +362,15 @@ hl.config({
 
         follow_mouse = 1,
 
-        sensitivity = -0.05 , -0.05, 
+        sensitivity = -0.05, 
         accel_profile = "flat",
 
         touchpad = {
             natural_scroll = false,
+            disable_while_typing = false,
         },
     },
+    
 })
 
 hl.gesture({
@@ -371,8 +383,8 @@ hl.gesture({
 -- Example per-device config
 -- See https://wiki.hypr.land/Configuring/Advanced-and-Cool/Devices/ for more
 hl.device({
-    name        = "epic-mouse-v1",
-    sensitivity = -0.05,                 -------------------------------------- touchpad
+    name        = "asue140d:00-04f3:31b9-touchpad",
+    sensitivity = 0.15,
 })
 
 ---------------------
