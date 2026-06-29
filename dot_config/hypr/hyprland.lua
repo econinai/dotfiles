@@ -130,30 +130,33 @@ else
     hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\11.0\\2/g\" ~/.config/noctalia/templates/gtk/gtk3.css ")
 end
 transparentenabled = false
+
 -----------------
 ---- PLUGINS ----
 -----------------
 
-hl.config { plugin = { dynamic_cursors = {
-    enabled = true,
-    mode = "tilt",
-    threshold = 2,
-    rotate = {
-        length = 20,
-        offset = 0.0,
-    },
-    tilt = {
-        limit = 3000,
-        activation = "negative_quadratic",
-        window = 150,
-    },
-    hyprcursor = {
-        nearest = true,
-        enabled = true,
-        resolution = -1,
-        fallback = "clientside",
-    },
-}}}
+if hl.plugin.dynamic_cursors then
+	hl.config { plugin = { dynamic_cursors = {
+	    enabled = true,
+	    mode = "tilt",
+	    threshold = 2,
+	    rotate = {
+	        length = 20,
+	        offset = 0.0,
+	    },
+	    tilt = {
+	        limit = 3000,
+	        activation = "negative_quadratic",
+	        window = 150,
+	    },
+	    hyprcursor = {
+	        nearest = true,
+	        enabled = true,
+	        resolution = -1,
+	        fallback = "clientside",
+	    },
+	}}}
+end
 
 
 if hl.plugin.hyprglass then
