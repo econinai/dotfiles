@@ -43,6 +43,7 @@ hl.on("hyprland.start", function ()
   hl.exec_cmd("hyprpm reload")
   hl.exec_cmd("pkill -9 wl-paste; wl-paste --watch cliphist store &")
   hl.exec_cmd("qs -c \"noctalia-shell\"")
+  hl.exec_cmd("systemctl --user start hyprpolkitagent")
 --   hl.exec_cmd("gsettings set org.gnome.desktop.interface color-scheme \"prefer-dark\"")
 --   hl.exec_cmd("gsettings set org.gnome.desktop.interface gtk-theme \"adw-gtk3\"")
 end)
@@ -148,6 +149,9 @@ if hl.plugin.dynamic_cursors then
 	        limit = 3000,
 	        activation = "negative_quadratic",
 	        window = 150,
+	    },
+	    shake = {
+	            enabled = false,
 	    },
 	    hyprcursor = {
 	        nearest = true,
