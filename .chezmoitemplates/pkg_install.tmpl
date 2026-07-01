@@ -13,19 +13,28 @@ pkg_install() {
 
     ### pacman
     local pacmanpkgs=$(pacman -Si $notfound 2>/dev/null | awk '/^Name/ { print $3 }') || true
-    sudo pacman -S --needed --noconfirm $pacmanpkgs || true
+    echo "\t::Installing via pacman: $pacmanpkgs"
+    sudo pacman -S --needed --noconfirm $pacmanpkgs 1>/dev/null 2>/dev/null || true
     notfound=$(diff_words "$notfound" "$pacmanpkgs")
 
     ### yay
     if [[ $notfound != "" ]]; then
       local yaypkgs=$(yay -Si $notfound 2>/dev/null | awk '/^Name/ { print $3 }') || true
-      yay -S --needed --noconfirm $yaypkgs || true
+      echo "\t::Installing via AUR: $yaypkgs"
+      yay -S --needed --noconfirm $yaypkgs 1>/dev/null 2>/dev/null || true
       notfound=$(diff_words "$notfound" "$yaypkgs")
     fi;
     
     ### flathak
     if [[ $notfound != "" ]]; then
-      flatpak install flathub -y --or-update $notfound
+      local flatpakpkgs=$(flatpak search --columns=application "$notfound" 2>/dev/null | tail -n +1 | awk '{print $1}') || true
+      echo "\t::Installing via flatpak: $flatpakpkgs"
+      flatpak install flathub -y --or-update $flatpakpkgs 1>/dev/null 2>/dev/null || true
+      notfound=$(diff_words "$notfound" "$flatpakpkgs")
+    fi;
+
+    if [[ $notfound != "" ]]; then
+      echo "\t::Not found at all: $notfound"
     fi;
   fi;
 }

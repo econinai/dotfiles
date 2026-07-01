@@ -11,6 +11,7 @@ done < <(lspci | grep -E "(VGA|3D|Display)")
 NEEDS_NVIDIA_KMS=false
 
 for device in "${VIDEODEVICES[@]}"; do
+  echo "Installing video drivers for $device"
   if [[ $(echo "$device" | grep -i "nvidia") != "" ]]; then ### NVIDIA
     NEEDS_NVIDIA_KMS=true
     case "$(echo "$device" | grep -oP '[A-Z]{2}(?=[0-9]{3})' | head -n 1)" in 
@@ -31,16 +32,18 @@ for device in "${VIDEODEVICES[@]}"; do
 done
 
 if [ "$NEEDS_NVIDIA_KMS" = true ]; then
+	echo "Making initramfs..."
     if command -v mkinitcpio &> /dev/null; then
-        sudo sed -i 's/^MODULES=(.*/MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf
-        sudo mkinitcpio -P
+        sudo sed -i 's/^MODULES=(.*/MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf  1>/dev/null 2>/dev/null || true
+        sudo mkinitcpio -P 1>/dev/null 2>/dev/null || true
     elif command -v update-initramfs &> /dev/null; then
-        sudo update-initramfs -u -k all
+        sudo update-initramfs -u -k all 1>/dev/null 2>/dev/null || true
     elif command -v dracut &> /dev/null; then
-        echo 'force_drivers+=" nvidia nvidia_modeset nvidia_uvm nvidia_drm "' | sudo tee /etc/dracut.conf.d/nvidia.conf > /dev/null
-        sudo dracut --force --regenerate-all 
+        echo 'force_drivers+=" nvidia nvidia_modeset nvidia_uvm nvidia_drm "' | sudo tee /etc/dracut.conf.d/nvidia.conf > /dev/null 1>/dev/null 2>/dev/null || true
+        sudo dracut --force --regenerate-all 1>/dev/null 2>/dev/null || true
     else
         echo "Warning: not found initramfs."
     fi
 fi
+
 
