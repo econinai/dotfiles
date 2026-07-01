@@ -12,14 +12,14 @@ pkg_install() {
     notfound="$1"
 
     ### pacman
-    local pacmanpkgs="$(pacman -Si $notfound 2>/dev/null | awk '/^Name/ { print $3 }')" || true
+    local pacmanpkgs="$(pacman -Si \"$notfound\" 2>/dev/null | awk '/^Name/ { print $3 }')" || true
     echo -e "\t::Installing via pacman: $pacmanpkgs"
     sudo pacman -S --needed --noconfirm $pacmanpkgs 1>/dev/null 2>/dev/null || true
     notfound=$(diff_words "$notfound" "$pacmanpkgs")
 
     ### yay
     if [[ $notfound != "" ]]; then
-      local yaypkgs="$(yay -Si $notfound 2>/dev/null | awk '/^Name/ { print $3 }')" || true
+      local yaypkgs="$(yay -Si \"$notfound\" 2>/dev/null | awk '/^Name/ { print $3 }')" || true
       echo -e "\t::Installing via AUR: $yaypkgs"
       yay -S --needed --noconfirm $yaypkgs 1>/dev/null || true
       notfound=$(diff_words "$notfound" "$yaypkgs")
