@@ -51,7 +51,7 @@
         "displayMode": "always_visible",
         "enableExclusionZoneInset": false,
         "fontScale": 1,
-        "frameRadius": 12,
+        "frameRadius": 20,
         "frameThickness": 8,
         "hideOnOverview": false,
         "marginHorizontal": 4,
@@ -111,7 +111,7 @@
                     "formatHorizontal": "HH:mm ddd, MMM dd",
                     "formatVertical": "HH mm - dd MM",
                     "id": "Clock",
-                    "tooltipFormat": "HH:mm ddd, MMM dd",
+                    "tooltipFormat": "HH:mm:ss ddd, MMM dd",
                     "useCustomFont": false
                 },
                 {
@@ -149,7 +149,7 @@
                     "blacklist": [
                     ],
                     "chevronColor": "none",
-                    "colorizeIcons": true,
+                    "colorizeIcons": false,
                     "drawerEnabled": true,
                     "hidePassive": false,
                     "id": "Tray",
@@ -831,7 +831,7 @@
     },
     "wallpaper": {
         "automationEnabled": false,
-        "directory": "/home/interia/Pictures",
+        "directory": "",
         "enableMultiMonitorDirectories": false,
         "enabled": true,
         "favorites": [
