@@ -16,6 +16,12 @@ pkg_install() {
     echo -e "\e[32m\t::Installing via pacman: $pacmanpkgs\e[0m"
     sudo pacman -S --needed --noconfirm $pacmanpkgs 1>/dev/null 2>/dev/null || true
     notfound=$(diff_words "$notfound" "$pacmanpkgs")
+    
+    local installedpkgs=$(pacman -Qe $pacmanpkgs 2>/dev/null | awk '{ print $1 }' | xargs) || true
+    local notinstalledpkg=$(diff_words "$pacmanpkgs" "$installedpkgs")
+    if [[ $notinstalledpkg != "" ]]; then
+      echo -e "\e[31m\t::Not installing via pacman by unknown errors: $notinstalledpkg\e[0m"
+    fi;
 
     ### yay
     if [[ $notfound != "" ]]; then
@@ -23,6 +29,12 @@ pkg_install() {
       echo -e "\e[32m\t::Installing via AUR: $yaypkgs\e[0m"
       yay -S --needed --noconfirm $yaypkgs 1>/dev/null 2>/dev/null || true
       notfound=$(diff_words "$notfound" "$yaypkgs")
+      
+      local installedpkgs=$(yay -Qe $yaypkgs 2>/dev/null | awk '{ print $1 }' | xargs) || true
+      local notinstalledpkg=$(diff_words "$yaypkgs" "$installedpkgs")
+      if [[ $notinstalledpkg != "" ]]; then
+      	echo -e "\e[31m\t::Not installing via AUR by unknown errors: $notinstalledpkg\e[0m"
+      fi;
     fi;
     
     ### flathak
@@ -31,10 +43,16 @@ pkg_install() {
       echo -e "\e[32m\t::Installing via flatpak: $flatpakpkgs\e[0m"
       flatpak install flathub -y --or-update $flatpakpkgs 1>/dev/null 2>/dev/null || true
       notfound=$(diff_words "$notfound" "$flatpakpkgs")
+      
+      local installedpkgs=$(flatpak list --app --columns=application | xargs) || true
+      local notinstalledpkg=$(diff_words "$flatpakpkgs" "$installedpkgs")
+      if [[ $notinstalledpkg != "" ]]; then
+        echo -e "\e[31m\t::Not installing via flathub by unknown errors: $notinstalledpkg\e[0m"
+      fi;
     fi;
 
     if [[ $notfound != "" ]]; then
-      echo -e "\t::Not found at all: $notfound"
+      echo -e "\e[31m\t::Not found at all: $notfound\e[0m"
     fi;
   fi;
 }
