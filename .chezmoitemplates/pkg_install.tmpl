@@ -27,7 +27,8 @@ pkg_install() {
     
     ### flathak
     if [[ $notfound != "" ]]; then
-      local flatpakpkgs="$(flatpak search --columns=application "$notfound" 2>/dev/null | tail -n +1 | awk '{print $1}')" || true
+    local search_pattern
+      local flatpakpkgs="$(flatpak remote-ls flathub --app --columns=application 2>/dev/null | grep -E \"$(echo \"$notfound\" | sed 's/ /|/g')\")" || true
       echo -e "\t::Installing via flatpak: $flatpakpkgs"
       flatpak install flathub -y --or-update $flatpakpkgs 1>/dev/null || true
       notfound=$(diff_words "$notfound" "$flatpakpkgs")
