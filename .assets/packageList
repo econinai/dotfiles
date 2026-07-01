@@ -74,10 +74,12 @@ xdg-user-dirs
 xdg-utils
 xdg-desktop-portal-hyprland
 kio-admin
+unrar
+ark
 
 gifski 
 wl-screenrec-git
-grimblast
+grimblast-git
 noctalia-shell
 vscodium
 zen-browser-bin
