@@ -3,4 +3,4 @@
 {{ template "sudo.tmpl" . }}
 {{ template "pkg_install.tmpl" . }}
 
-pkg_install "$(awk '{for(i=1;i<=NF;i++) printf \"%s \", $i; } END {print \"\"}' {{ .chezmoi.sourceDir }}/.assets/packageList)"
+pkg_install "$(awk '{for(i=1;i<=NF;i++) printf "%s ", $i; } END {print ""}' {{ .chezmoi.sourceDir }}/.assets/packageList)"
