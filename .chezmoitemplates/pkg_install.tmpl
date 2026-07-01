@@ -20,7 +20,7 @@ pkg_install() {
     ### yay
     if [[ $notfound != "" ]]; then
       local yaypkgs=$(yay -Si $notfound 2>/dev/null | awk '/^Name/ { print $3 }' | xargs) || true
-      echo -e "\e[32m\t::Installing via AUR: $yaypkgs\e[/0m"
+      echo -e "\e[32m\t::Installing via AUR: $yaypkgs\e[0m"
       yay -S --needed --noconfirm $yaypkgs 1>/dev/null 2>/dev/null || true
       notfound=$(diff_words "$notfound" "$yaypkgs")
     fi;
