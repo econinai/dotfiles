@@ -5,7 +5,9 @@
 
 ### cursor theme
 
-sudo tar -xf "{{ .chezmoi.sourceDir }}/.assets/aosp-cursors-linux-1.3.0.tar.xz" -C "/usr/share/icons"
+echo "Installing cursor theme..."
+
+sudo tar -xf "{{ .chezmoi.sourceDir }}/.assets/aosp-cursors-linux-1.3.0.tar.xz" -C "/usr/share/icons" 1>/dev/null 2>/dev/null
 sudo chmod -R 755 /usr/share/icons/aosp-cursors
 
 sudo mkdir -p /usr/share/icons/default
@@ -25,4 +27,6 @@ sudo chmod +x /etc/profile.d/cursor.sh
 
 ### icons theme
 
-sudo tar -xf "{{ .chezmoi.sourceDir }}/.assets/ColorFlow.tar.xz" -C "/usr/share/icons"
+echo "Installing icons theme..."
+
+sudo tar -xf "{{ .chezmoi.sourceDir }}/.assets/ColorFlow.tar.xz" -C "/usr/share/icons" 1>/dev/null 2>/dev/null
