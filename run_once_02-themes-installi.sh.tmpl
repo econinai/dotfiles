@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+{{ template "sudo.tmpl" . }}
+{{ template "pkg_install.tmpl" . }}
+
+### cursor theme
+
+sudo tar -xf "{{ .chezmoi.sourceDir }}/.assets/aosp-cursors-linux-1.3.0.tar.xz" -C "/usr/share/icons"
+sudo chmod -R 755 /usr/share/icons/aosp-cursors
+
+sudo mkdir -p /usr/share/icons/default
+sudo bash -c 'cat <<EOF > /usr/share/icons/default/index.theme
+[Icon Theme]
+Inherits=aosp-cursors
+EOF'
+
+sudo bash -c 'cat <<EOF > /etc/profile.d/cursor.sh
+export XCURSOR_THEME="aosp-cursors"
+export XCURSOR_SIZE="24"
+export HYPRCURSOR_THEME="aosp-cursors"
+export HYPRCURSOR_SIZE="24"
+EOF'
+
+sudo chmod +x /etc/profile.d/cursor.sh
+
+### icons theme
+
+sudo tar -xf "{{ .chezmoi.sourceDir }}/.assets/ColorFlow.tar.xz" -C "/usr/share/icons"
