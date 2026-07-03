@@ -30,3 +30,39 @@ sudo chmod +x /etc/profile.d/cursor.sh
 echo "Installing icons theme..."
 
 sudo tar -xf "{{ .chezmoi.sourceDir }}/.assets/themes/icons/ColorFlow.tar.xz" -C "/usr/share/icons" 1>/dev/null 2>/dev/null
+
+### grub theme
+
+echo "Installing grub theme..."
+
+THEME_DIR="/usr/share/grub/themes"
+THEME_NAME=Particle-circle-window
+
+function has_command() {
+  command -v $1 > /dev/null
+}
+
+[[ -d ${THEME_DIR}/${THEME_NAME} ]] && sudo rm -rf ${THEME_DIR}/${THEME_NAME}
+sudo mkdir -p "${THEME_DIR}/${THEME_NAME}"
+
+sudo tar -xf "{{ .chezmoi.sourceDir }}/.assets/themes/grub/${THEME_NAME}.tar.xz" -C ${THEME_DIR}/${THEME_NAME} 1>/dev/null 2>/dev/null
+
+sudo cp -an /etc/default/grub /etc/default/grub.bak 1>/dev/null 2>/dev/null
+
+sudo grep "GRUB_THEME=" /etc/default/grub 2>&1 >/dev/null && sudo sed -i '/GRUB_THEME=/d' /etc/default/grub 
+
+echo "GRUB_THEME=\"${THEME_DIR}/${THEME_NAME}/theme.txt\"" | sudo tee -a /etc/default/grub 1>/dev/null 2>/dev/null
+
+if has_command update-grub; then
+  sudo update-grub 1>/dev/null 2>/dev/null
+elif has_command grub-mkconfig; then
+  sudo grub-mkconfig -o /boot/grub/grub.cfg 1>/dev/null 2>/dev/null
+elif has_command zypper || has_command transactional-update; then
+  sudo grub2-mkconfig -o /boot/grub2/grub.cfg 1>/dev/null 2>/dev/null
+elif has_command dnf || has_command rpm-ostree; then
+  if [[ -f /boot/efi/EFI/fedora/grub.cfg ]]; then
+    sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg 1>/dev/null 2>/dev/null
+  elif [[ -f /boot/grub2/grub.cfg ]]; then
+    sudo grub2-mkconfig -o /boot/grub2/grub.cfg 1>/dev/null 2>/dev/null
+  fi
+fi
