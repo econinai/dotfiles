@@ -3,4 +3,6 @@
 {{ template "sudo.tmpl" . }}
 {{ template "pkg_install.tmpl" . }}
 
+# {{ include ".assets/packageList" | sha256sum }}
+
 pkg_install "$(awk '{for(i=1;i<=NF;i++) printf "%s ", $i; } END {print ""}' {{ .chezmoi.sourceDir }}/.assets/packageList)"
