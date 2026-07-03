@@ -18,9 +18,9 @@ EOF'
 
 sudo bash -c 'cat <<EOF > /etc/profile.d/cursor.sh
 export XCURSOR_THEME="aosp-cursors"
-export XCURSOR_SIZE="24"
+export XCURSOR_SIZE="18"
 export HYPRCURSOR_THEME="aosp-cursors"
-export HYPRCURSOR_SIZE="24"
+export HYPRCURSOR_SIZE="18"
 EOF'
 
 sudo chmod +x /etc/profile.d/cursor.sh
@@ -45,7 +45,7 @@ function has_command() {
 [[ -d ${THEME_DIR}/${THEME_NAME} ]] && sudo rm -rf ${THEME_DIR}/${THEME_NAME}
 sudo mkdir -p "${THEME_DIR}/${THEME_NAME}"
 
-sudo tar -xf "{{ .chezmoi.sourceDir }}/.assets/themes/grub/${THEME_NAME}.tar.xz" -C ${THEME_DIR}/${THEME_NAME} 1>/dev/null 2>/dev/null
+sudo tar -xf "{{ .chezmoi.sourceDir }}/.assets/themes/grub/${THEME_NAME}.tar.xz" -C ${THEME_DIR} 1>/dev/null 2>/dev/null
 
 sudo cp -an /etc/default/grub /etc/default/grub.bak 1>/dev/null 2>/dev/null
 
