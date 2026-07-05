@@ -4,6 +4,21 @@
 {{ template "pkg_install.tmpl" . }}
 
 if [[ $PKG_MGR == "pacman" ]]; then
+  ### reflector
+  echo "Installing reflector..."
+  if ! pacman -Qi reflector &>/dev/null; then
+    sudo pacman -S --needed --noconfirm reflector
+  fi
+  sudo reflector --latest 15 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+  sudo systemctl enable --now reflector.timer
+  sudo pacman -Sy --noconfirm archlinux-keyring
+  ### multilib
+  if grep -q "#\[multilib\]" /etc/pacman.conf; then
+    sudo sed -i '/#\[multilib\]/,/#Include = \/etc\/pacman.d\/mirrorlist/ s/^#//' /etc/pacman.conf
+  fi
+  
+  # Обновляем базы данных один раз в самом конце
+  sudo pacman -Syu --noconfirm
   ### multilib
   echo "Installing multilib..."
   if [[ $(awk 'prev == "#[multilib]" && $0 == "#Include = /etc/pacman.d/mirrorlist" {print "0"; exit 0} {prev = $0} END {exit 1}' /etc/pacman.conf ) == "0" ]]; then
@@ -30,4 +45,7 @@ if [[ $PKG_MGR == "pacman" ]]; then
   echo "Installing flatpak..."
   sudo pacman -S --needed --noconfirm flatpak 1>/dev/null 2>/dev/null || true
   flatpak remote-add --if-not-exists flathub https://flathub.org 1>/dev/null 2>/dev/null || true
+  ### updating all
+  echo "Final updating..."
+  sudo pacman -Syu --noconfirm
 fi;
