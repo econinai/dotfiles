@@ -13,13 +13,6 @@ if [[ $PKG_MGR == "pacman" ]]; then
   sudo systemctl enable --now reflector.timer
   sudo pacman -Sy --noconfirm archlinux-keyring
   ### multilib
-  if grep -q "#\[multilib\]" /etc/pacman.conf; then
-    sudo sed -i '/#\[multilib\]/,/#Include = \/etc\/pacman.d\/mirrorlist/ s/^#//' /etc/pacman.conf
-  fi
-  
-  # Обновляем базы данных один раз в самом конце
-  sudo pacman -Syu --noconfirm
-  ### multilib
   echo "Installing multilib..."
   sudo grep "\[multilib\]" /etc/pacman.conf 2>&1 >/dev/null && sudo sed -i '/\[multilib\]/d' /etc/pacman.conf
   sudo grep "Include = /etc/pacman.d/mirrorlist" /etc/pacman.conf 2>&1 >/dev/null && sudo sed -i '/Include = \/etc\/pacman.d\/mirrorlist/d' /etc/pacman.conf
