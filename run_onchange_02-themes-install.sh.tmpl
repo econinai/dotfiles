@@ -54,8 +54,13 @@ sudo tar --no-same-owner -xf "{{ .chezmoi.sourceDir }}/.assets/themes/grub/${THE
 sudo cp -an /etc/default/grub /etc/default/grub.bak 1>/dev/null 2>/dev/null
 
 sudo grep "GRUB_THEME=" /etc/default/grub 2>&1 >/dev/null && sudo sed -i '/GRUB_THEME=/d' /etc/default/grub 
-
 echo "GRUB_THEME=\"${THEME_DIR}/${THEME_NAME}/theme.txt\"" | sudo tee -a /etc/default/grub 1>/dev/null 2>/dev/null
+
+sudo grep "GRUB_TIMEOUT=" /etc/default/grub 2>&1 >/dev/null && sudo sed -i '/GRUB_TIMEOUT=/d' /etc/default/grub 
+echo "GRUB_TIMEOUT=1" | sudo tee -a /etc/default/grub 1>/dev/null 2>/dev/null
+
+sudo grep "GRUB_GFXMODE=" /etc/default/grub 2>&1 >/dev/null && sudo sed -i '/GRUB_GFXMODE=/d' /etc/default/grub 
+echo "GRUB_GFXMODE=\"1920x1080x32,auto\"" | sudo tee -a /etc/default/grub 1>/dev/null 2>/dev/null
 
 if has_command update-grub; then
   sudo update-grub 1>/dev/null 2>/dev/null
