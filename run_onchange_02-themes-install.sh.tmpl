@@ -75,3 +75,7 @@ elif has_command dnf || has_command rpm-ostree; then
     sudo grub2-mkconfig -o /boot/grub2/grub.cfg 1>/dev/null 2>/dev/null
   fi
 fi
+
+### root bashrc
+
+sudo cp "{{ .chezmoi.sourceDir }}/dot_bashrc" "/root/.bashrc"
