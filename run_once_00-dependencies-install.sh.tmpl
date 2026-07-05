@@ -4,6 +4,10 @@
 {{ template "pkg_install.tmpl" . }}
 
 if [[ $PKG_MGR == "pacman" ]]; then
+  ### pacman theming
+  sudo grep "Color" /etc/pacman.conf 2>&1 >/dev/null && sudo sed -i '/Color/d' /etc/pacman.conf
+  sudo grep "ILoveCandy" /etc/pacman.conf 2>&1 >/dev/null && sudo sed -i '/ILoveCandy/d' /etc/pacman.conf
+  sudo sed -i '/^\[options\]$/a Color\nILoveCandy' /etc/pacman.conf 1>/dev/null 2>/dev/null
   ### reflector
   echo "Installing reflector..."
   if ! pacman -Qi reflector &>/dev/null; then
