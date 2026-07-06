@@ -6,3 +6,13 @@
 # {{ include ".assets/packageList" | sha256sum }}
 
 pkg_install "$(awk '{for(i=1;i<=NF;i++) printf "%s ", $i; } END {print ""}' {{ .chezmoi.sourceDir }}/.assets/packageList)"
+
+### noctalia greeter
+
+echo -e "Installing greeter..."
+
+sudo sed -i '/^\[default_session\]$/a command = \"\/usr\/local\/bin\/noctalia-greeter-session\"\nuser = \"greeter\"' /etc/greetd/config.toml  1>/dev/null 2>/dev/null
+
+sudo systemctl disable display-manager.service 1>/dev/null 2>/dev/null
+
+sudo systemctl enable greetd 1>/dev/null 2>/dev/null
