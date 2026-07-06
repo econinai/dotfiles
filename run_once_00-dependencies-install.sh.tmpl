@@ -23,24 +23,24 @@ if [[ $PKG_MGR == "pacman" ]]; then
   echo "[multilib]" | sudo tee -a /etc/pacman.conf 1>/dev/null 2>/dev/null
   echo "Include = /etc/pacman.d/mirrorlist" | sudo tee -a /etc/pacman.conf 1>/dev/null 2>/dev/null
   echo "Updating pacman databases..."
-  sudo pacman -Sy --noconfirm 1>/dev/null || true
+  sudo pacman -Sy --noconfirm 1>/dev/null
   ### yay install
   echo "Installing yay..."
   if [[ $(pacman -Qe yay 2>&1 | awk '{print $1}') == "error:" ]]; then
-    sudo pacman -S --needed --noconfirm base-devel git 2>/dev/null 1>/dev/null || true
+    sudo pacman -S --needed --noconfirm base-devel git 2>/dev/null 1>/dev/null
     if [ -d "/tmp/yay" ]; then
       git -C /tmp/yay pull 1>/dev/null || true
     else
-      git clone https://aur.archlinux.org/yay.git /tmp/yay 2>/dev/null || true
+      git clone https://aur.archlinux.org/yay.git /tmp/yay 2>/dev/null
     fi;
-    makepkg -D /tmp/yay -si --noconfirm 1>/dev/null 2>/dev/null || true
+    makepkg -D /tmp/yay -si --noconfirm 1>/dev/null 2>/dev/null
     rm -rf /tmp/yay
   fi;
   ### flatpak install
   echo "Installing flatpak..."
-  sudo pacman -S --needed --noconfirm flatpak 1>/dev/null 2>/dev/null || true
-  flatpak remote-add --if-not-exists flathub https://flathub.org 1>/dev/null 2>/dev/null || true
+  sudo pacman -S --needed --noconfirm flatpak 1>/dev/null 2>/dev/null
+  flatpak remote-add --if-not-exists flathub https://flathub.org 1>/dev/null 2>/dev/null
   ### updating all
   echo "Final updating..."
-  sudo pacman -Syu --noconfirm
+  sudo pacman -Syu --noconfirm 1>/dev/null 2>/dev/null
 fi;

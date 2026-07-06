@@ -34,13 +34,13 @@ done
 if [ "$NEEDS_NVIDIA_KMS" = true ]; then
 	echo "Making initramfs..."
     if command -v mkinitcpio &> /dev/null; then
-        sudo sed -i 's/^MODULES=(.*/MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf  1>/dev/null 2>/dev/null || true
-        sudo mkinitcpio -P 1>/dev/null 2>/dev/null || true
+        sudo sed -i 's/^MODULES=(.*/MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf  1>/dev/null 2>/dev/null
+        sudo mkinitcpio -P 1>/dev/null 2>/dev/null
     elif command -v update-initramfs &> /dev/null; then
-        sudo update-initramfs -u -k all 1>/dev/null 2>/dev/null || true
+        sudo update-initramfs -u -k all 1>/dev/null 2>/dev/null
     elif command -v dracut &> /dev/null; then
-        echo 'force_drivers+=" nvidia nvidia_modeset nvidia_uvm nvidia_drm "' | sudo tee /etc/dracut.conf.d/nvidia.conf > /dev/null 1>/dev/null 2>/dev/null || true
-        sudo dracut --force --regenerate-all 1>/dev/null 2>/dev/null || true
+        echo 'force_drivers+=" nvidia nvidia_modeset nvidia_uvm nvidia_drm "' | sudo tee /etc/dracut.conf.d/nvidia.conf > /dev/null 1>/dev/null 2>/dev/null
+        sudo dracut --force --regenerate-all 1>/dev/null 2>/dev/null
     else
         echo "Warning: not found initramfs."
     fi
