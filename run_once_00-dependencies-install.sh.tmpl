@@ -11,11 +11,11 @@ if [[ $PKG_MGR == "pacman" ]]; then
   ### reflector
   echo "Installing reflector..."
   if ! pacman -Qi reflector &>/dev/null; then
-    sudo pacman -S --needed --noconfirm reflector
+    sudo pacman -S --needed --noconfirm reflector 1>/dev/null 2>/dev/null
   fi
-  sudo reflector --latest 15 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
-  sudo systemctl enable --now reflector.timer
-  sudo pacman -Sy --noconfirm archlinux-keyring
+  sudo reflector --latest 15 --protocol https --sort rate --save /etc/pacman.d/mirrorlist 1>/dev/null 2>/dev/null
+  sudo systemctl enable --now reflector.timer 1>/dev/null 2>/dev/null
+  sudo pacman -Sy --noconfirm archlinux-keyring 1>/dev/null 2>/dev/null
   ### multilib
   echo "Installing multilib..."
   if [[ $(awk 'prev == "#[multilib]" && $0 == "#Include = /etc/pacman.d/mirrorlist" {print "0"; exit 0} {prev = $0} END {exit 1}' /etc/pacman.conf ) == "0" ]]; then
@@ -25,18 +25,18 @@ if [[ $PKG_MGR == "pacman" ]]; then
     echo "Include = /etc/pacman.d/mirrorlist" | sudo tee -a /etc/pacman.conf > /dev/null
   fi;
   echo "Updating pacman databases..."
-  sudo pacman -Sy --noconfirm 1>/dev/null
+  sudo pacman -Sy --noconfirm 1>/dev/null 2>/dev/null
   ### yay install
   echo "Installing yay..."
   if [[ $(pacman -Qe yay 2>&1 | awk '{print $1}') == "error:" ]]; then
     sudo pacman -S --needed --noconfirm base-devel git 2>/dev/null 1>/dev/null
     if [ -d "/tmp/yay" ]; then
-      git -C /tmp/yay pull 1>/dev/null || true
+      git -C /tmp/yay pull 1>/dev/null
     else
       git clone https://aur.archlinux.org/yay.git /tmp/yay 2>/dev/null
     fi;
     makepkg -D /tmp/yay -si --noconfirm 1>/dev/null 2>/dev/null
-    rm -rf /tmp/yay
+    rm -rf /tmp/yay 1>/dev/null 2>/dev/null
   fi;
   ### flatpak install
   echo "Installing flatpak..."
