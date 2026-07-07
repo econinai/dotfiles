@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+{{ template "pkg_install.tmpl" . }}
+
+### udev
+
+echo "Installing udev rules..."
+
+sudo bash -c 'cat <<EOF > /etc/udev/rules.d/99-usb-sync.rules
+SUBSYSTEMS=="usb", SUBSYSTEM=="block", ENV{ID_FS_USAGE}=="filesystem", ENV{UDISKS_MOUNT_OPTIONS_DEFAULTS}+="sync,dirsync", ENV{UDISKS_MOUNT_OPTIONS_ALLOW}+="sync,dirsync"
+EOF'
+
+sudo bash -c 'cat <<EOF > /etc/udev/rules.d/99-usb-autosuspend.rules
+SUBSYSTEM=="input", GROUP="input", MODE="0660"
+ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="on"
+EOF'
+
