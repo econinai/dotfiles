@@ -16,3 +16,13 @@ sudo sed -i '/^\[default_session\]$/a command = \"\/usr\/local\/bin\/noctalia-gr
 sudo systemctl disable display-manager.service 1>/dev/null 2>/dev/null
 
 sudo systemctl enable greetd 1>/dev/null 2>/dev/null
+
+### hyprland plugins
+
+if [[ $(awk "/^hyprland$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
+  hyprpm update
+  hyprpm add https://github.com/hyprnux/hyprglass
+  hyprpm enable hyprglass
+  hyprpm add https://github.com/virtcode/hypr-dynamic-cursors
+  hyprpm enable dynamic-cursors
+fi;
