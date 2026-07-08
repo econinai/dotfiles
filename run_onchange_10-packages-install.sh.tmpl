@@ -26,3 +26,10 @@ if [[ $(awk "/^hyprland$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]
   hyprpm add https://github.com/virtcode/hypr-dynamic-cursors
   hyprpm enable dynamic-cursors
 fi;
+
+### auto-cpufreq
+
+if [[ $(awk "/^auto-cpufreq$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
+  sudo cp {{ .chezmoi.sourceDir }}/.assets/auto-cpufreq.conf /etc/auto-cpufreq.conf
+  sudo systemctl enable auto-cpufreq 
+fi;
