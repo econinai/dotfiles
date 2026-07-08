@@ -16,3 +16,50 @@ SUBSYSTEM=="input", GROUP="input", MODE="0660"
 ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="on"
 EOF'
 
+### swap file
+
+echo "Installing swap file..."
+
+SWAP_SIZE="16G"
+SWAP_PATH="/swapfile"
+
+FS_TYPE=$(df -Th / | awk 'NR==2 {print $2}')
+
+if [ -f "$SWAP_PATH" ]; then
+  sudo swapoff "$SWAP_PATH" 1>/dev/null 2>/dev/null l || true
+  sudo rm -f "$SWAP_PATH" 1>/dev/null 2>/dev/null 
+fi
+
+case "$FS_TYPE" in
+  f2fs)
+    sudo touch "$SWAP_PATH" 1>/dev/null 2>/dev/null 
+    sudo chattr +C "$SWAP_PATH" 1>/dev/null 2>/dev/null 
+    sudo fallocate -l "$SWAP_SIZE" "$SWAP_PATH" 1>/dev/null 2>/dev/null 
+    ;;
+    
+  btrfs)
+    sudo touch "$SWAP_PATH" 1>/dev/null 2>/dev/null 
+    sudo chattr +C "$SWAP_PATH" 1>/dev/null 2>/dev/null 
+    if command -v btrfs >/dev/null 2>&1; then
+        sudo btrfs property set "$SWAP_PATH" compression none 1>/dev/null 2>/dev/null 
+    fi
+    sudo truncate -s 0 "$SWAP_PATH" 1>/dev/null 2>/dev/null 
+    sudo dd if=/dev/zero of="$SWAP_PATH" bs=1M count=$(echo "$SWAP_SIZE" | sed 's/G//')000 status=progress 1>/dev/null 2>/dev/null 
+    ;;
+    
+  ext4|xfs)
+    sudo fallocate -l "$SWAP_SIZE" "$SWAP_PATH" 1>/dev/null 2>/dev/null 
+    ;;
+    
+  *)
+    sudo dd if=/dev/zero of="$SWAP_PATH" bs=1M count=$(echo "$SWAP_SIZE" | sed 's/G//')000 status=progress 1>/dev/null 2>/dev/null 
+    ;;
+esac
+
+sudo chmod 600 "$SWAP_PATH" 1>/dev/null 2>/dev/null 
+sudo mkswap "$SWAP_PATH" 1>/dev/null 2>/dev/null 
+sudo swapon "$SWAP_PATH" 1>/dev/null 2>/dev/null 
+
+if ! grep -q "$SWAP_PATH" /etc/fstab; then
+  echo "$SWAP_PATH none swap sw 0 0" | sudo tee -a /etc/fstab > /dev/null || true
+fi
