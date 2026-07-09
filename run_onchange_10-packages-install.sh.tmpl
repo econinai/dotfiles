@@ -33,3 +33,10 @@ if [[ $(awk "/^auto-cpufreq$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != 
   sudo cp {{ .chezmoi.sourceDir }}/.assets/auto-cpufreq.conf /etc/auto-cpufreq.conf
   sudo systemctl enable auto-cpufreq 
 fi;
+
+### pacman-contrib
+
+if [[ $(awk "/^pacman-contrib$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
+  sudo systemctl enable --now paccache.timer
+fi;
+
