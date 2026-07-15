@@ -108,7 +108,6 @@ slurp
 snixembed
 sof-firmware
 steam
-telegram-desktop
 tesseract 
 tesseract-data-eng 
 tex-gyre-fonts
@@ -205,3 +204,4 @@ zen-browser-bin
 com.usebottles.bottles
 dev.vencord.Vesktop
 io.anytype.anytype
+org.telegram.desktop
