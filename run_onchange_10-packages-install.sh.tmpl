@@ -11,7 +11,7 @@ pkg_install "$(awk '{for(i=1;i<=NF;i++) printf "%s ", $i; } END {print ""}' {{ .
 
 echo -e "Installing greeter..."
 
-sudo sed -i '/^\[default_session\]$/a command = \"\/usr\/local\/bin\/noctalia-greeter-session\"\nuser = \"greeter\"' /etc/greetd/config.toml  1>/dev/null 2>/dev/null
+sudo cp "{{ .chezmoi.sourceDir }}/.assets/greetdconfig.toml" "/etc/greetd/config.toml"
 
 sudo systemctl disable display-manager.service 1>/dev/null 2>/dev/null
 
