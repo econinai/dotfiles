@@ -46,3 +46,11 @@ if [[ $PKG_MGR == "pacman" ]]; then
   echo "Final updating..."
   sudo pacman -Syu --noconfirm 1>/dev/null 2>/dev/null
 fi;
+
+if [[ $(uname -r | grep "lts") != "" ]]; then 
+  pkg_install "linux-lts-headers"
+elif [[ $(uname -r | grep "zen") != "" ]]; then
+  pkg_install "linux-zen-headers" 
+else
+  pkg_install "linux-headers"
+fi
