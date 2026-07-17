@@ -44,6 +44,7 @@ if [ "$NEEDS_NVIDIA_KMS" = true ]; then
     else
         echo "Warning: not found initramfs."
     fi
+    sudo systemctl enable nvidia-suspend.service nvidia-hibernate.service nvidia-resume.service
 fi
 
 
