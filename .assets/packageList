@@ -201,6 +201,8 @@ xdg-utils
 xdg-utils
 zbar 
 zen-browser-bin
+gnome-keyring
+seahorse
 
 com.usebottles.bottles
 dev.vencord.Vesktop
