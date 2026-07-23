@@ -35,6 +35,16 @@ echo "Installing icons theme..." 2>&1 | tee -a log.txt
 
 sudo tar -xf "{{ .chezmoi.sourceDir }}/.assets/themes/icons/ColorFlow.tar.xz" -C "/usr/share/icons" >> log.txt 2>&1
 
+### gtk themes
+
+echo "Installing gtk themes..." 2>&1 | tee -a log.txt
+
+gsettings set org.gnome.desktop.interface font-name 'Manrope ExtraLight Medium Regular 14' >> log.txt 2>&1
+gsettings set org.gnome.desktop.interface icon-theme 'ColorFlow' >> log.txt 2>&1
+gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3-dark' >> log.txt 2>&1
+gsettings set org.gnome.desktop.interface cursor-theme 'aosp-cursors' >> log.txt 2>&1
+gsettings set org.gnome.desktop.interface cursor-size 18 >> log.txt 2>&1
+
 ### grub theme
 
 echo "Installing grub theme..." 2>&1 | tee -a log.txt
