@@ -9,35 +9,35 @@
 
 ### cursor theme
 
-echo "Installing cursor theme..."
+echo "Installing cursor theme..." 2>&1 | tee -a log.txt
 
-sudo tar -xf "{{ .chezmoi.sourceDir }}/.assets/themes/cursor/aosp-cursors-linux-1.3.0.tar.xz" -C "/usr/share/icons" 1>/dev/null 2>/dev/null
-sudo chmod -R 755 /usr/share/icons/aosp-cursors
+sudo tar -xf "{{ .chezmoi.sourceDir }}/.assets/themes/cursor/aosp-cursors-linux-1.3.0.tar.xz" -C "/usr/share/icons" >> log.txt 2>&1
+sudo chmod -R 755 /usr/share/icons/aosp-cursors >> log.txt 2>&1
 
-sudo mkdir -p /usr/share/icons/default
+sudo mkdir -p /usr/share/icons/default >> log.txt 2>&1
 sudo bash -c 'cat <<EOF > /usr/share/icons/default/index.theme
 [Icon Theme]
 Inherits=aosp-cursors
-EOF'
+EOF' >> log.txt 2>&1
 
 sudo bash -c 'cat <<EOF > /etc/profile.d/cursor.sh
 export XCURSOR_THEME="aosp-cursors"
 export XCURSOR_SIZE="18"
 export HYPRCURSOR_THEME="aosp-cursors"
 export HYPRCURSOR_SIZE="18"
-EOF'
+EOF' >> log.txt 2>&1
 
-sudo chmod +x /etc/profile.d/cursor.sh
+sudo chmod +x /etc/profile.d/cursor.sh >> log.txt 2>&1
 
 ### icons theme
 
-echo "Installing icons theme..."
+echo "Installing icons theme..." 2>&1 | tee -a log.txt
 
-sudo tar -xf "{{ .chezmoi.sourceDir }}/.assets/themes/icons/ColorFlow.tar.xz" -C "/usr/share/icons" 1>/dev/null 2>/dev/null
+sudo tar -xf "{{ .chezmoi.sourceDir }}/.assets/themes/icons/ColorFlow.tar.xz" -C "/usr/share/icons" >> log.txt 2>&1
 
 ### grub theme
 
-echo "Installing grub theme..."
+echo "Installing grub theme..." 2>&1 | tee -a log.txt
 
 THEME_DIR="/boot/grub/themes"
 THEME_NAME=Particle-circle-window
@@ -46,36 +46,36 @@ function has_command() {
   command -v $1 > /dev/null
 }
 
-[[ -d ${THEME_DIR}/${THEME_NAME} ]] && sudo rm -rf ${THEME_DIR}/${THEME_NAME}
-sudo mkdir -p "${THEME_DIR}/${THEME_NAME}"
+[[ -d ${THEME_DIR}/${THEME_NAME} ]] && sudo rm -rf ${THEME_DIR}/${THEME_NAME} >> log.txt 2>&1
+sudo mkdir -p "${THEME_DIR}/${THEME_NAME}" >> log.txt 2>&1
 
-sudo tar --no-same-owner -xf "{{ .chezmoi.sourceDir }}/.assets/themes/grub/${THEME_NAME}.tar.xz" -C ${THEME_DIR} 1>/dev/null 2>/dev/null
+sudo tar --no-same-owner -xf "{{ .chezmoi.sourceDir }}/.assets/themes/grub/${THEME_NAME}.tar.xz" -C ${THEME_DIR} >> log.txt 2>&1
 
-sudo cp -an /etc/default/grub /etc/default/grub.bak 1>/dev/null 2>/dev/null
+sudo cp -an /etc/default/grub /etc/default/grub.bak >> log.txt 2>&1
 
 sudo grep "GRUB_THEME=" /etc/default/grub 2>&1 >/dev/null && sudo sed -i '/GRUB_THEME=/d' /etc/default/grub 
-echo "GRUB_THEME=\"${THEME_DIR}/${THEME_NAME}/theme.txt\"" | sudo tee -a /etc/default/grub 1>/dev/null 2>/dev/null
+echo "GRUB_THEME=\"${THEME_DIR}/${THEME_NAME}/theme.txt\"" | sudo tee -a /etc/default/grub >> log.txt 2>&1
 
 sudo grep "GRUB_TIMEOUT=" /etc/default/grub 2>&1 >/dev/null && sudo sed -i '/GRUB_TIMEOUT=/d' /etc/default/grub 
-echo "GRUB_TIMEOUT=1" | sudo tee -a /etc/default/grub 1>/dev/null 2>/dev/null
+echo "GRUB_TIMEOUT=1" | sudo tee -a /etc/default/grub >> log.txt 2>&1
 
 sudo grep "GRUB_GFXMODE=" /etc/default/grub 2>&1 >/dev/null && sudo sed -i '/GRUB_GFXMODE=/d' /etc/default/grub 
-echo "GRUB_GFXMODE=\"1920x1080x32,auto\"" | sudo tee -a /etc/default/grub 1>/dev/null 2>/dev/null
+echo "GRUB_GFXMODE=\"1920x1080x32,auto\"" | sudo tee -a /etc/default/grub >> log.txt 2>&1
 
 if has_command update-grub; then
-  sudo update-grub 1>/dev/null 2>/dev/null
+  sudo update-grub >> log.txt 2>&1
 elif has_command grub-mkconfig; then
-  sudo grub-mkconfig -o /boot/grub/grub.cfg 1>/dev/null 2>/dev/null
+  sudo grub-mkconfig -o /boot/grub/grub.cfg >> log.txt 2>&1
 elif has_command zypper || has_command transactional-update; then
-  sudo grub2-mkconfig -o /boot/grub2/grub.cfg 1>/dev/null 2>/dev/null
+  sudo grub2-mkconfig -o /boot/grub2/grub.cfg >> log.txt 2>&1
 elif has_command dnf || has_command rpm-ostree; then
   if [[ -f /boot/efi/EFI/fedora/grub.cfg ]]; then
-    sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg 1>/dev/null 2>/dev/null
+    sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg >> log.txt 2>&1
   elif [[ -f /boot/grub2/grub.cfg ]]; then
-    sudo grub2-mkconfig -o /boot/grub2/grub.cfg 1>/dev/null 2>/dev/null
+    sudo grub2-mkconfig -o /boot/grub2/grub.cfg >> log.txt 2>&1
   fi
 fi
 
 ### root bashrc
 
-sudo cp "{{ .chezmoi.sourceDir }}/dot_bashrc" "/root/.bashrc"
+sudo cp "{{ .chezmoi.sourceDir }}/dot_bashrc" "/root/.bashrc" >> log.txt 2>&1

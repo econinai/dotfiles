@@ -7,46 +7,47 @@ if [[ $PKG_MGR == "pacman" ]]; then
   ### pacman theming
   sudo grep "Color" /etc/pacman.conf 2>&1 >/dev/null && sudo sed -i '/Color/d' /etc/pacman.conf
   sudo grep "ILoveCandy" /etc/pacman.conf 2>&1 >/dev/null && sudo sed -i '/ILoveCandy/d' /etc/pacman.conf
-  sudo sed -i '/^\[options\]$/a Color\nILoveCandy' /etc/pacman.conf 1>/dev/null 2>/dev/null
+  sudo sed -i '/^\[options\]$/a Color\nILoveCandy' /etc/pacman.conf >> log.txt 2>&1
   ### reflector
-  echo "Installing reflector..."
+  echo "Installing reflector..." 2>&1 | tee -a log.txt
   if ! pacman -Qi reflector &>/dev/null; then
-    sudo pacman -S --needed --noconfirm reflector 1>/dev/null 2>/dev/null
+    sudo pacman -S --needed --noconfirm reflector >> log.txt 2>&1
   fi
-  sudo reflector --latest 15 --protocol https --sort rate --save /etc/pacman.d/mirrorlist 1>/dev/null 2>/dev/null
-  sudo systemctl enable --now reflector.timer 1>/dev/null 2>/dev/null
-  sudo pacman -Sy --noconfirm archlinux-keyring 1>/dev/null 2>/dev/null
+  sudo reflector --latest 15 --protocol https --sort rate --save /etc/pacman.d/mirrorlist >> log.txt 2>&1
+  sudo systemctl enable --now reflector.timer >> log.txt 2>&1
+  sudo pacman -Sy --noconfirm archlinux-keyring  >> log.txt 2>&1
   ### multilib
-  echo "Installing multilib..."
+  echo "Installing multilib..." 2>&1 | tee -a log.txt
   if [[ $(awk 'prev == "#[multilib]" && $0 == "#Include = /etc/pacman.d/mirrorlist" {print "0"; exit 0} {prev = $0} END {exit 1}' /etc/pacman.conf ) == "0" ]]; then
     sudo sed -i -z 's/#\[multilib\]\n#Include = \/etc\/pacman.d\/mirrorlist/\[multilib\]\nInclude = \/etc\/pacman.d\/mirrorlist/g' /etc/pacman.conf
   elif [[ $(awk 'prev == "[multilib]" && $0 == "Include = /etc/pacman.d/mirrorlist" {print "0"; exit 0} {prev = $0} END {exit 1}' /etc/pacman.conf ) != "0" ]]; then 
     echo "[multilib]" | sudo tee -a /etc/pacman.conf > /dev/null
     echo "Include = /etc/pacman.d/mirrorlist" | sudo tee -a /etc/pacman.conf > /dev/null
   fi;
-  echo "Updating pacman databases..."
-  sudo pacman -Sy --noconfirm 1>/dev/null 2>/dev/null
+  echo "Updating pacman databases..." 2>&1 | tee -a log.txt
+  sudo pacman -Sy --noconfirm >> log.txt 2>&1
   ### yay install
-  echo "Installing yay..."
+  echo "Installing yay..." 2>&1 | tee -a log.txt
   if [[ $(pacman -Qe yay 2>&1 | awk '{print $1}') == "error:" ]]; then
-    sudo pacman -S --needed --noconfirm base-devel git 2>/dev/null 1>/dev/null
+    sudo pacman -S --needed --noconfirm base-devel git >> log.txt 2>&1
     if [ -d "/tmp/yay" ]; then
-      git -C /tmp/yay pull 1>/dev/null
+      git -C /tmp/yay pull >> log.txt 2>&1
     else
       git clone https://aur.archlinux.org/yay.git /tmp/yay 2>/dev/null
     fi;
-    makepkg -D /tmp/yay -si --noconfirm 1>/dev/null 2>/dev/null
-    rm -rf /tmp/yay 1>/dev/null 2>/dev/null
+    makepkg -D /tmp/yay -si --noconfirm >> log.txt 2>&1
+    rm -rf /tmp/yay >> log.txt 2>&1
   fi;
   ### flatpak install
-  echo "Installing flatpak..."
-  sudo pacman -S --needed --noconfirm flatpak 1>/dev/null 2>/dev/null
-  flatpak remote-add --if-not-exists flathub https://flathub.org 1>/dev/null 2>/dev/null
+  echo "Installing flatpak..." 2>&1 | tee -a log.txt
+  sudo pacman -S --needed --noconfirm flatpak >> log.txt 2>&1
+  flatpak remote-add --if-not-exists flathub https://flathub.org >> log.txt 2>&1
   ### updating all
-  echo "Final updating..."
-  sudo pacman -Syu --noconfirm 1>/dev/null 2>/dev/null
+  echo "Final updating..." 2>&1 | tee -a log.txt
+  sudo pacman -Syu --noconfirm >> log.txt 2>&1
 fi;
 
+echo "Installing headers..." 2>&1 | tee -a log.txt
 if [[ $(uname -r | grep "lts") != "" ]]; then 
   pkg_install "linux-lts-headers"
 elif [[ $(uname -r | grep "zen") != "" ]]; then
