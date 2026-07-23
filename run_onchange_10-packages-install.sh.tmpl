@@ -22,7 +22,7 @@ sudo systemctl enable greetd >> log.txt 2>&1
 echo -e "Installing hyprland plugins..." 2>&1 | tee -a log.txt
 
 if [[ $(awk "/^hyprland$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
-  hyprpm update >> log.txt 2>&1
+  hyprpm update --no-shallow >> log.txt 2>&1
   hyprpm add https://github.com/hyprnux/hyprglass >> log.txt 2>&1
   hyprpm enable hyprglass >> log.txt 2>&1
   hyprpm add https://github.com/virtcode/hypr-dynamic-cursors >> log.txt 2>&1
