@@ -200,10 +200,10 @@ xdg-user-dirs
 xdg-utils
 xdg-utils
 zbar 
-zen-browser-bin
 gnome-keyring
 seahorse
 
+app.zen_browser.zen
 com.usebottles.bottles
 dev.vencord.Vesktop
 io.anytype.anytype
