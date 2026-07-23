@@ -26,7 +26,7 @@ SWAP_PATH="/swapfile"
 FS_TYPE=$(df -Th / | awk 'NR==2 {print $2}')
 
 if [ -f "$SWAP_PATH" ]; then
-  sudo swapoff "$SWAP_PATH" 1>/dev/null 2>/dev/null l || true
+  sudo swapoff "$SWAP_PATH" 1>/dev/null 2>/dev/null l
   sudo rm -f "$SWAP_PATH" 1>/dev/null 2>/dev/null 
 fi
 
@@ -61,5 +61,5 @@ sudo mkswap "$SWAP_PATH" 1>/dev/null 2>/dev/null
 sudo swapon "$SWAP_PATH" 1>/dev/null 2>/dev/null 
 
 if ! grep -q "$SWAP_PATH" /etc/fstab; then
-  echo "$SWAP_PATH none swap sw 0 0" | sudo tee -a /etc/fstab > /dev/null || true
+  echo "$SWAP_PATH none swap sw 0 0" | sudo tee -a /etc/fstab > /dev/null
 fi
