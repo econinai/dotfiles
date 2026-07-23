@@ -42,3 +42,12 @@ if [[ $(awk "/^pacman-contrib$/" {{ .chezmoi.sourceDir }}/.assets/packageList) !
   sudo systemctl enable --now paccache.timer >> log.txt 2>&1
 fi;
 
+### zen-browser
+
+awk '/^\[Install/ {in_section=1; next} /^\[/ {in_section=0} in_section && /^Default=/ {sub(/^Default=/, ""); print}' {{ .chezmoi.homeDir }}/.var/app/app.zen_browser.zen/.zen/profiles.ini | while read -r val; do
+	mkdir -p "{{ .chezmoi.homeDir }}/.var/app/app.zen_browser.zen/.zen/$val/chrome" >> log.txt 2>&1
+    echo "@import \"{{ .chezmoi.homeDir }}/.cache/noctalia/zen-browser/zen-userChrome.css\";" > "{{ .chezmoi.homeDir }}/.var/app/app.zen_browser.zen/.zen/$val/chrome/userChrome.css"
+    echo "@import \"{{ .chezmoi.homeDir }}/.cache/noctalia/zen-browser/zen-userContent.css\";" > "{{ .chezmoi.homeDir }}/.var/app/app.zen_browser.zen/.zen/$val/chrome/userContent.css"
+    flatpak override --user --filesystem={{ .chezmoi.homeDir }}/.cache/noctalia/zen-browser/zen-userContent.css app.zen_browser.zen >> log.txt 2>&1
+    flatpak override --user --filesystem={{ .chezmoi.homeDir }}/.cache/noctalia/zen-browser/zen-userChrome.css app.zen_browser.zen >> log.txt 2>&1
+done
