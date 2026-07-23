@@ -7,52 +7,52 @@ diff_words() {
 }
 
 pkg_install() {
-  echo -e "\e[32mInstalling packages:\e[0m"
+  echo -e "\e[32mInstalling packages:\e[0m" 2>&1 | tee -a log.txt
   if [[ $PKG_MGR == "pacman" ]]; then
     notfound="$1"
     
     ### pacman
     local pacmanpkgs=$(pacman -Si $notfound 2>/dev/null | awk '/^Name/ { print $3 }' | xargs)
-    echo -e "\e[32m\t::Installing via pacman: $pacmanpkgs\e[0m"
-    sudo pacman -S --needed --noconfirm $pacmanpkgs 1>/dev/null 2>/dev/null
+    echo -e "\e[32m\t::Installing via pacman: $pacmanpkgs\e[0m" 2>&1 | tee -a log.txt
+    sudo pacman -S --needed --noconfirm $pacmanpkgs >> log.txt 2>&1
     notfound=$(diff_words "$notfound" "$pacmanpkgs")
     
     local installedpkgs=$(pacman -Qe $pacmanpkgs 2>/dev/null | awk '{ print $1 }' | xargs)
     local notinstalledpkg=$(diff_words "$pacmanpkgs" "$installedpkgs")
     if [[ $notinstalledpkg != "" ]]; then
-      echo -e "\e[31m\t::Not installing via pacman by unknown errors: $notinstalledpkg\e[0m"
+      echo -e "\e[31m\t::Not installing via pacman by unknown errors: $notinstalledpkg\e[0m" 2>&1 | tee -a log.txt
     fi;
 
     ### yay
     if [[ $notfound != "" ]]; then
       local yaypkgs=$(yay -Si $notfound 2>/dev/null | awk '/^Name/ { print $3 }' | xargs)
-      echo -e "\e[32m\t::Installing via AUR: $yaypkgs\e[0m"
-      yay -S --needed --noconfirm $yaypkgs 1>/dev/null 2>/dev/null
+      echo -e "\e[32m\t::Installing via AUR: $yaypkgs\e[0m" 2>&1 | tee -a log.txt
+      yay -S --needed --noconfirm $yaypkgs >> log.txt 2>&1
       notfound=$(diff_words "$notfound" "$yaypkgs")
       
       local installedpkgs=$(yay -Qe $yaypkgs 2>/dev/null | awk '{ print $1 }' | xargs)
       local notinstalledpkg=$(diff_words "$yaypkgs" "$installedpkgs")
       if [[ $notinstalledpkg != "" ]]; then
-      	echo -e "\e[31m\t::Not installing via AUR by unknown errors: $notinstalledpkg\e[0m"
+      	echo -e "\e[31m\t::Not installing via AUR by unknown errors: $notinstalledpkg\e[0m" 2>&1 | tee -a log.txt
       fi;
     fi;
     
     ### flathak
     if [[ $notfound != "" ]]; then
       local flatpakpkgs=$(flatpak remote-ls flathub --app --columns=application 2>/dev/null | grep -E "$(echo "$notfound" | sed 's/ /|/g')" | xargs)
-      echo -e "\e[32m\t::Installing via flatpak: $flatpakpkgs\e[0m"
-      flatpak install flathub -y --or-update $flatpakpkgs 1>/dev/null 2>/dev/null
+      echo -e "\e[32m\t::Installing via flatpak: $flatpakpkgs\e[0m" 2>&1 | tee -a log.txt
+      flatpak install flathub -y --or-update $flatpakpkgs >> log.txt 2>&1
       notfound=$(diff_words "$notfound" "$flatpakpkgs")
       
       local installedpkgs=$(flatpak list --app --columns=application | xargs)
       local notinstalledpkg=$(diff_words "$flatpakpkgs" "$installedpkgs")
       if [[ $notinstalledpkg != "" ]]; then
-        echo -e "\e[31m\t::Not installing via flathub by unknown errors: $notinstalledpkg\e[0m"
+        echo -e "\e[31m\t::Not installing via flathub by unknown errors: $notinstalledpkg\e[0m" 2>&1 | tee -a log.txt
       fi;
     fi;
 
     if [[ $notfound != "" ]]; then
-      echo -e "\e[31m\t::Not found at all: $notfound\e[0m"
+      echo -e "\e[31m\t::Not found at all: $notfound\e[0m" 2>&1 | tee -a log.txt
     fi;
   fi;
 }

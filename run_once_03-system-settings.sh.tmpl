@@ -5,20 +5,20 @@
 
 ### udev
 
-echo "Installing udev rules..."
+echo "Installing udev rules..." 2>&1 | tee -a log.txt
 
 sudo bash -c 'cat <<EOF > /etc/udev/rules.d/99-usb-sync.rules
 SUBSYSTEMS=="usb", SUBSYSTEM=="block", ENV{ID_FS_USAGE}=="filesystem", ENV{UDISKS_MOUNT_OPTIONS_DEFAULTS}+="sync,dirsync", ENV{UDISKS_MOUNT_OPTIONS_ALLOW}+="sync,dirsync"
-EOF'
+EOF' >> log.txt 2>&1
 
 sudo bash -c 'cat <<EOF > /etc/udev/rules.d/99-usb-autosuspend.rules
 SUBSYSTEM=="input", GROUP="input", MODE="0660"
 ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="on"
-EOF'
+EOF' >> log.txt 2>&1
 
 ### swap file
 
-echo "Installing swap file..."
+echo "Installing swap file..." 2>&1 | tee -a log.txt
 
 SWAP_SIZE="16G"
 SWAP_PATH="/swapfile"
@@ -26,39 +26,39 @@ SWAP_PATH="/swapfile"
 FS_TYPE=$(df -Th / | awk 'NR==2 {print $2}')
 
 if [ -f "$SWAP_PATH" ]; then
-  sudo swapoff "$SWAP_PATH" 1>/dev/null 2>/dev/null l
-  sudo rm -f "$SWAP_PATH" 1>/dev/null 2>/dev/null 
+  sudo swapoff "$SWAP_PATH" >> log.txt 2>&1
+  sudo rm -f "$SWAP_PATH" >> log.txt 2>&1
 fi
 
 case "$FS_TYPE" in
   f2fs)
-    sudo touch "$SWAP_PATH" 1>/dev/null 2>/dev/null 
-    sudo chattr +C "$SWAP_PATH" 1>/dev/null 2>/dev/null 
-    sudo fallocate -l "$SWAP_SIZE" "$SWAP_PATH" 1>/dev/null 2>/dev/null 
+    sudo touch "$SWAP_PATH" >> log.txt 2>&1
+    sudo chattr +C "$SWAP_PATH" >> log.txt 2>&1
+    sudo fallocate -l "$SWAP_SIZE" "$SWAP_PATH" >> log.txt 2>&1
     ;;
     
   btrfs)
-    sudo touch "$SWAP_PATH" 1>/dev/null 2>/dev/null 
-    sudo chattr +C "$SWAP_PATH" 1>/dev/null 2>/dev/null 
+    sudo touch "$SWAP_PATH" >> log.txt 2>&1
+    sudo chattr +C "$SWAP_PATH" >> log.txt 2>&1
     if command -v btrfs >/dev/null 2>&1; then
-        sudo btrfs property set "$SWAP_PATH" compression none 1>/dev/null 2>/dev/null 
+        sudo btrfs property set "$SWAP_PATH" compression none >> log.txt 2>&1
     fi
-    sudo truncate -s 0 "$SWAP_PATH" 1>/dev/null 2>/dev/null 
-    sudo dd if=/dev/zero of="$SWAP_PATH" bs=1M count=$(echo "$SWAP_SIZE" | sed 's/G//')000 status=progress 1>/dev/null 2>/dev/null 
+    sudo truncate -s 0 "$SWAP_PATH" >> log.txt 2>&1
+    sudo dd if=/dev/zero of="$SWAP_PATH" bs=1M count=$(echo "$SWAP_SIZE" | sed 's/G//')000 status=progress >> log.txt 2>&1
     ;;
     
   ext4|xfs)
-    sudo fallocate -l "$SWAP_SIZE" "$SWAP_PATH" 1>/dev/null 2>/dev/null 
+    sudo fallocate -l "$SWAP_SIZE" "$SWAP_PATH" >> log.txt 2>&1
     ;;
     
   *)
-    sudo dd if=/dev/zero of="$SWAP_PATH" bs=1M count=$(echo "$SWAP_SIZE" | sed 's/G//')000 status=progress 1>/dev/null 2>/dev/null 
+    sudo dd if=/dev/zero of="$SWAP_PATH" bs=1M count=$(echo "$SWAP_SIZE" | sed 's/G//')000 status=progress >> log.txt 2>&1
     ;;
 esac
 
-sudo chmod 600 "$SWAP_PATH" 1>/dev/null 2>/dev/null 
-sudo mkswap "$SWAP_PATH" 1>/dev/null 2>/dev/null 
-sudo swapon "$SWAP_PATH" 1>/dev/null 2>/dev/null 
+sudo chmod 600 "$SWAP_PATH" >> log.txt 2>&1
+sudo mkswap "$SWAP_PATH" >> log.txt 2>&1
+sudo swapon "$SWAP_PATH" >> log.txt 2>&1
 
 if ! grep -q "$SWAP_PATH" /etc/fstab; then
   echo "$SWAP_PATH none swap sw 0 0" | sudo tee -a /etc/fstab > /dev/null

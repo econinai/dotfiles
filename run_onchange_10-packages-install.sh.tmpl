@@ -9,34 +9,36 @@ pkg_install "$(awk '{for(i=1;i<=NF;i++) printf "%s ", $i; } END {print ""}' {{ .
 
 ### noctalia greeter
 
-echo -e "Installing greeter..."
+echo -e "Installing greeter..." 2>&1 | tee -a log.txt
 
-sudo cp "{{ .chezmoi.sourceDir }}/.assets/greetdconfig.toml" "/etc/greetd/config.toml"
+sudo cp "{{ .chezmoi.sourceDir }}/.assets/greetdconfig.toml" "/etc/greetd/config.toml" >> log.txt 2>&1
 
-sudo systemctl disable display-manager.service 1>/dev/null 2>/dev/null
+sudo systemctl disable display-manager.service >> log.txt 2>&1
 
-sudo systemctl enable greetd 1>/dev/null 2>/dev/null
+sudo systemctl enable greetd >> log.txt 2>&1
 
 ### hyprland plugins
 
+echo -e "Installing hyprland plugins..." 2>&1 | tee -a log.txt
+
 if [[ $(awk "/^hyprland$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
-  hyprpm update
-  hyprpm add https://github.com/hyprnux/hyprglass
-  hyprpm enable hyprglass
-  hyprpm add https://github.com/virtcode/hypr-dynamic-cursors
-  hyprpm enable dynamic-cursors
+  hyprpm update >> log.txt 2>&1
+  hyprpm add https://github.com/hyprnux/hyprglass >> log.txt 2>&1
+  hyprpm enable hyprglass >> log.txt 2>&1
+  hyprpm add https://github.com/virtcode/hypr-dynamic-cursors >> log.txt 2>&1
+  hyprpm enable dynamic-cursors >> log.txt 2>&1
 fi;
 
 ### auto-cpufreq
 
 if [[ $(awk "/^auto-cpufreq$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
-  sudo cp {{ .chezmoi.sourceDir }}/.assets/auto-cpufreq.conf /etc/auto-cpufreq.conf
-  sudo systemctl enable auto-cpufreq 
+  sudo cp {{ .chezmoi.sourceDir }}/.assets/auto-cpufreq.conf /etc/auto-cpufreq.conf >> log.txt 2>&1
+  sudo systemctl enable auto-cpufreq  >> log.txt 2>&1
 fi;
 
 ### pacman-contrib
 
 if [[ $(awk "/^pacman-contrib$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
-  sudo systemctl enable --now paccache.timer
+  sudo systemctl enable --now paccache.timer >> log.txt 2>&1
 fi;
 
