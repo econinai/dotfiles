@@ -1,0 +1,9 @@
+[user]
+	email = econinnai@gmail.com
+	name = econinai
+[core]
+	editor = micro
+[alias]
+	l = log --oneline --decorate --graph --all
+[init]
+	defaultBranch = main
