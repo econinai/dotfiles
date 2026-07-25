@@ -51,3 +51,9 @@ awk '/^\[Install/ {in_section=1; next} /^\[/ {in_section=0} in_section && /^Defa
     flatpak override --user --filesystem={{ .chezmoi.homeDir }}/.cache/noctalia/zen-browser/zen-userContent.css app.zen_browser.zen >> log.txt 2>&1
     flatpak override --user --filesystem={{ .chezmoi.homeDir }}/.cache/noctalia/zen-browser/zen-userChrome.css app.zen_browser.zen >> log.txt 2>&1
 done
+
+### virt-manager
+
+if [[ $(awk "/^libvirt$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
+	sudo systemctl enable libvirtd.service >> log.txt 2>&1
+fi;
