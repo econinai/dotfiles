@@ -57,3 +57,11 @@ done
 if [[ $(awk "/^libvirt$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
 	sudo systemctl enable libvirtd.service >> log.txt 2>&1
 fi;
+
+### dolphin
+
+if [[ $(awk "/^dolphin$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
+	xdg-mime default org.kde.dolphin.desktop inode/directory >> log.txt 2>&1
+	xdg-settings set default-file-manager org.kde.dolphin.desktop >> log.txt 2>&1
+fi;
+
