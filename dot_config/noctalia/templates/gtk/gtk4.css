@@ -64,7 +64,7 @@
     --error-fg-color: {{colors.on_error.default.hex}};
     --error-color: {{colors.error.default.hex}};
 
-    --window-bg-color: {{colors.surface.default.rgba | set_alpha 0.5}};
+    --window-bg-color: {{colors.surface.default.rgba | set_alpha 1.0}};
     --window-fg-color: {{colors.on_surface.default.hex}};
 
     --view-bg-color: {{colors.surface.default.rgba | set_alpha 0.1}};

@@ -28,17 +28,20 @@ hl.monitor({
 
 local terminal    = "kitty"
 local fileManager = "dolphin"
-local launcher    = "qs -c \"noctalia-shell\" ipc call launcher toggle"
+local launcher    = "noctalia msg panel-toggle launcher"
 local texteditor  = "gtk-launch org.xfce.mousepad.desktop"
 local exitHyprland = "command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"
 local screenshot = "file=\"/home/$USER/Pictures/Screenshots/screenshot_$(date +%s).png\"; grimblast --freeze copysave area \"$file\"; if [[ -f \"$file\" ]]; then wl-copy --type image/png < \"$file\"; notify-send --app-name=\"System\" \"Screenshot\" \"Image has been saved and copied to the clipboard\" -i \"$file\"; fi"
-local openBuffer = "qs -c \"noctalia-shell\" ipc call plugin:clipboard toggle"
-local toolsMenu = "qs -c \"noctalia-shell\" ipc call plugin:screen-toolkit toggle"
-local mainMenu  = "qs -c \"noctalia-shell\" ipc call controlCenter toggle"
+local openBuffer = "noctalia msg panel-toggle clipboard"
+local colorpicker = "noctalia msg panel-toggle oldirtty/color_picker:panel"
+local calc = "noctalia msg panel-toggle yuuto/calculator:panel"
+local timer = "noctalia msg panel-toggle noctalia/timer:panel"
+local windowswitche = "noctalia msg window-switcher"
+local mainMenu  = "noctalia msg panel-toggle control-center"
 local switchLocal = "for kb in $(hyprctl devices -j | jq -r \".keyboards[].name\" | grep -vE \"power-button|consumer-control|system-control\"); do hyprctl switchxkblayout \"$kb\" next; done"
-local mediaPrev = "qs -c \"noctalia-shell\" ipc call media previous"
-local mediaNext = "qs -c \"noctalia-shell\" ipc call media next"
-local mediaToggle = "qs -c \"noctalia-shell\" ipc call media playPause"
+local mediaPrev = "noctalia msg media previous"
+local mediaNext = "noctalia msg media next"
+local mediaToggle = "noctalia msg media playPause"
 local taskmng = "missioncenter"
 local showInfo = "notify-send \"all is ok\" && ~/.config/hypr/scripts/slider.sh check"
 
@@ -49,8 +52,7 @@ local showInfo = "notify-send \"all is ok\" && ~/.config/hypr/scripts/slider.sh 
 hl.on("hyprland.start", function ()
   hl.exec_cmd("hyprpm reload")
   hl.exec_cmd("pkill -9 wl-paste; wl-paste --watch cliphist store &")
-  hl.exec_cmd("qs -c \"noctalia-shell\"")
-  hl.exec_cmd("systemctl --user start hyprpolkitagent")
+  hl.exec_cmd("noctalia")
   hl.exec_cmd("easyeffects --hide-window")
 --   hl.exec_cmd("gsettings set org.gnome.desktop.interface color-scheme \"prefer-dark\"")
 --   hl.exec_cmd("gsettings set org.gnome.desktop.interface gtk-theme \"adw-gtk3\"")
@@ -79,6 +81,9 @@ hl.env("XDG_MENU_PREFIX", "arch-")
 ---- APPERANCE SCRIPT ----
 --------------------------
 
+-- For Noctalia Color templates
+require("noctalia").apply_theme()
+
 local apperance_mode = "flat"
 local file = io.open(os.getenv("HOME") .. "/.cache/sys_appearance", "r")
 if file then
@@ -89,6 +94,7 @@ end
 local hyprglassenabled = false
 local blurenabled = false
 local transparentenabled = false
+local isneedborder = true
 local inactive_opacityvalue = 1.0
 local active_bordervalue = {"rgba(eeeeeec0)", "rgba(eeeeee00)", "rgba(eeeeee00)", "rgba(eeeeee60)"}
 local inactive_bordervalue = {"rgba(909090c0)", "rgba(90909000)", "rgba(90909000)", "rgba(90909060)"}
@@ -98,6 +104,8 @@ if apperance_mode == "blur" then
     blurenabled = true
     transparentenabled = true
     inactive_opacityvalue = 0.8
+    hl.exec_cmd("sed -i '/^[[:space:]]*\\[bar\\.default\\]/,/[[:space:]]*background_opacity/s/\\(background_opacity[[:space:]]*=[[:space:]]*\\)[0-9.]\\+/\\10.5/' ~/.config/noctalia/settings.toml")
+    hl.exec_cmd("sed -i '/^[[:space:]]*\\[shell\\.panel\\]/,/[[:space:]]*shadow/s/\\(shadow[[:space:]]*=[[:space:]]*\\)\\(true\\|false\\)/\\1false/' ~/.config/noctalia/settings.toml")
     hl.exec_cmd("sed -i 's/^background_opacity.*/background_opacity 0.5/' ~/.config/kitty/kitty.conf")
     hl.exec_cmd("perl -0777 -pi -e 's/(<rect[^>]*?id=\"window-normal\"[^>]*?style=\"[^\"]*?opacity:)[0-9.]*/${1}0.5/s' ~/.config/noctalia/templates/kvantum/noctalia.svg")
     hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\10.5\\2/g\" ~/.config/noctalia/templates/gtk/gtk4.css ")
@@ -108,40 +116,24 @@ elseif apperance_mode == "liquid" then
     blurenabled = false
     transparentenabled = true
     inactive_opacityvalue = 0.8
+    hl.exec_cmd("sed -i '/^[[:space:]]*\\[bar\\.default\\]/,/[[:space:]]*background_opacity/s/\\(background_opacity[[:space:]]*=[[:space:]]*\\)[0-9.]\\+/\\11.0/' ~/.config/noctalia/settings.toml")
+    hl.exec_cmd("sed -i '/^[[:space:]]*\\[shell\\.panel\\]/,/[[:space:]]*shadow/s/\\(shadow[[:space:]]*=[[:space:]]*\\)\\(true\\|false\\)/\\1true/' ~/.config/noctalia/settings.toml")
     hl.exec_cmd("sed -i 's/^background_opacity.*/background_opacity 0.5/' ~/.config/kitty/kitty.conf")
     hl.exec_cmd("perl -0777 -pi -e 's/(<rect[^>]*?id=\"window-normal\"[^>]*?style=\"[^\"]*?opacity:)[0-9.]*/${1}0.5/s' ~/.config/noctalia/templates/kvantum/noctalia.svg")
     hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\10.5\\2/g\" ~/.config/noctalia/templates/gtk/gtk4.css ")
     hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\10.5\\2/g\" ~/.config/noctalia/templates/gtk/gtk3.css ")
     hl.exec_cmd("sed -i -E \"s/(--window-bg-color: \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\10.5\\2/g\" ~/.config/noctalia/templates/gtk/gtk4.css ")
 else
-    local file = io.open(os.getenv("HOME") .. "/.config/hypr/noctalia/noctalia-colors.conf", "r")
-    if file then
-        local found_primary, found_surface = nil, nil
-        for line in file:lines() do
-            local p_match = line:match("%$primary%s*=%s*rgb%((%x+)%)")
-            if p_match then
-                active_bordervalue = { "rgba(" .. p_match .. "ff)" }
-                found_primary = true
-            end
-            local s_match = line:match("%$surface%s*=%s*rgb%((%x+)%)")
-            if s_match then
-                inactive_bordervalue = { "rgba(" .. s_match .. "ff)" }
-                found_surface = true
-            end
-            if found_primary and found_surface then
-                break
-            end
-        end
-        anglevalue = 0
-        file:close()
-    end
+    isneedborder = false
+    hl.exec_cmd("sed -i '/^[[:space:]]*\\[bar\\.default\\]/,/[[:space:]]*background_opacity/s/\\(background_opacity[[:space:]]*=[[:space:]]*\\)[0-9.]\\+/\\11.0/' ~/.config/noctalia/settings.toml")
+    hl.exec_cmd("sed -i '/^[[:space:]]*\\[shell\\.panel\\]/,/[[:space:]]*shadow/s/\\(shadow[[:space:]]*=[[:space:]]*\\)\\(true\\|false\\)/\\1true/' ~/.config/noctalia/settings.toml")
     hl.exec_cmd("sed -i 's/^background_opacity.*/background_opacity 1.0/' ~/.config/kitty/kitty.conf")
     hl.exec_cmd("perl -0777 -pi -e 's/(<rect[^>]*?id=\"window-normal\"[^>]*?style=\"[^\"]*?opacity:)[0-9.]*/${1}1.0/s' ~/.config/noctalia/templates/kvantum/noctalia.svg")
     hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\11.0\\2/g\" ~/.config/noctalia/templates/gtk/gtk4.css ")
     hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\11.0\\2/g\" ~/.config/noctalia/templates/gtk/gtk3.css ")
     hl.exec_cmd("sed -i -E \"s/(--window-bg-color: \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\11.0\\2/g\" ~/.config/noctalia/templates/gtk/gtk4.css ")
 end
-transparentenabled = false
+--transparentenabled = false
 
 -----------------
 ---- PLUGINS ----
@@ -207,7 +199,6 @@ if hl.plugin.hyprglass then
     hg.preset("clear", {
         glass_opacity = 2.4,
     })
-
 end
 
 -----------------------
@@ -224,7 +215,21 @@ if transparentenabled then
 end
 
 hl.layer_rule({ match = { namespace = "selection" }, blur = false })
+hl.layer_rule({ match = { namespace = "noctalia-bar-default" }, ignore_alpha = 0 })
+hl.layer_rule({ match = { namespace = "noctalia-bar-default" }, blur = true })
+hl.layer_rule({ match = { namespace = "noctalia-attached-panel" }, blur = true })
+hl.layer_rule({ match = { namespace = "noctalia-attached-panel" }, ignore_alpha = 0 })
 
+if isneedborder then
+	hl.config({
+		general = {
+			col = {
+            	active_border   = { colors = active_bordervalue, angle = anglevalue },
+            	inactive_border = { colors = inactive_bordervalue, angle = anglevalue },
+        	},
+    	}
+	})
+end
 
 hl.config({
     general = {
@@ -232,11 +237,6 @@ hl.config({
         gaps_out = 10,
 
         border_size = 1,
-
-        col = {
-            active_border   = { colors = active_bordervalue, angle = anglevalue },
-            inactive_border = { colors = inactive_bordervalue, angle = anglevalue },
-        },
 
         -- Set to true to enable resizing windows by clicking and dragging on borders and gaps
         resize_on_border = true,
@@ -400,14 +400,16 @@ local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd(screenshot))
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd(openBuffer))
-hl.bind(mainMod .. " + C", hl.dsp.exec_cmd(toolsMenu))
+hl.bind(mainMod .. " + C", hl.dsp.exec_cmd(colorpicker))
+hl.bind(mainMod .. " + X", hl.dsp.exec_cmd(calc))
+hl.bind(mainMod .. " + Z", hl.dsp.exec_cmd(timer))
 hl.bind(mainMod .. " + SUPER_L", hl.dsp.exec_cmd(mainMenu), {release = true})
 hl.bind(mainMod .. " + O", hl.dsp.exec_cmd(texteditor))
 
 hl.bind("SHIFT + ALT + ALT_L", hl.dsp.exec_cmd(switchLocal), {release = true, locked = true, transparent = true})
 hl.bind("SHIFT + ALT + SHIFT_L", hl.dsp.exec_cmd(switchLocal), {release = true, locked = true, transparent = true})
-hl.bind("SUPER  + TAB", hl.dsp.focus({ workspace = "previous_per_monitor" }))
-hl.bind("ALT  + TAB", hl.dsp.focus({ monitor = "+1" }))
+hl.bind("SUPER + TAB", hl.dsp.focus({ workspace = "previous_per_monitor" }))
+hl.bind("ALT + TAB", hl.dsp.focus({ monitor = "+1" }))
 
 hl.bind(mainMod .. " + comma", hl.dsp.exec_cmd(mediaPrev))
 hl.bind(mainMod .. " + period", hl.dsp.exec_cmd(mediaNext))
@@ -416,7 +418,7 @@ hl.bind("CTRL + Control_R", hl.dsp.exec_cmd(showInfo))
 
 hl.bind("CTRL + SHIFT + escape", hl.dsp.exec_cmd(taskmng))
 
-hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" })) ---------------------------
+hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exec_cmd(exitHyprland))
@@ -471,3 +473,5 @@ hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd(mediaToggle), { locked = true })
 hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd(mediaPrev),   { locked = true })
 
 hl.bind("CTRL + SHIFT + M", hl.dsp.pass({ window = "class:^(vesktop)$" }), { transparent = true })
+
+

@@ -1,0 +1,41 @@
+[theme.templates.kvantumconf]
+
+input_path = "~/.config/noctalia/templates/kvantum/noctalia.kvconfig"
+output_path = "~/.config/Kvantum/noctalia/noctalia.kvconfig"
+post_hook = ""
+
+[theme.templates.kvantumsvg]
+
+input_path = "~/.config/noctalia/templates/kvantum/noctalia.svg"
+output_path = "~/.config/Kvantum/noctalia/noctalia.svg"
+post_hook = "kvantummanager --set noctalia"
+
+[theme.templates.gtk3]
+
+input_path = "~/.config/noctalia/templates/gtk/gtk3.css"
+output_path = "~/.config/gtk-3.0/noctalia.css"
+post_hook = ""
+
+[theme.templates.gtk4]
+
+input_path = "~/.config/noctalia/templates/gtk/gtk4.css"
+output_path = "~/.config/gtk-4.0/noctalia.css"
+post_hook = "~/.config/noctalia/templates/gtk/apply.sh"
+
+[theme.templates.gtksourceview4]
+
+input_path = "~/.config/noctalia/templates/gtk/classic.xml"
+output_path = "~/.local/share/gtksourceview-4/styles/classic.xml"
+post_hook = ""
+
+[theme.templates.gtksourceview3]
+
+input_path = "~/.config/noctalia/templates/gtk/classic.xml"
+output_path = "~/.local/share/gtksourceview-3/styles/classic.xml"
+post_hook = ""
+
+[theme.templates.libgedit]
+
+input_path = "~/.config/noctalia/templates/gtk/classic.xml"
+output_path = "~/.local/share/libgedit-gtksourceview-300/styles/classic.xml"
+post_hook = ""
