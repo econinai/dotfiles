@@ -24,6 +24,7 @@ f2fs-tools
 ffmpeg
 firefox
 fuse2
+fzf
 galculator
 gcc
 gifski 
@@ -38,9 +39,9 @@ gst-plugins-base
 gst-plugins-good 
 gst-plugins-ugly
 gthumb
+gtk-layer-shell
 hyprland
 hyprpicker
-hyprpolkitagent
 hyprsunset
 hyprutils
 i2c-tools
