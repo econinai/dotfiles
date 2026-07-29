@@ -1,0 +1,6 @@
+/home/econinai
+.git
+node_modules
+.cache
+.venv
+.*
