@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+
+{{ template "sudo.tmpl" . }}
+{{ template "pkg_install.tmpl" . }}
+
+# {{ include ".assets/packageList" | sha256sum }}
+
+### noctalia greeter
+
+echo -e "Installing greeter..." 2>&1 | tee -a log.txt
+
+sudo cp "{{ .chezmoi.sourceDir }}/.assets/greetdconfig.toml" "/etc/greetd/config.toml" >> log.txt 2>&1
+
+sudo systemctl disable display-manager.service >> log.txt 2>&1
+
+sudo systemctl enable greetd >> log.txt 2>&1
+
+### hyprland plugins
+
+echo -e "Installing hyprland plugins..." 2>&1 | tee -a log.txt
+
+if [[ $(awk "/^hyprland$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
+  hyprpm update --no-shallow >> log.txt 2>&1
+  hyprpm add https://github.com/hyprnux/hyprglass >> log.txt 2>&1
+  hyprpm enable hyprglass >> log.txt 2>&1
+  hyprpm add https://github.com/virtcode/hypr-dynamic-cursors >> log.txt 2>&1
+  hyprpm enable dynamic-cursors >> log.txt 2>&1
+fi;
+
+### auto-cpufreq
+
+if [[ $(awk "/^auto-cpufreq$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
+  sudo cp {{ .chezmoi.sourceDir }}/.assets/auto-cpufreq.conf /etc/auto-cpufreq.conf >> log.txt 2>&1
+  sudo systemctl enable auto-cpufreq  >> log.txt 2>&1
+fi;
+
+### pacman-contrib
+
+if [[ $(awk "/^pacman-contrib$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
+  sudo systemctl enable --now paccache.timer >> log.txt 2>&1
+fi;
+
+### zen-browser
+
+awk '/^\[Install/ {in_section=1; next} /^\[/ {in_section=0} in_section && /^Default=/ {sub(/^Default=/, ""); print}' {{ .chezmoi.homeDir }}/.var/app/app.zen_browser.zen/.zen/profiles.ini | while read -r val; do
+	mkdir -p "{{ .chezmoi.homeDir }}/.var/app/app.zen_browser.zen/.zen/$val/chrome" >> log.txt 2>&1
+    echo "@import \"{{ .chezmoi.homeDir }}/.cache/noctalia/zen-browser/zen-userChrome.css\";" > "{{ .chezmoi.homeDir }}/.var/app/app.zen_browser.zen/.zen/$val/chrome/userChrome.css"
+    echo "@import \"{{ .chezmoi.homeDir }}/.cache/noctalia/zen-browser/zen-userContent.css\";" > "{{ .chezmoi.homeDir }}/.var/app/app.zen_browser.zen/.zen/$val/chrome/userContent.css"
+    flatpak override --user --filesystem={{ .chezmoi.homeDir }}/.cache/noctalia/zen-browser/zen-userContent.css app.zen_browser.zen >> log.txt 2>&1
+    flatpak override --user --filesystem={{ .chezmoi.homeDir }}/.cache/noctalia/zen-browser/zen-userChrome.css app.zen_browser.zen >> log.txt 2>&1
+done
+
+### virt-manager
+
+if [[ $(awk "/^libvirt$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
+	sudo systemctl enable libvirtd.service >> log.txt 2>&1
+fi;
+
+### dolphin
+
+if [[ $(awk "/^dolphin$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
+	xdg-mime default org.kde.dolphin.desktop inode/directory >> log.txt 2>&1
+	xdg-settings set default-file-manager org.kde.dolphin.desktop >> log.txt 2>&1
+fi;
+
