@@ -206,7 +206,7 @@ end
 -----------------------
 
 if transparentenabled then
-    local classes = {"vesktop", "org.telegram.desktop", "codium", "steam", "zen", "anytype"}
+    local classes = {"vesktop", "org.telegram.desktop", "codium", "steam", "app.zen_browser.zen", "anytype"}
 
     for index, value in ipairs(classes) do
         hl.window_rule({ match = { class = value }, tag = "+hyprglass_preset_clear" })
