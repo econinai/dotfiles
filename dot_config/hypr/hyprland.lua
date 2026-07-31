@@ -471,5 +471,5 @@ hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd(mediaPrev),   { locked = true })
 
 hl.bind("CTRL + SHIFT + M", hl.dsp.pass({ window = "class:^(vesktop)$" }), { transparent = true })
 
-hl.bind("switch:Lid Switch", hl.dsp.exec_cmd("noctalia msg session lock-and-suspend"), { locked = true })
+hl.bind("switch:on:Lid Switch", hl.dsp.exec_cmd("noctalia msg session lock; systemctl suspend"), { locked = true })
 
