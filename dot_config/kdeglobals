@@ -135,7 +135,7 @@ ColorScheme=Noctalia
 Name=noctalia
 
 [Icons]
-Theme=ColorFlow
+Theme=icons-theme
 
 [KDE]
 widgetStyle=kvantum
