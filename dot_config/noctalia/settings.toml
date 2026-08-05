@@ -15,7 +15,49 @@ enabled = false
 tint_intensity = 0.3
 
 [bar]
-order = [ "default" ]
+order = [ "default", "bottom" ]
+
+    [bar.bottom]
+    auto_hide = true
+    background_opacity = 1.0
+    capsule = true
+    center = [
+        "notifications",
+        "clipboard",
+        "bar_2",
+        "bar",
+        "widget_2",
+    	"screen",
+        "caffeine",
+        "lid-suspender",
+        "apperance",
+        "theme_mode",
+        "wallpaper",
+        "w_engine_widget_2",
+        "settings",
+        "launcher"
+    ]
+    enabled = true
+    shadow = false
+    end = [ "clock" ]
+    layer = "overlay"
+    margin_ends = 0
+    padding = 30
+    position = "bottom"
+    radius = 0
+    radius_top_left = 80
+    radius_top_right = 80
+    reserve_space = false
+    scale = 2.0000000223517418
+    show_on_workspace_switch = false
+    start = [ "media" ]
+    thickness = 80
+
+        [bar.bottom.dead_zone.actions]
+        scroll_down = "workspace-switch next"
+        scroll_left = "workspace-switch next"
+        scroll_right = "workspace-switch prev"
+        scroll_up = "workspace-switch prev"
 
     [bar.default]
     auto_hide = false
@@ -51,19 +93,11 @@ order = [ "default" ]
     shadow = false
     show_on_workspace_switch = true
     smart_auto_hide = false
-    start = [ "clock", "weather", "media", "group:g1" ]
+    start = [ "clock", "weather", "media" ]
     thickness = 50
     widget_spacing = 6
 
         [bar.default.dead_zone]
-
-        [[bar.default.capsule_group]]
-        enabled = true
-        fill = "surface"
-        id = "g1"
-        members = [ "apperance", "w-engine-widget", "lid-guard" ]
-        opacity = 0.0
-        padding = 6.0
 
         [[bar.default.capsule_group]]
         enabled = true
@@ -89,8 +123,15 @@ order = [ "default" ]
         opacity = 0.0
         padding = 6.0
 
+	[[bar.default.dead_zone.actions]]
+    	middle = "panel-toggle launcher"
+        scroll_down = "workspace-switch next"
+        scroll_left = "workspace-switch next"
+        scroll_right = "workspace-switch prev"
+        scroll_up = "workspace-switch prev"
+
 [battery]
-warning_threshold = 10
+warning_threshold = 20
 
 [brightness]
 enable_ddcutil = true
@@ -114,6 +155,12 @@ width = 700
     event_time_format = "%H:%M"
     show_events_card = true
     show_week_numbers = false
+
+    [[control_center.shortcuts]]
+    type = "wifi"
+
+    [[control_center.shortcuts]]
+    type = "bluetooth"
 
     [[control_center.shortcuts]]
     type = "wallpaper"
@@ -348,7 +395,6 @@ enabled = [
     "noctalia/translator",
     "nightwatch75/file-search",
     "whyoolw/dropwall",
-    "8bury/lid-guard",
     "noctalia/timer"
 ]
 
@@ -403,7 +449,7 @@ time_format = "{:%H:%M:%S}"
     speed = 1.0
 
     [shell.greeter_sync]
-    auto_sync = true
+    auto_sync = false
 
     [shell.launcher]
     app_grid = false
@@ -812,3 +858,32 @@ type = "weather"
 
 [widget.widget]
 type = "yuuto/arch-updater:widget"
+
+[widget.bar]
+type = "yuuto/calculator:bar"
+
+[widget.bar_2]
+show_idle_on_horizontal = false
+type = "noctalia/timer:bar"
+
+[widget.lid-suspender]
+glyph = "briefcase"
+tooltip = "Disables lid suspend"
+type = "custom_button"
+
+    [widget.lid-suspender.actions]
+    left = "exec if [[ $(cat ~/.cache/lid_guard) == \"1\" ]]; then notify-send \"Lid guard off\"; echo -n \"0\" > ~/.cache/lid_guard; else notify-send \"Lid guard on\"; echo -n \"1\" > ~/.cache/lid_guard; fi; hyprctl reload;"
+
+[widget.w_engine_widget_2]
+type = "tadomika_ari/w-engine:w-engine-widget"
+
+[widget.widget_2]
+type = "oldirtty/color_picker:widget"
+
+[widget.screen]
+glyph = "screenshot"
+type = "custom_button"
+
+    [widget.screen.actions]
+    left = "exec file=\"/home/$USER/Pictures/Screenshots/screenshot_$(date +%s).png\"; grimblast --freeze copysave area \"$file\"; if [[ -f \"$file\" ]]; then wl-copy --type image/png < \"$file\"; notify-send --app-name=\"System\" \"Screenshot\" \"Image has been saved and copied to the clipboard\" -i \"$file\"; fi"
+
