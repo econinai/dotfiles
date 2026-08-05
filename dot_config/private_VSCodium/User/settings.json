@@ -1,3 +1,9 @@
 {
-    "terminal.integrated.fontFamily": "'Fira Code', 'Symbols Nerd Font Mono', monospace"
+    "terminal.integrated.fontFamily": "'Fira Code', 'Symbols Nerd Font Mono', monospace",
+    "workbench.colorTheme": "Visual Studio Dark",
+    "editor.fontSize": 18,
+    "[rust]": {
+    "editor.defaultFormatter": "rust-lang.rust-analyzer",
+    "editor.formatOnSave": true
+}
 }
