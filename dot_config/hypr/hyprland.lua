@@ -388,6 +388,11 @@ hl.device({
     sensitivity = 0.15,
 })
 
+hl.device({
+    name        = "dualsense-wireless-controller-touchpad",
+    sensitivity = 0.15,
+})
+
 ---------------------
 ---- KEYBINDINGS ----
 ---------------------
