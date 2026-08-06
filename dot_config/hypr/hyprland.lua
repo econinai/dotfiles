@@ -107,8 +107,9 @@ if apperance_mode == "blur" then
 elseif apperance_mode == "liquid" then
     hyprglassenabled = true
     blurenabled = false
-    transparentenabled = true
-    inactive_opacityvalue = 0.8
+    transparentenabled = false
+    inactive_opacityvalue = 1.0
+    isneedborder = false
     hl.exec_cmd("sed -i '/^[[:space:]]*\\[bar\\.default\\]/,/[[:space:]]*background_opacity/s/\\(background_opacity[[:space:]]*=[[:space:]]*\\)[0-9.]\\+/\\11.0/' ~/.config/noctalia/settings.toml")
     hl.exec_cmd("sed -i '/^[[:space:]]*\\[bar\\.bottom\\]/,/[[:space:]]*background_opacity/s/\\(background_opacity[[:space:]]*=[[:space:]]*\\)[0-9.]\\+/\\11.0/' ~/.config/noctalia/settings.toml")
     hl.exec_cmd("sed -i '/^[[:space:]]*\\[shell\\.panel\\]/,/[[:space:]]*shadow/s/\\(shadow[[:space:]]*=[[:space:]]*\\)\\(true\\|false\\)/\\1true/' ~/.config/noctalia/settings.toml")
@@ -176,7 +177,7 @@ if hl.plugin.hyprglass then
         chromatic_aberration = 0.1,
         fresnel_strength = 0.3,
         specular_strength = 0.5,
-        glass_opacity = 2.4,
+        glass_opacity = 1.4,
         tint_color = 0x00000000,
         contrast = 1.0,
         saturation = 1.0,
@@ -184,15 +185,6 @@ if hl.plugin.hyprglass then
         refraction_strength = 10.0,
         lens_distortion = 5.0,
         edge_thickness = 0.05,
-    })
-
-    -- Presets
-    hg.preset("default", {
-        glass_opacity = 1.4,
-    })
-
-    hg.preset("clear", {
-        glass_opacity = 2.4,
     })
 end
 
