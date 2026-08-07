@@ -3,9 +3,9 @@
 {{ template "sudo.tmpl" . }}
 {{ template "pkg_install.tmpl" . }}
 
-# {{ include ".assets/themes/grub" | sha256sum }}
-# {{ include ".assets/themes/icons" | sha256sum }}
-# {{ include ".assets/themes/cursor" | sha256sum }}
+# {{ include ".assets/themes/grub/grub-theme.tar.xz" | sha256sum }}
+# {{ include ".assets/themes/icons/icons-theme.tar.xz" | sha256sum }}
+# {{ include ".assets/themes/cursor/cursor-theme.tar.xz" | sha256sum }}
 
 ### cursor theme
 
@@ -58,9 +58,6 @@ gsettings set org.gnome.desktop.interface cursor-size 18 >> log.txt 2>&1
 ### grub theme
 
 echo "Installing grub theme..." 2>&1 | tee -a log.txt
-
-THEME_DIR="/boot/grub/themes"
-THEME_NAME=Particle-circle-window
 
 [[ -d /boot/grub/themes/grub-theme ]] && sudo rm -rf /boot/grub/themes/grub-theme >> log.txt 2>&1
 sudo mkdir -p "/boot/grub/themes/grub-theme" >> log.txt 2>&1
