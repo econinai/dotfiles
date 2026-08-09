@@ -3,9 +3,9 @@
 {{ template "sudo.tmpl" . }}
 {{ template "pkg_install.tmpl" . }}
 
-# {{ include ".assets/themes/grub/grub-theme.tar.xz" | sha256sum }}
-# {{ include ".assets/themes/icons/icons-theme.tar.xz" | sha256sum }}
-# {{ include ".assets/themes/cursor/cursor-theme.tar.xz" | sha256sum }}
+# {{ include ".assets/themes/grub/Particle-circle-window.tar.xz" | sha256sum }}
+# {{ include ".assets/themes/icons/ColorFlow.tar.xz" | sha256sum }}
+# {{ include ".assets/themes/cursor/aosp-cursor.tar.xz" | sha256sum }}
 
 ### cursor theme
 
@@ -14,9 +14,7 @@ echo "Installing cursor theme..." 2>&1 | tee -a log.txt
 [[ -d /usr/share/icons/cursor-theme ]] && sudo rm -rf /usr/share/icons/cursor-theme >> log.txt 2>&1
 sudo mkdir -p "/usr/share/icons/cursor-theme" >> log.txt 2>&1
 
-TMP_FOLDER=$(mktemp -d)
-sudo tar -xf "{{ .chezmoi.sourceDir }}/.assets/themes/cursor/*.tar.*" -C "$TMP_FOLDER" >> log.txt 2>&1
-sudo mv "$TMP_FOLDER/*" /usr/share/icons/cursor-theme
+sudo tar -xf "{{ .chezmoi.sourceDir }}/.assets/themes/cursor/aosp-cursor.tar.xz" -C "/usr/share/icons/cursor-theme" >> log.txt 2>&1
 sudo chmod -R 755 /usr/share/icons/cursor-theme >> log.txt 2>&1
 
 sudo mkdir -p /usr/share/icons/default >> log.txt 2>&1
@@ -41,9 +39,7 @@ echo "Installing icons theme..." 2>&1 | tee -a log.txt
 [[ -d /usr/share/icons/icons-theme ]] && sudo rm -rf /usr/share/icons/icons-theme >> log.txt 2>&1
 sudo mkdir -p "/usr/share/icons/icons-theme" >> log.txt 2>&1
 
-TMP_FOLDER=$(mktemp -d)
-sudo tar -xf "{{ .chezmoi.sourceDir }}/.assets/themes/icons/*.tar.*" -C "$TMP_FOLDER" >> log.txt 2>&1
-sudo mv "$TMP_FOLDER/*" /usr/share/icons/icons-theme
+sudo tar -xf "{{ .chezmoi.sourceDir }}/.assets/themes/icons/ColorFlow.tar.xz" -C "/usr/share/icons/icons-theme" >> log.txt 2>&1
 
 ### gtk themes
 
@@ -62,9 +58,7 @@ echo "Installing grub theme..." 2>&1 | tee -a log.txt
 [[ -d /boot/grub/themes/grub-theme ]] && sudo rm -rf /boot/grub/themes/grub-theme >> log.txt 2>&1
 sudo mkdir -p "/boot/grub/themes/grub-theme" >> log.txt 2>&1
 
-TMP_FOLDER=$(mktemp -d)
-sudo tar --no-same-owner -xf "{{ .chezmoi.sourceDir }}/.assets/themes/grub/*.tar.*" -C "$TMP_FOLDER" >> log.txt 2>&1
-sudo mv "$TMP_FOLDER/*" /boot/grub/themes/grub-theme
+sudo tar --no-same-owner -xf "{{ .chezmoi.sourceDir }}/.assets/themes/grub/Particle-circle-window.tar.xz" -C "/boot/grub/themes/grub-theme" >> log.txt 2>&1
 
 sudo cp -an /etc/default/grub /etc/default/grub.bak >> log.txt 2>&1
 
