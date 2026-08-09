@@ -396,7 +396,8 @@ enabled = [
     "noctalia/translator",
     "nightwatch75/file-search",
     "whyoolw/dropwall",
-    "noctalia/timer"
+    "noctalia/timer",
+    "alexander/screen-toolkit"
 ]
 
     [[plugins.source]]
