@@ -35,7 +35,8 @@ order = [ "default", "bottom" ]
         "wallpaper",
         "w_engine_widget_2",
         "settings",
-        "launcher"
+        "launcher",
+    	"widget_3"
     ]
     enabled = true
     shadow = false
@@ -887,3 +888,5 @@ type = "custom_button"
     [widget.screen.actions]
     left = "exec file=\"/home/$USER/Pictures/Screenshots/screenshot_$(date +%s).png\"; grimblast --freeze copysave area \"$file\"; if [[ -f \"$file\" ]]; then wl-copy --type image/png < \"$file\"; notify-send --app-name=\"System\" \"Screenshot\" \"Image has been saved and copied to the clipboard\" -i \"$file\"; fi"
 
+[widget.widget_3]
+type = "alexander/screen-toolkit:widget"

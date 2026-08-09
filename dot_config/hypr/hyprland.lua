@@ -33,7 +33,7 @@ local texteditor  = "gtk-launch org.xfce.mousepad.desktop"
 local exitHyprland = "command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"
 local screenshot = "file=\"/home/$USER/Pictures/Screenshots/screenshot_$(date +%s).png\"; grimblast --freeze copysave area \"$file\"; if [[ -f \"$file\" ]]; then wl-copy --type image/png < \"$file\"; notify-send --app-name=\"System\" \"Screenshot\" \"Image has been saved and copied to the clipboard\" -i \"$file\"; fi"
 local openBuffer = "noctalia msg panel-toggle clipboard"
-local colorpicker = "noctalia msg panel-toggle oldirtty/color_picker:panel"
+local toolkit = "noctalia msg panel-toggle alexander/screen-toolkit:panel"
 local windowswitche = "noctalia msg window-switcher"
 local mainMenu  = "noctalia msg panel-toggle control-center"
 local switchLocal = "for kb in $(hyprctl devices -j | jq -r \".keyboards[].name\" | grep -vE \"power-button|consumer-control|system-control\"); do hyprctl switchxkblayout \"$kb\" next; done"
@@ -389,7 +389,7 @@ local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd(screenshot))
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd(openBuffer))
-hl.bind(mainMod .. " + C", hl.dsp.exec_cmd(colorpicker))
+hl.bind(mainMod .. " + C", hl.dsp.exec_cmd(toolkit))
 hl.bind(mainMod .. " + SUPER_L", hl.dsp.exec_cmd(mainMenu), {release = true})
 hl.bind(mainMod .. " + O", hl.dsp.exec_cmd(texteditor))
 

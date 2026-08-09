@@ -6,6 +6,7 @@ auto-cpufreq
 base
 base-devel
 bash-completion
+bc
 blueman
 bluez
 bluez-utils
@@ -40,6 +41,7 @@ gst-plugins-good
 gst-plugins-ugly
 gthumb
 gtk-layer-shell
+gpu-screen-recorder
 hyprland
 hyprpicker
 hyprsunset
@@ -61,6 +63,7 @@ libvirt
 linux-wallpaperengine-git
 make
 meson
+mpv
 micro
 mission-center
 mousepad
@@ -109,6 +112,7 @@ slurp
 snixembed
 sof-firmware
 steam
+swappy
 tesseract 
 tesseract-data-eng 
 tex-gyre-fonts
@@ -185,12 +189,13 @@ virt-manager
 vscodium
 wayland
 wget
+wf-recorder
 wireplumber
 wl-clipboard
 wl-clipboard-history-git
 wl-color-picker
-wlr-randr
 wl-screenrec-git
+wlr-randr
 woff2-font-awesome
 x264
 xdg-dbus-proxy
