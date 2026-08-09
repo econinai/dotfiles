@@ -11,7 +11,7 @@ echo -e "Installing greeter..." 2>&1 | tee -a log.txt
 
 sudo cp "{{ .chezmoi.sourceDir }}/.assets/greetdconfig.toml" "/etc/greetd/config.toml" >> log.txt 2>&1
 
-sudo systemctl disable display-manager.service >> log.txt 2>&1
+sudo systemctl disable display-manager.service || true >> log.txt 2>&1
 
 sudo systemctl enable greetd >> log.txt 2>&1
 
@@ -60,6 +60,5 @@ fi;
 
 if [[ $(awk "/^dolphin$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
 	xdg-mime default org.kde.dolphin.desktop inode/directory >> log.txt 2>&1
-	xdg-settings set default-file-manager org.kde.dolphin.desktop >> log.txt 2>&1
 fi;
 
