@@ -307,10 +307,11 @@ sunrise = ""
 sunset = ""
 
 [lockscreen]
+blurred_desktop = true
 allow_empty_password = false
 blur_intensity = 0.8
-blurred_desktop = false
 enabled = true
+lock_before_suspend   = false
 fingerprint = true
 monitors = []
 tint_intensity = 0.3
