@@ -471,3 +471,14 @@ end
 if isneedlidguard == "0" then
     hl.bind("switch:on:Lid Switch", hl.dsp.exec_cmd("noctalia msg session lock; systemctl suspend"), { locked = true })
 end    
+
+hl.bind("switch:on:Lid Switch", function()
+                 hl.timer(function()
+                   hl.dispatch(hl.dsp.dpms({ action = "disable" }))
+                 end, {timeout = 500, type = "oneshot"})
+               end, { locked = true })
+hl.bind("switch:off:Lid Switch", function()
+                 hl.timer(function()
+                   hl.dispatch(hl.dsp.dpms({ action = "enable" }))
+                 end, {timeout = 500, type = "oneshot"})
+               end, { locked = true })
