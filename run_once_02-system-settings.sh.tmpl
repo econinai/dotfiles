@@ -63,3 +63,5 @@ sudo swapon "$SWAP_PATH" >> log.txt 2>&1
 if ! grep -q "$SWAP_PATH" /etc/fstab; then
   echo "$SWAP_PATH none swap sw 0 0" | sudo tee -a /etc/fstab > /dev/null
 fi
+
+sudo cp "{{ .chezmoi.sourceDir }}/.assets/logind.conf" "/etc/systemd/logind.conf" >> log.txt 2>&1
