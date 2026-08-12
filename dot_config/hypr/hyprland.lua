@@ -52,8 +52,6 @@ hl.on("hyprland.start", function ()
   hl.exec_cmd("pkill -9 wl-paste; wl-paste --watch cliphist store &")
   hl.exec_cmd("noctalia")
   hl.exec_cmd("easyeffects --hide-window")
---   hl.exec_cmd("gsettings set org.gnome.desktop.interface color-scheme \"prefer-dark\"")
---   hl.exec_cmd("gsettings set org.gnome.desktop.interface gtk-theme \"adw-gtk3\"")
 end)
 
 
