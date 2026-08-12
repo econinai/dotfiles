@@ -469,7 +469,7 @@ if file then
 end
 
 if isneedlidguard == "0" then
-    hl.bind("switch:on:Lid Switch", hl.dsp.exec_cmd("noctalia msg session lock; systemctl suspend"), { locked = true })
+    hl.bind("switch:on:Lid Switch", hl.dsp.exec_cmd("noctalia msg session lock; systemctl suspend -i"), { locked = true })
 end    
 
 hl.bind("switch:on:Lid Switch", function()
