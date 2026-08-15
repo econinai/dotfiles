@@ -73,3 +73,10 @@ if [[ $(awk "/^dolphin$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]
 	xdg-mime default org.kde.dolphin.desktop inode/directory >> log.txt 2>&1
 fi;
 
+### kitty
+
+if [[ $(awk "/^kitty$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
+	xdg-mime default kitty.desktop x-scheme-handler/terminal >> log.txt 2>&1
+	kwriteconfig6 --file kdeglobals --group General --key TerminalApplication kitty >> log.txt 2>&1
+fi;
+
