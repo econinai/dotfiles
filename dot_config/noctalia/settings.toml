@@ -21,6 +21,7 @@ order = [ "default", "bottom" ]
     auto_hide = true
     background_opacity = 1.0
     capsule = true
+    capsule_opacity = 0.0
     center = [
         "notifications",
         "clipboard",
