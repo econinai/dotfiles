@@ -28,7 +28,8 @@ order = [ "default", "bottom" ]
         "bar_2",
         "bar",
         "widget_2",
-    	"screen",
+        "screen",
+        "widget_3",
         "caffeine",
         "lid-suspender",
         "apperance",
@@ -36,8 +37,7 @@ order = [ "default", "bottom" ]
         "wallpaper",
         "w_engine_widget_2",
         "settings",
-        "launcher",
-    	"widget_3"
+        "launcher"
     ]
     enabled = true
     shadow = false
