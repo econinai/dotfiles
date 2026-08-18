@@ -26,7 +26,7 @@ hl.monitor({
 ---- MY PROGRAMS ----
 ---------------------
 
-local terminal    = "kitty"
+local terminal    = "xdg-open terminal://"
 local fileManager = "dolphin"
 local launcher    = "noctalia msg panel-toggle launcher"
 local texteditor  = "gtk-launch org.xfce.mousepad.desktop"
@@ -41,7 +41,7 @@ local mediaPrev = "noctalia msg media previous"
 local mediaNext = "noctalia msg media next"
 local mediaToggle = "noctalia msg media playPause"
 local taskmng = "missioncenter"
-local showInfo = "notify-send \"all is ok\" && ~/.config/hypr/scripts/slider.sh check"
+local showInfo = "notify-send \"all is ok\""
 
 -------------------
 ---- AUTOSTART ----
