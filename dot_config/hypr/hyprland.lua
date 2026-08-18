@@ -67,6 +67,7 @@ hl.env("XDG_SESSION_DESKTOP", "Hyprland")
 hl.env("XDG_SESSION_TYPE", "wayland")
 hl.env("XDG_MENU_PREFIX", "arch- kbuildsycoca6")
 hl.env("XDG_TERMINAL_SERVICE", "kitty.desktop")
+hl.env("SHELL", "/usr/bin/fish")
 
 --------------------------
 ---- APPERANCE SCRIPT ----

@@ -5,6 +5,7 @@ auto-cpufreq
 base
 base-devel
 bash-completion
+fish
 bc
 blueman
 bluez
