@@ -43,6 +43,7 @@ gst-plugins-ugly
 gthumb
 gtk-layer-shell
 gpu-screen-recorder
+ghostty
 hyprland
 hyprpicker
 hyprsunset
@@ -55,7 +56,6 @@ jq
 just
 kdbusaddons5
 kio-admin
-kitty
 kservice5
 kvantum
 kvantum-qt5

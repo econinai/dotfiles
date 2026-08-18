@@ -1,0 +1,21 @@
+font-family = "Liga SFMonoNerdFont"
+font-size = 14.0
+
+background-opacity = 0.5
+
+window-padding-x = 10
+window-padding-y = 10
+
+confirm-close-surface = false
+
+cursor-style = block
+cursor-style-blink = true
+custom-shader = "shaders/ghostty-cursor-shaders/cursor_warp.glsl"
+custom-shader-animation = always
+
+theme = noctalia
+
+keybind = ctrl+c=unbind
+keybind = ctrl+shift+c=unbind
+keybind = performable:ctrl+c=copy_to_clipboard
+keybind = ctrl+shift+c=text:\x03

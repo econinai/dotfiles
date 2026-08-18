@@ -80,6 +80,13 @@ if [[ $(awk "/^kitty$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; 
 	kwriteconfig6 --file kdeglobals --group General --key TerminalApplication kitty >> log.txt 2>&1
 fi;
 
+### ghostty
+
+if [[ $(awk "/^ghostty$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
+	xdg-mime default com.mitchellh.ghostty.desktop x-scheme-handler/terminal >> log.txt 2>&1
+	kwriteconfig6 --file kdeglobals --group General --key TerminalApplication ghostty >> log.txt 2>&1
+fi;
+
 ### fish
 
 if [[ $(awk "/^fish$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
