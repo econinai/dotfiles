@@ -26,7 +26,7 @@ hl.monitor({
 ---- MY PROGRAMS ----
 ---------------------
 
-local terminal    = "xdg-open terminal://"
+local terminal    = "ghostty"
 local fileManager = "dolphin"
 local launcher    = "noctalia msg panel-toggle launcher"
 local texteditor  = "gtk-launch org.xfce.mousepad.desktop"
