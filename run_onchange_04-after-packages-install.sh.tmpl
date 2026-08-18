@@ -80,3 +80,9 @@ if [[ $(awk "/^kitty$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; 
 	kwriteconfig6 --file kdeglobals --group General --key TerminalApplication kitty >> log.txt 2>&1
 fi;
 
+### fish
+
+if [[ $(awk "/^fish$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
+	chsh -s $(which fish) >> log.txt 2>&1
+	sudo chsh -s $(which fish) >> log.txt 2>&1
+fi;
