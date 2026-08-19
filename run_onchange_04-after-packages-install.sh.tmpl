@@ -93,3 +93,9 @@ if [[ $(awk "/^fish$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; t
 	chsh -s $(which fish) >> log.txt 2>&1
 	sudo chsh -s $(which fish) >> log.txt 2>&1
 fi;
+
+### xdg
+
+sudo ln -sf /etc/xdg/menus/arch-applications.menu /etc/xdg/menus/applications.menu
+rm -f ~/.cache/ksycoca6_*
+
