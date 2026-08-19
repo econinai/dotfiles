@@ -1,7 +1,7 @@
 font-family = "Liga SFMonoNerdFont"
 font-size = 14.0
 
-background-opacity = 0.5
+background-opacity = 1.0
 
 window-padding-x = 10
 window-padding-y = 10
