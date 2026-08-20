@@ -19,26 +19,10 @@ order = [ "default", "bottom" ]
 
     [bar.bottom]
     auto_hide = true
-    background_opacity = 1.0
+    background_opacity = 0.5
     capsule = true
     capsule_opacity = 0.0
-    center = [
-        "notifications",
-        "clipboard",
-        "bar_2",
-        "bar",
-        "widget_2",
-        "screen",
-        "widget_3",
-        "caffeine",
-        "lid-suspender",
-        "apperance",
-        "theme_mode",
-        "wallpaper",
-        "w_engine_widget_2",
-        "settings",
-        "launcher"
-    ]
+	center = [ "group:g6", "group:g5", "group:g4", "group:g3", "group:g2", "group:g1" ]
     enabled = true
     shadow = false
     end = [ "clock" ]
@@ -61,9 +45,70 @@ order = [ "default", "bottom" ]
         scroll_right = "workspace-switch prev"
         scroll_up = "workspace-switch prev"
 
+       	[[bar.bottom.capsule_group]]
+       	accordion = false
+       	accordion_direction = "end"
+       	enabled = true
+        fill = "surface_variant"
+       	id = "g1"
+       	members = [ "bar_3", "bar_4" ]
+       	opacity = 0.0
+       	padding = 6.0
+       	
+       	[[bar.bottom.capsule_group]]
+       	accordion = false
+       	accordion_direction = "end"
+       	enabled = true
+       	fill = "surface_variant"
+       	id = "g2"
+       	members = [ "settings", "launcher" ]
+       	opacity = 0.0
+       	padding = 6.0
+       	
+       	[[bar.bottom.capsule_group]]
+       	accordion = false
+       	accordion_direction = "end"
+       	enabled = true
+       	fill = "surface_variant"
+       	id = "g3"
+       	members = [ "apperance", "theme_mode", "wallpaper", "w_engine_widget_2" ]
+       	opacity = 0.0
+       	padding = 6.0
+       	
+       	[[bar.bottom.capsule_group]]
+       	accordion = false
+       	accordion_direction = "end"
+       	enabled = true
+       	fill = "surface_variant"
+       	id = "g4"
+       	members = [ "caffeine", "lid-suspender" ]
+       	opacity = 0.0
+       	padding = 6.0
+       	
+       	[[bar.bottom.capsule_group]]
+       	accordion = false
+       	accordion_direction = "end"
+       	enabled = true
+       	fill = "surface_variant"
+       	id = "g5"
+       	members = [ "screen", "widget_3" ]
+       	opacity = 0.0
+       	padding = 6.0
+       	
+       	[[bar.bottom.capsule_group]]
+       	accordion = false
+       	accordion_direction = "end"
+       	enabled = true
+       	fill = "surface_variant"
+       	id = "g6"
+       	members = [ "notifications", "clipboard", "bar_2", "bar" ]
+       	opacity = 0.0
+       	padding = 6.0
+       	
+
     [bar.default]
     auto_hide = false
-    background_opacity = 1.0
+    background_opacity = 0.5
     border = "outline"
     border_width = 0.0
     capsule = true
@@ -381,6 +426,9 @@ scale = 1.0
 [plugin_settings."noctalia/notes"]
 panel_placement = "attached"
 
+[plugin_settings."weinguyen/procmon"]
+panel_placement = "attached"
+
 [plugin_settings."oldirtty/color_picker"]
 panel_open_near_click = true
 panel_placement = "attached"
@@ -394,12 +442,13 @@ auto_update = true
 enabled = [
     "tadomika_ari/w-engine",
     "yuuto/calculator",
-    "oldirtty/color_picker",
     "noctalia/translator",
     "nightwatch75/file-search",
     "whyoolw/dropwall",
     "noctalia/timer",
-    "alexander/screen-toolkit"
+    "alexander/screen-toolkit",
+    "rylos/syncthing",
+    "rylos/tailnet"
 ]
 
     [[plugins.source]]
@@ -489,7 +538,7 @@ time_format = "{:%H:%M:%S}"
     polkit_position = "center"
     session_placement = "attached"
     session_position = "auto"
-    shadow = true
+    shadow = false
     transparency_mode = "solid"
     wallpaper_placement = "attached"
     wallpaper_position = "auto"
@@ -870,6 +919,13 @@ type = "yuuto/calculator:bar"
 show_idle_on_horizontal = false
 type = "noctalia/timer:bar"
 
+[widget.bar_3]
+type = "rylos/tailnet:bar"
+
+[widget.bar_4]
+type = "rylos/syncthing:bar"
+
+
 [widget.lid-suspender]
 glyph = "briefcase"
 tooltip = "Disables lid suspend"
@@ -893,3 +949,7 @@ type = "custom_button"
 
 [widget.widget_3]
 type = "alexander/screen-toolkit:widget"
+
+[widget.widget_4]
+type = "weinguyen/procmon:widget"
+
