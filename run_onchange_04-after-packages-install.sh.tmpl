@@ -94,6 +94,19 @@ if [[ $(awk "/^fish$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; t
 	sudo chsh -s $(which fish) >> log.txt 2>&1
 fi;
 
+### ark
+
+if [[ $(awk "/^ark$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
+	xdg-mime default org.kde.ark.desktop application/zip >> log.txt 2>&1
+	xdg-mime default org.kde.ark.desktop application/x-tar >> log.txt 2>&1
+	xdg-mime default org.kde.ark.desktop application/x-7z-compressed >> log.txt 2>&1
+	xdg-mime default org.kde.ark.desktop application/x-rar >> log.txt 2>&1
+	xdg-mime default org.kde.ark.desktop application/x-gzip >> log.txt 2>&1
+	xdg-mime default org.kde.ark.desktop application/x-bzip2 >> log.txt 2>&1
+	xdg-mime default org.kde.ark.desktop application/x-xz >> log.txt 2>&1
+	xdg-mime default org.kde.ark.desktop application/x-compressed-tar >> log.txt 2>&1
+fi;
+
 ### xdg
 
 sudo ln -sf /etc/xdg/menus/arch-applications.menu /etc/xdg/menus/applications.menu
