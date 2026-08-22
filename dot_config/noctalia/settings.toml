@@ -423,19 +423,15 @@ scale = 1.0
     volume_output = true
     wifi = true
 
-[plugin_settings."noctalia/notes"]
-panel_placement = "attached"
-
 [plugin_settings."weinguyen/procmon"]
-panel_placement = "attached"
-
-[plugin_settings."oldirtty/color_picker"]
-panel_open_near_click = true
 panel_placement = "attached"
 
 [plugin_settings."tadomika_ari/w-engine"]
 w-engine-panel_open_near_click = true
 w-engine-panel_placement = "attached"
+
+[plugin_settings."rylos/syncthing"]
+notify_events = false
 
 [plugins]
 auto_update = true
