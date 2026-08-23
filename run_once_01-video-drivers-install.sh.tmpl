@@ -45,6 +45,7 @@ if [ "$NEEDS_NVIDIA_KMS" = true ]; then
         echo "Warning: not found initramfs." 2>&1 | tee -a log.txt
     fi
     sudo systemctl enable nvidia-suspend.service nvidia-hibernate.service nvidia-resume.service  >> log.txt 2>&1
+	sudo sed -i -e '/^GRUB_CMDLINE_LINUX_DEFAULT=/s/"$/ nvidia.NVreg_PreserveVideoMemoryAllocations=1"/' -e '/^GRUB_CMDLINE_LINUX_DEFAULT=/s/\([^"]\)$/\1 nvidia.NVreg_PreserveVideoMemoryAllocations=1/' /etc/default/grub >> log.txt 2>&1
 fi
 
 
