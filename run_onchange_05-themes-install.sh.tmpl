@@ -2,6 +2,7 @@
 
 {{ template "sudo.tmpl" . }}
 {{ template "pkg_install.tmpl" . }}
+{{ template "update_grub.tmpl" . }}
 
 # {{ include ".assets/themes/grub/Particle-circle-window.tar.xz" | sha256sum }}
 # {{ include ".assets/themes/icons/ColorFlow.tar.xz" | sha256sum }}
@@ -71,19 +72,7 @@ echo "GRUB_TIMEOUT=1" | sudo tee -a /etc/default/grub >> log.txt 2>&1
 sudo grep "GRUB_GFXMODE=" /etc/default/grub 2>&1 >/dev/null && sudo sed -i '/GRUB_GFXMODE=/d' /etc/default/grub 
 echo "GRUB_GFXMODE=\"1920x1080x32,auto\"" | sudo tee -a /etc/default/grub >> log.txt 2>&1
 
-if command -v update-grub > /dev/null; then
-  sudo update-grub >> log.txt 2>&1
-elif command -v grub-mkconfig > /dev/null; then
-  sudo grub-mkconfig -o /boot/grub/grub.cfg >> log.txt 2>&1
-elif command -v zypper > /dev/null || command -v transactional-update > /dev/null; then
-  sudo grub2-mkconfig -o /boot/grub2/grub.cfg >> log.txt 2>&1
-elif command -v dnf > /dev/null || command -v rpm-ostree > /dev/null; then
-  if [[ -f /boot/efi/EFI/fedora/grub.cfg ]]; then
-    sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg >> log.txt 2>&1
-  elif [[ -f /boot/grub2/grub.cfg ]]; then
-    sudo grub2-mkconfig -o /boot/grub2/grub.cfg >> log.txt 2>&1
-  fi
-fi
+update_grub
 
 ### root bashrc
 
