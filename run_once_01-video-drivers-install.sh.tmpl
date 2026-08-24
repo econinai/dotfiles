@@ -46,6 +46,19 @@ if [ "$NEEDS_NVIDIA_KMS" = true ]; then
     fi
     sudo systemctl enable nvidia-suspend.service nvidia-hibernate.service nvidia-resume.service  >> log.txt 2>&1
 	sudo sed -i -e '/^GRUB_CMDLINE_LINUX_DEFAULT=/s/"$/ nvidia.NVreg_PreserveVideoMemoryAllocations=1"/' -e '/^GRUB_CMDLINE_LINUX_DEFAULT=/s/\([^"]\)$/\1 nvidia.NVreg_PreserveVideoMemoryAllocations=1/' /etc/default/grub >> log.txt 2>&1
+	if command -v update-grub > /dev/null; then
+	  sudo update-grub >> log.txt 2>&1
+	elif command -v grub-mkconfig > /dev/null; then
+	  sudo grub-mkconfig -o /boot/grub/grub.cfg >> log.txt 2>&1
+	elif command -v zypper > /dev/null || command -v transactional-update > /dev/null; then
+	  sudo grub2-mkconfig -o /boot/grub2/grub.cfg >> log.txt 2>&1
+	elif command -v dnf > /dev/null || command -v rpm-ostree > /dev/null; then
+	  if [[ -f /boot/efi/EFI/fedora/grub.cfg ]]; then
+	    sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg >> log.txt 2>&1
+	  elif [[ -f /boot/grub2/grub.cfg ]]; then
+	    sudo grub2-mkconfig -o /boot/grub2/grub.cfg >> log.txt 2>&1
+	  fi
+	fi
 fi
 
 
