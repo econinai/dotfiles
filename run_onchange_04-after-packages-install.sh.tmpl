@@ -107,8 +107,4 @@ if [[ $(awk "/^ark$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; th
 	xdg-mime default org.kde.ark.desktop application/x-compressed-tar >> log.txt 2>&1
 fi;
 
-### xdg
-
-sudo ln -sf /etc/xdg/menus/arch-applications.menu /etc/xdg/menus/applications.menu
-rm -f ~/.cache/ksycoca6_*
 

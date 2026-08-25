@@ -16,6 +16,10 @@ if [[ $PKG_MGR == "pacman" ]]; then
   sudo reflector --latest 15 --protocol https --sort rate --save /etc/pacman.d/mirrorlist >> log.txt 2>&1
   sudo systemctl enable --now reflector.timer >> log.txt 2>&1
   sudo pacman -Sy --noconfirm archlinux-keyring  >> log.txt 2>&1
+  if [ -f /etc/os-release ] && grep -q 'ID="artix"' /etc/os-release; then
+      pacman -S --noconfirm artix-archlinux-support
+      pacman-key --populate archlinux
+  fi
   ### multilib
   echo "Installing multilib..." 2>&1 | tee -a log.txt
   if [[ $(awk 'prev == "#[multilib]" && $0 == "#Include = /etc/pacman.d/mirrorlist" {print "0"; exit 0} {prev = $0} END {exit 1}' /etc/pacman.conf ) == "0" ]]; then
@@ -42,6 +46,11 @@ if [[ $PKG_MGR == "pacman" ]]; then
   echo "Installing flatpak..." 2>&1 | tee -a log.txt
   sudo pacman -S --needed --noconfirm flatpak >> log.txt 2>&1
   flatpak remote-add --if-not-exists flathub https://flathub.org >> log.txt 2>&1
+  ### xdg
+  echo "Installing xdg menu..." 2>&1 | tee -a log.txt
+  sudo pacman -S --needed --noconfirm archlinux-xdg-menu kservice >> log.txt 2>&1
+  sudo ln -sf /etc/xdg/menus/arch-applications.menu /etc/xdg/menus/applications.menu >> log.txt 2>&1
+  rm -f ~/.cache/ksycoca6_* >> log.txt 2>&1
   ### updating all
   echo "Final updating..." 2>&1 | tee -a log.txt
   sudo pacman -Syu --noconfirm >> log.txt 2>&1
