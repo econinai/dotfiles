@@ -91,6 +91,7 @@ fi;
 if [[ $(awk "/^fish$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
 	chsh -s $(which fish) >> log.txt 2>&1
 	sudo chsh -s $(which fish) >> log.txt 2>&1
+	sudo cp {{ .chezmoi.sourceDir }}dot_config/private_fish/config.fish /etc/fish/config.fish >> log.txt 2>&1
 fi;
 
 ### ark
