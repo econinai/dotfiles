@@ -354,7 +354,7 @@ hl.config({
         accel_profile = "flat",
 
         touchpad = {
-            natural_scroll = false,
+            natural_scroll = true,
             disable_while_typing = false,
         },
     },
