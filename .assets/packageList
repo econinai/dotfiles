@@ -60,7 +60,6 @@ kservice5
 kvantum
 kvantum-qt5
 less
-libvirt 
 linux-wallpaperengine-git
 make
 meson
@@ -102,8 +101,6 @@ pipewire-pulse
 pkgconf
 python 
 python-gobject 
-qemu-base 
-qemu-full 
 qt5ct
 qt5-wayland
 qt6ct
@@ -187,7 +184,6 @@ ttf-zed-mono-nerd
 unrar
 unzip
 uwsm
-virt-manager 
 vscodium
 wayland
 wget
