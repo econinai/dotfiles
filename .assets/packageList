@@ -6,6 +6,7 @@ base
 base-devel
 bash-completion
 fish
+bat
 bc
 blueman
 bluez
