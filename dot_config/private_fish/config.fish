@@ -5,6 +5,7 @@ end
 alias ls='eza -a --icons=always'
 alias ll='eza -al --icons=always'
 alias grep='grep --color=auto'
+alias cat='bat'
 
 set -gx SUDO_PROMPT "Password for %u user: "
 

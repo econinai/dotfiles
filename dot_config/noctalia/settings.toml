@@ -423,9 +423,6 @@ scale = 1.0
     volume_output = true
     wifi = true
 
-[plugin_settings."weinguyen/procmon"]
-panel_placement = "attached"
-
 [plugin_settings."tadomika_ari/w-engine"]
 w-engine-panel_open_near_click = true
 w-engine-panel_placement = "attached"
@@ -824,14 +821,11 @@ type = "volume"
 
 [widget.keyboard_layout]
 hide_when_single_layout = true
-show_icon = false
+show_glyph = false
 type = "keyboard_layout"
 
     [widget.keyboard_layout.actions]
     right = "keyboard-layout-cycle"
-
-[widget.lid-guard]
-type = "8bury/lid-guard:lid-guard"
 
 [widget.lock_keys]
 display = "full"
@@ -867,9 +861,8 @@ device = "output"
 type = "volume"
 
 [widget.ram]
-display = "text"
 stat = "ram_pct"
-type = "sysmon"
+visualization = "none"
 
 [widget.spacer]
 interactive = false
@@ -884,9 +877,8 @@ type = "taskbar"
 workspace_label_placement = "inside"
 
 [widget.temp]
-display = "text"
 stat = "cpu_temp"
-type = "sysmon"
+visualization = "none"
 
 [widget.tray]
 drawer = true
@@ -904,9 +896,6 @@ type = "weather"
 
     [widget.weather.actions]
     right = "panel-toggle control-center weather"
-
-[widget.widget]
-type = "yuuto/arch-updater:widget"
 
 [widget.bar]
 type = "yuuto/calculator:bar"
@@ -933,9 +922,6 @@ type = "custom_button"
 [widget.w_engine_widget_2]
 type = "tadomika_ari/w-engine:w-engine-widget"
 
-[widget.widget_2]
-type = "oldirtty/color_picker:widget"
-
 [widget.screen]
 glyph = "screenshot"
 type = "custom_button"
@@ -945,7 +931,3 @@ type = "custom_button"
 
 [widget.widget_3]
 type = "alexander/screen-toolkit:widget"
-
-[widget.widget_4]
-type = "weinguyen/procmon:widget"
-

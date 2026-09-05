@@ -1,0 +1,8 @@
+{
+    "discordBranch": "stable",
+    "minimizeToTray": true,
+    "arRPC": true,
+    "webRTCIPHandlingPolicy": "default_public_interface_only",
+    "splashColor": "rgb(220, 220, 223)",
+    "splashBackground": "rgb(0, 0, 0)"
+}
