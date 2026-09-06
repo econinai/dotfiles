@@ -7,13 +7,12 @@
 
 ### noctalia greeter
 
-echo -e "Installing greeter..." 2>&1 | tee -a log.txt
-
-sudo cp "{{ .chezmoi.sourceDir }}/.assets/greetdconfig.toml" "/etc/greetd/config.toml" >> log.txt 2>&1
-
-sudo systemctl disable display-manager.service || true >> log.txt 2>&1
-
-sudo systemctl enable greetd >> log.txt 2>&1
+if [[ $(awk "/^noctalia-greeter$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
+  echo -e "Installing greeter..." 2>&1 | tee -a log.txt
+  sudo cp "{{ .chezmoi.sourceDir }}/.assets/greetdconfig.toml" "/etc/greetd/config.toml" >> log.txt 2>&1
+  sudo systemctl disable display-manager.service || true >> log.txt 2>&1
+  sudo systemctl enable greetd >> log.txt 2>&1
+fi;
 
 ### hyprland plugins
 
