@@ -107,4 +107,12 @@ if [[ $(awk "/^ark$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; th
 	xdg-mime default org.kde.ark.desktop application/x-compressed-tar >> log.txt 2>&1
 fi;
 
+### vmware
+
+if [[ $(awk "/^vmware-workstation$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
+	sudo systemctl start vmware-networks-configuration.service
+	sudo systemctl enable --now vmware-networks.service
+	sudo systemctl enable --now vmware-usbarbitrator.service
+fi;
+
 
