@@ -206,6 +206,8 @@ hl.layer_rule({ match = { namespace = "noctalia-bar-default" }, ignore_alpha = 0
 hl.layer_rule({ match = { namespace = "noctalia-bar-default" }, blur = true })
 hl.layer_rule({ match = { namespace = "noctalia-attached-panel" }, blur = true })
 hl.layer_rule({ match = { namespace = "noctalia-attached-panel" }, ignore_alpha = 0 })
+hl.layer_rule({ match = { namespace = "wvkbd" }, blur = true })
+hl.layer_rule({ match = { namespace = "wvkbd" }, ignore_alpha = 0 })
 
 if isneedborder then
 	hl.config({

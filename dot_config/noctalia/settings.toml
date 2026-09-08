@@ -101,7 +101,7 @@ order = [ "default", "bottom" ]
        	enabled = true
        	fill = "surface_variant"
        	id = "g6"
-       	members = [ "notifications", "clipboard", "bar_2", "bar" ]
+       	members = [ "notifications", "clipboard", "virt_kbd", "bar_2", "bar" ]
        	opacity = 0.0
        	padding = 6.0
        	
@@ -931,3 +931,12 @@ type = "custom_button"
 
 [widget.widget_3]
 type = "alexander/screen-toolkit:widget"
+
+
+[widget.virt_kbd]
+glyph = "keyboard-hide"
+tooltip = "Virtual Keyboard"
+type = "custom_button"
+
+    [widget.virt_kbd.actions]
+    left = "exec if pgrep -x wvkbd-mobintl || pgrep -x wvkbd; then killall wvkbd wvkbd-mobintl; else wvkbd-mobintl -L $(hyprctl monitors -j | jq '.[] | select(.focused == true) | .height / 2') -R 20 --alpha 128 --bg 00000000 --fg 000000 --fg-sp 000000 --fn \"DeJaVu $(hyprctl monitors -j | jq '.[] | select(.focused == true) | .height / 50')\"; fi"
