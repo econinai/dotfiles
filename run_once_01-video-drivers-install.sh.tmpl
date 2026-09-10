@@ -7,13 +7,13 @@
 VIDEODEVICES=()
 while IFS= read -r line; do
     VIDEODEVICES+=("$line")
-done < <(lspci | grep -E "(VGA|3D|Display)")
+done < <(lspci -nn | grep -E "(VGA|3D|Display)")
 
 NEEDS_NVIDIA_KMS=false
 
 for device in "${VIDEODEVICES[@]}"; do
   echo "Installing video drivers for $device" 2>&1 | tee -a log.txt
-  if [[ $(echo "$device" | grep -i "nvidia") != "" ]]; then ### NVIDIA
+  if [[ $(echo "$device" | grep -Ei "\[10de\]|\[10de:") != "" ]]; then ### NVIDIA
     NEEDS_NVIDIA_KMS=true
     case "$(echo "$device" | grep -oP '[A-Z]{2}(?=[0-9]{3})' | head -n 1)" in 
     GP|GM|GK|GF|G[0-9]) ### OLD NVIDIA (LOWER THEN 16xx)
@@ -23,9 +23,9 @@ for device in "${VIDEODEVICES[@]}"; do
       pkg_install "dkms nvidia-open-dkms nvidia-utils lib32-nvidia-utils vulkan-icd-loader lib32-vulkan-icd-loader"
       ;;
     esac
-  elif [[ $(echo "$device" | grep -i "radeon") != "" ]]; then ### AMD
+  elif [[ $(echo "$device" | grep -Ei "\[1002\]|\[1002:") != "" ]]; then ### AMD
     pkg_install "vulkan-radeon lib32-vulkan-radeon mesa-utils lib32-mesa"
-  elif [[ $(echo "$device" | grep -i "intel") != "" ]]; then ### INTEL
+  elif [[ $(echo "$device" | grep -Ei "\[8086\]|\[8086:") != "" ]]; then ### INTEL
     pkg_install "vulkan-intel lib32-vulkan-intel mesa-utils lib32-mesa"
   else
     pkg_install "mesa mesa-utils lib32-mesa"
