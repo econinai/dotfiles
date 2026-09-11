@@ -10,8 +10,8 @@
 if [[ $(awk "/^noctalia-greeter$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
   echo -e "Installing greeter..." 2>&1 | tee -a log.txt
   sudo cp "{{ .chezmoi.sourceDir }}/.assets/greetdconfig.toml" "/etc/greetd/config.toml" >> log.txt 2>&1
-  sudo systemctl disable display-manager.service || true >> log.txt 2>&1
-  sudo systemctl enable greetd >> log.txt 2>&1
+  manage_service "display-manager" "disable" || true
+  manage_service "greetd" "enable"
 fi;
 
 ### hyprland plugins
@@ -40,78 +40,78 @@ fi;
 
 if [[ $(awk "/^auto-cpufreq$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
   sudo cp {{ .chezmoi.sourceDir }}/.assets/auto-cpufreq.conf /etc/auto-cpufreq.conf >> log.txt 2>&1
-  sudo systemctl enable auto-cpufreq  >> log.txt 2>&1
+  manage_service "auto-cpufreq" "enable"
 fi;
 
 ### pacman-contrib
 
 if [[ $(awk "/^pacman-contrib$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
-  sudo systemctl enable --now paccache.timer >> log.txt 2>&1
+  manage_service "paccache.timer" "enable-now"
 fi;
 
 ### zen-browser
 
 awk '/^\[Install/ {in_section=1; next} /^\[/ {in_section=0} in_section && /^Default=/ {sub(/^Default=/, ""); print}' {{ .chezmoi.homeDir }}/.var/app/app.zen_browser.zen/.zen/profiles.ini | while read -r val; do
-	mkdir -p "{{ .chezmoi.homeDir }}/.var/app/app.zen_browser.zen/.zen/$val/chrome" >> log.txt 2>&1
-    echo "@import \"{{ .chezmoi.homeDir }}/.cache/noctalia/zen-browser/zen-userChrome.css\";" > "{{ .chezmoi.homeDir }}/.var/app/app.zen_browser.zen/.zen/$val/chrome/userChrome.css"
-    echo "@import \"{{ .chezmoi.homeDir }}/.cache/noctalia/zen-browser/zen-userContent.css\";" > "{{ .chezmoi.homeDir }}/.var/app/app.zen_browser.zen/.zen/$val/chrome/userContent.css"
-    flatpak override --user --filesystem={{ .chezmoi.homeDir }}/.cache/noctalia/zen-browser/zen-userContent.css app.zen_browser.zen >> log.txt 2>&1
-    flatpak override --user --filesystem={{ .chezmoi.homeDir }}/.cache/noctalia/zen-browser/zen-userChrome.css app.zen_browser.zen >> log.txt 2>&1
+  mkdir -p "{{ .chezmoi.homeDir }}/.var/app/app.zen_browser.zen/.zen/$val/chrome" >> log.txt 2>&1
+  echo "@import \"{{ .chezmoi.homeDir }}/.cache/noctalia/zen-browser/zen-userChrome.css\";" > "{{ .chezmoi.homeDir }}/.var/app/app.zen_browser.zen/.zen/$val/chrome/userChrome.css"
+  echo "@import \"{{ .chezmoi.homeDir }}/.cache/noctalia/zen-browser/zen-userContent.css\";" > "{{ .chezmoi.homeDir }}/.var/app/app.zen_browser.zen/.zen/$val/chrome/userContent.css"
+  flatpak override --user --filesystem={{ .chezmoi.homeDir }}/.cache/noctalia/zen-browser/zen-userContent.css app.zen_browser.zen >> log.txt 2>&1
+  flatpak override --user --filesystem={{ .chezmoi.homeDir }}/.cache/noctalia/zen-browser/zen-userChrome.css app.zen_browser.zen >> log.txt 2>&1
 done
 
 ### virt-manager
 
 if [[ $(awk "/^libvirt$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
-	sudo systemctl enable libvirtd.service >> log.txt 2>&1
+  manage_service "libvirtd" "enable"
 fi;
 
 ### dolphin
 
 if [[ $(awk "/^dolphin$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
-	xdg-mime default org.kde.dolphin.desktop inode/directory >> log.txt 2>&1
+  xdg-mime default org.kde.dolphin.desktop inode/directory >> log.txt 2>&1
 fi;
 
 ### kitty
 
 if [[ $(awk "/^kitty$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
-	xdg-mime default kitty.desktop x-scheme-handler/terminal >> log.txt 2>&1
-	kwriteconfig6 --file kdeglobals --group General --key TerminalApplication kitty >> log.txt 2>&1
+  xdg-mime default kitty.desktop x-scheme-handler/terminal >> log.txt 2>&1
+  kwriteconfig6 --file kdeglobals --group General --key TerminalApplication kitty >> log.txt 2>&1
 fi;
 
 ### ghostty
 
 if [[ $(awk "/^ghostty$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
-	xdg-mime default com.mitchellh.ghostty.desktop x-scheme-handler/terminal >> log.txt 2>&1
-	kwriteconfig6 --file kdeglobals --group General --key TerminalApplication ghostty >> log.txt 2>&1
+  xdg-mime default com.mitchellh.ghostty.desktop x-scheme-handler/terminal >> log.txt 2>&1
+  kwriteconfig6 --file kdeglobals --group General --key TerminalApplication ghostty >> log.txt 2>&1
 fi;
 
 ### fish
 
 if [[ $(awk "/^fish$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
-	chsh -s $(which fish) >> log.txt 2>&1
-	sudo chsh -s $(which fish) >> log.txt 2>&1
-	sudo cp {{ .chezmoi.sourceDir }}dot_config/private_fish/config.fish /etc/fish/config.fish >> log.txt 2>&1
+  chsh -s $(which fish) >> log.txt 2>&1
+  sudo chsh -s $(which fish) >> log.txt 2>&1
+  sudo cp {{ .chezmoi.sourceDir }}dot_config/private_fish/config.fish /etc/fish/config.fish >> log.txt 2>&1
 fi;
 
 ### ark
 
 if [[ $(awk "/^ark$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
-	xdg-mime default org.kde.ark.desktop application/zip >> log.txt 2>&1
-	xdg-mime default org.kde.ark.desktop application/x-tar >> log.txt 2>&1
-	xdg-mime default org.kde.ark.desktop application/x-7z-compressed >> log.txt 2>&1
-	xdg-mime default org.kde.ark.desktop application/x-rar >> log.txt 2>&1
-	xdg-mime default org.kde.ark.desktop application/x-gzip >> log.txt 2>&1
-	xdg-mime default org.kde.ark.desktop application/x-bzip2 >> log.txt 2>&1
-	xdg-mime default org.kde.ark.desktop application/x-xz >> log.txt 2>&1
-	xdg-mime default org.kde.ark.desktop application/x-compressed-tar >> log.txt 2>&1
+  xdg-mime default org.kde.ark.desktop application/zip >> log.txt 2>&1
+  xdg-mime default org.kde.ark.desktop application/x-tar >> log.txt 2>&1
+  xdg-mime default org.kde.ark.desktop application/x-7z-compressed >> log.txt 2>&1
+  xdg-mime default org.kde.ark.desktop application/x-rar >> log.txt 2>&1
+  xdg-mime default org.kde.ark.desktop application/x-gzip >> log.txt 2>&1
+  xdg-mime default org.kde.ark.desktop application/x-bzip2 >> log.txt 2>&1
+  xdg-mime default org.kde.ark.desktop application/x-xz >> log.txt 2>&1
+  xdg-mime default org.kde.ark.desktop application/x-compressed-tar >> log.txt 2>&1
 fi;
 
 ### vmware
 
 if [[ $(awk "/^vmware-workstation$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
-	sudo systemctl start vmware-networks-configuration.service
-	sudo systemctl enable --now vmware-networks.service
-	sudo systemctl enable --now vmware-usbarbitrator.service
+  manage_service "vmware-networks-configuration" "enable"
+  manage_service "vmware-networks" "enable-now"
+  manage_service "vmware-usbarbitrator" "enable-now"
 fi;
 
 
