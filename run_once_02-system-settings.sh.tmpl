@@ -2,6 +2,7 @@
 
 {{ template "sudo.tmpl" . }}
 {{ template "pkg_install.tmpl" . }}
+{{ template "service.tmpl" . }}
 
 ### udev
 
@@ -65,3 +66,11 @@ if ! grep -q "$SWAP_PATH" /etc/fstab; then
 fi
 
 sudo cp "{{ .chezmoi.sourceDir }}/.assets/logind.conf" "/etc/systemd/logind.conf" >> log.txt 2>&1
+
+### suspend check
+
+sudo cp "{{ .chezmoi.sourceDir }}/.assets/check-lid.service" "/etc/systemd/system/check-lid.service" >> log.txt 2>&1
+sudo cp "{{ .chezmoi.sourceDir }}/.assets/check_lid_after_wakeup.sh" "/usr/local/bin/check_lid_after_wakeup.sh" >> log.txt 2>&1
+sudo chmod +x /usr/local/bin/check_lid_after_wakeup.sh >> log.txt 2>&1
+manage_service "-" "daemon-reload"
+manage_service "check-lid" "enable-now"

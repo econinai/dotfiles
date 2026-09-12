@@ -1,0 +1,10 @@
+[Unit]
+Description=Check lid status after suspend
+After=suspend.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/check_lid_after_wakeup.sh
+
+[Install]
+WantedBy=suspend.target

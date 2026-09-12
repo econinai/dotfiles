@@ -10,6 +10,7 @@ manage_service() {
           "start")       sudo systemctl start "$service_name" >> log.txt 2>&1 ;;
           "disable-now") sudo systemctl disable —now "$service_name" >> log.txt 2>&1 ;;
           "disable")     sudo systemctl disable "$service_name" >> log.txt 2>&1 ;;
+          "daemon-reload") sudo systemctl daemon-reload >> log.txt 2>&1 ;;
         esac
       fi
 
