@@ -5,6 +5,10 @@
 
 # {{ include ".assets/packageList" | sha256sum }}
 
+### root bashrc
+
+sudo cp "{{ .chezmoi.sourceDir }}/dot_bashrc" "/root/.bashrc" >> log.txt 2>&1
+
 ### noctalia greeter
 
 if [[ $(awk "/^noctalia-greeter$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
