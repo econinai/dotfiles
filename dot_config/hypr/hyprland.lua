@@ -42,6 +42,46 @@ local mediaNext = "noctalia msg media next"
 local mediaToggle = "noctalia msg media playPause"
 local taskmng = "missioncenter"
 local showInfo = "notify-send \"all is ok\""
+local help = [[
+if pgrep -x yad > /dev/null; then
+    if hyprctl clients -j | jq -e '.[] | select(.title == "Hyprland Keybinds HUD")' > /dev/null; then
+        pkill -f "title=Hyprland Keybinds HUD"
+        exit 0
+    fi
+fi
+
+hyprctl binds -j | jq -r '.[] | "\(.modmask) + \(.key)\n\(if .description != "" then .description else .dispatcher end)"' | \
+sed -E \
+    -e 's/^0 \+ //g' \
+        -e 's/^64 \+ SUPER_L/󰘳/g' \
+    -e 's/^64 \+/󰘳   + /g' \
+    -e 's/^65 \+/󰘳   + 󰘶  + /g' \
+    -e 's/^68 \+/󰘳   + 󰘵  + /g' \
+    -e 's/^69 \+/󰘳   + 󰘵  + 󰘶  + /g' \
+    -e 's/^8 \+/󰘵  + /g' \
+    -e 's/^9 \+/󰘵  + 󰘶  + /g' \
+    -e 's/^1 \+/󰘶  + /g' \
+    -e 's/^16 \+/󰘴  + /g' \
+    -e 's/^17 \+/󰘴  + 󰘶  + /g' \
+    -e 's/^4 \+/󰘴  + /g' \
+    -e 's/^5 \+/󰘴  + 󰘶  + /g' \
+    -e 's/modmask : //g' \
+    -e '/^[A-Z0-9]/ s/^(.{1,30})/&                              /; s/^(.{30}).*$/\1/' | \
+yad --list \
+    --title="Hyprland Keybinds HUD" \
+    --window-icon="preferences-desktop-keyboard-shortcuts" \
+    --column="Сочетание клавиш:C" \
+    --column="Описание / Действие:C" \
+    --expand-column=0 \
+    --column-align="cc" \
+    --width=$(hyprctl monitors -j | jq '.[] | select(.focused == true) | .width / 2') \
+    --height=$(hyprctl monitors -j | jq '.[] | select(.focused == true) | .height / 2') \
+    --directory \
+    --no-headers \
+    --search-column=2 \
+    --button="Закрыть":0 \
+    --center
+]]
 
 -------------------
 ---- AUTOSTART ----
@@ -200,7 +240,7 @@ if transparentenabled then
         hl.window_rule({ match = { class = value }, opacity = "1.0 override 0.5 override" })
     end
 end
-
+hl.window_rule({ match = { class = "yad", title = "Hyprland Keybinds HUD"}, float = true, pin = true, center = true })
 hl.layer_rule({ match = { namespace = "selection" }, blur = false })
 hl.layer_rule({ match = { namespace = "noctalia-bar-default" }, ignore_alpha = 0 })
 hl.layer_rule({ match = { namespace = "noctalia-bar-default" }, blur = true })
@@ -389,79 +429,85 @@ hl.device({
 local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
-hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd(screenshot))
-hl.bind(mainMod .. " + V", hl.dsp.exec_cmd(openBuffer))
-hl.bind(mainMod .. " + C", hl.dsp.exec_cmd(toolkit))
-hl.bind(mainMod .. " + SUPER_L", hl.dsp.exec_cmd(mainMenu), {release = true})
-hl.bind(mainMod .. " + O", hl.dsp.exec_cmd(texteditor))
+hl.bind(mainMod .. " + H", hl.dsp.exec_cmd(help), { description = "󰞋  (Help)" })
+hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd(screenshot), { description = "󱣛  (Screenshot)" })
+hl.bind(mainMod .. " + V", hl.dsp.exec_cmd(openBuffer), { description = "  (Clipboard)" })
+hl.bind(mainMod .. " + C", hl.dsp.exec_cmd(toolkit), { description = "  (Screen toolkit)" })
+hl.bind(mainMod .. " + SUPER_L", hl.dsp.exec_cmd(mainMenu), {release = true, description = "  (Noctalia home)"})
+hl.bind(mainMod .. " + O", hl.dsp.exec_cmd(texteditor), { description = "󱩼  (Text editor)"})
 
-hl.bind("SHIFT + ALT + ALT_L", hl.dsp.exec_cmd(switchLocal), {release = true, locked = true, transparent = true})
-hl.bind("SHIFT + ALT + SHIFT_L", hl.dsp.exec_cmd(switchLocal), {release = true, locked = true, transparent = true})
-hl.bind("SUPER + TAB", hl.dsp.focus({ workspace = "previous_per_monitor" }))
-hl.bind("ALT + TAB", hl.dsp.focus({ monitor = "+1" }))
 
-hl.bind(mainMod .. " + comma", hl.dsp.exec_cmd(mediaPrev))
-hl.bind(mainMod .. " + period", hl.dsp.exec_cmd(mediaNext))
-hl.bind(mainMod .. " + slash", hl.dsp.exec_cmd(mediaToggle))
-hl.bind("CTRL + Control_R", hl.dsp.exec_cmd(showInfo))
+hl.bind("SHIFT + ALT + ALT_L", hl.dsp.exec_cmd(switchLocal), {release = true, locked = true, transparent = true, description = "  (Keyboard)"})
+hl.bind("SHIFT + ALT + SHIFT_L", hl.dsp.exec_cmd(switchLocal), {release = true, locked = true, transparent = true, description = "  (Keyboard)"})
+hl.bind("SUPER + TAB", hl.dsp.focus({ workspace = "previous_per_monitor" }), { description = "󰦛  (Last workspace)"})
+hl.bind("ALT + TAB", hl.dsp.focus({ monitor = "+1" }), { description = "󰍺  (Toggle per monitor)"})
 
-hl.bind("CTRL + SHIFT + escape", hl.dsp.exec_cmd(taskmng))
+hl.bind(mainMod .. " + comma", hl.dsp.exec_cmd(mediaPrev), { description = "󰒮  (Previous)"})
+hl.bind(mainMod .. " + period", hl.dsp.exec_cmd(mediaNext), { description = "󰒭  (Next)"})
+hl.bind(mainMod .. " + slash", hl.dsp.exec_cmd(mediaToggle), { description = "󰐎  (Play/Pause)"})
+hl.bind("CTRL + Control_R", hl.dsp.exec_cmd(showInfo), { description = "Show system info(doesnt work)"})
 
-hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
-hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(terminal))
-hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.window.close())
-hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exec_cmd(exitHyprland))
-hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
-hl.bind(mainMod .. " + T", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(launcher))
+hl.bind("CTRL + SHIFT + escape", hl.dsp.exec_cmd(taskmng), { description = "  (Task manager)"})
+
+hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }), { description = "  (Fullscreen)"})
+hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(terminal), { description = "  (Terminal)"})
+hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.window.close(), { description = "󰱞  (Close window)"})
+hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exec_cmd(exitHyprland), { description = "󰈆  (Exit hyprland)"})
+hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager), { description = "  (File manager)"})
+hl.bind(mainMod .. " + T", hl.dsp.window.float({ action = "toggle" }), { description = "󰉨  (Float)"})
+hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(launcher), { description = "󰀻  (Launcher)"})
 
 -- Move focus with mainMod + arrow keys
-hl.bind(mainMod .. " + A", hl.dsp.focus({ direction = "left" }))
-hl.bind(mainMod .. " + D", hl.dsp.focus({ direction = "right" }))
-hl.bind(mainMod .. " + W", hl.dsp.focus({ direction = "up" }))
-hl.bind(mainMod .. " + S", hl.dsp.focus({ direction = "down" }))
+hl.bind(mainMod .. " + A", hl.dsp.focus({ direction = "left" }), { description = "   (Focus)"})
+hl.bind(mainMod .. " + D", hl.dsp.focus({ direction = "right" }), { description = "   (Focus)"})
+hl.bind(mainMod .. " + W", hl.dsp.focus({ direction = "up" }), { description = "   (Focus)"})
+hl.bind(mainMod .. " + S", hl.dsp.focus({ direction = "down" }), { description = "   (Focus)"})
 
-hl.bind(mainMod .. " + CTRL + A", hl.dsp.window.move({ direction = "left" }))
-hl.bind(mainMod .. " + CTRL + D", hl.dsp.window.move({ direction = "right" }))
-hl.bind(mainMod .. " + CTRL + W", hl.dsp.window.move({ direction = "up" }))
-hl.bind(mainMod .. " + CTRL + S", hl.dsp.window.move({ direction = "down" }))
+hl.bind(mainMod .. " + CTRL + A", hl.dsp.window.move({ direction = "left" }), { description = "   (Move)"})
+hl.bind(mainMod .. " + CTRL + D", hl.dsp.window.move({ direction = "right" }), { description = "   (Move)"})
+hl.bind(mainMod .. " + CTRL + W", hl.dsp.window.move({ direction = "up" }), { description = "   (Move)"})
+hl.bind(mainMod .. " + CTRL + S", hl.dsp.window.move({ direction = "down" }), { description = "   (Move)"})
 
-hl.bind(mainMod .. " + SHIFT + CTRL + A", hl.dsp.workspace.move({ monitor = "left" }))
-hl.bind(mainMod .. " + SHIFT + CTRL + D", hl.dsp.workspace.move({ monitor = "right" }))
-hl.bind(mainMod .. " + SHIFT + CTRL + W", hl.dsp.workspace.move({ monitor = "up" }))
-hl.bind(mainMod .. " + SHIFT + CTRL + S", hl.dsp.workspace.move({ monitor = "down" }))
+hl.bind(mainMod .. " + SHIFT + CTRL + A", hl.dsp.workspace.move({ monitor = "left" }), { description = "󰍹   (Move)"})
+hl.bind(mainMod .. " + SHIFT + CTRL + D", hl.dsp.workspace.move({ monitor = "right" }), { description = "󰍹   (Move)"})
+hl.bind(mainMod .. " + SHIFT + CTRL + W", hl.dsp.workspace.move({ monitor = "up" }), { description = "󰍹   (Move)"})
+hl.bind(mainMod .. " + SHIFT + CTRL + S", hl.dsp.workspace.move({ monitor = "down" }), { description = "󰍹   (Move)"})
 
 -- Switch workspaces with mainMod + [0-9]
 -- Move active window to a workspace with mainMod + SHIFT + [0-9]
 for i = 1, 10 do
     local key = i % 10 -- 10 maps to key 0
-    hl.bind(mainMod .. " + " .. key,             hl.dsp.focus({ workspace = i}))
-    hl.bind(mainMod .. " + SHIFT + " .. key,     hl.dsp.window.move({ workspace = i }))
+    hl.bind(mainMod .. " + " .. key,             hl.dsp.focus({ workspace = i}), { description = "󱂬   ".. i .. " (Workspace)"})
+end
+for i = 1, 10 do
+    local key = i % 10 -- 10 maps to key 0
+    hl.bind(mainMod .. " + SHIFT + " .. key,     hl.dsp.window.move({ workspace = i }), { description = "   " .. i .. " (Move window)"})
 end
 
+
 -- Scroll through existing workspaces with mainMod + scroll
-hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
-hl.bind(mainMod .. " + mouse_up",   hl.dsp.focus({ workspace = "e-1" }))
+hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }), { description = "󱂬   (Next workspace)"})
+hl.bind(mainMod .. " + mouse_up",   hl.dsp.focus({ workspace = "e-1" }), { description = "󱂬   (Previous workspace)"})
 
 -- Move/resize windows with mainMod + LMB/RMB and dragging
-hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
-hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true, description = " 󰆾  (Move)" })
+hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true, description = " 󰩨  (Resize)" })
 
 -- Laptop multimedia keys for volume and LCD brightness
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),      { locked = true, repeating = true })
-hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),     { locked = true, repeating = true })
-hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),   { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessUp",  hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"),                  { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"),                  { locked = true, repeating = true })
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true, description = "󰝞  (Less)" })
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),      { locked = true, repeating = true, description = "󰝝  (More)" })
+hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),     { locked = true, repeating = true, description = "󰖁  (Mute)" })
+hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),   { locked = true, repeating = true, description = "󰍭  (Volume)" })
+hl.bind("XF86MonBrightnessUp",  hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"),                  { locked = true, repeating = true, description = "󰃠  (More)" })
+hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"),                  { locked = true, repeating = true, description = "󰃞  (Less)" })
 
 -- Requires playerctl
-hl.bind("XF86AudioNext",  hl.dsp.exec_cmd(mediaNext),   { locked = true })
-hl.bind("XF86AudioPause", hl.dsp.exec_cmd(mediaToggle), { locked = true })
-hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd(mediaToggle), { locked = true })
-hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd(mediaPrev),   { locked = true })
+hl.bind("XF86AudioNext",  hl.dsp.exec_cmd(mediaNext),   { locked = true, description = "󰒭  (Next)" })
+hl.bind("XF86AudioPause", hl.dsp.exec_cmd(mediaToggle), { locked = true, description = "󰐎  (Play/Pause)" })
+hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd(mediaToggle), { locked = true, description = "󰐎  (Play/Pause)" })
+hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd(mediaPrev),   { locked = true, description = "󰒮  (Previous)" })
 
-hl.bind("CTRL + SHIFT + M", hl.dsp.pass({ window = "class:^(vesktop)$" }), { transparent = true })
+hl.bind("CTRL + SHIFT + M", hl.dsp.pass({ window = "class:^(vesktop)$" }), { transparent = true, description = "  (Mute)" })
 
 local isneedlidguard = "0"
 local file = io.open(os.getenv("HOME") .. "/.cache/lid_guard", "r")
@@ -471,16 +517,16 @@ if file then
 end
 
 if isneedlidguard == "0" then
-    hl.bind("switch:on:Lid Switch", hl.dsp.exec_cmd("noctalia msg session lock; systemctl suspend -i"), { locked = true })
+    hl.bind("switch:on:Lid Switch", hl.dsp.exec_cmd("noctalia msg session lock; systemctl suspend -i"), { locked = true, description = "Suspend" })
 end    
 
 hl.bind("switch:on:Lid Switch", function()
                  hl.timer(function()
                    hl.dispatch(hl.dsp.dpms({ action = "disable" }))
                  end, {timeout = 500, type = "oneshot"})
-               end, { locked = true })
+               end, { locked = true, description = "On monitor" })
 hl.bind("switch:off:Lid Switch", function()
                  hl.timer(function()
                    hl.dispatch(hl.dsp.dpms({ action = "enable" }))
                  end, {timeout = 500, type = "oneshot"})
-               end, { locked = true })
+               end, { locked = true, description = "Off monitor" })
