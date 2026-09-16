@@ -42,46 +42,7 @@ local mediaNext = "noctalia msg media next"
 local mediaToggle = "noctalia msg media playPause"
 local taskmng = "missioncenter"
 local showInfo = "notify-send \"all is ok\""
-local help = [[
-if pgrep -x yad > /dev/null; then
-    if hyprctl clients -j | jq -e '.[] | select(.title == "Hyprland Keybinds HUD")' > /dev/null; then
-        pkill -f "title=Hyprland Keybinds HUD"
-        exit 0
-    fi
-fi
-
-hyprctl binds -j | jq -r '.[] | "\(.modmask) + \(.key)\n\(if .description != "" then .description else .dispatcher end)"' | \
-sed -E \
-    -e 's/^0 \+ //g' \
-        -e 's/^64 \+ SUPER_L/󰘳/g' \
-    -e 's/^64 \+/󰘳   + /g' \
-    -e 's/^65 \+/󰘳   + 󰘶  + /g' \
-    -e 's/^68 \+/󰘳   + 󰘵  + /g' \
-    -e 's/^69 \+/󰘳   + 󰘵  + 󰘶  + /g' \
-    -e 's/^8 \+/󰘵  + /g' \
-    -e 's/^9 \+/󰘵  + 󰘶  + /g' \
-    -e 's/^1 \+/󰘶  + /g' \
-    -e 's/^16 \+/󰘴  + /g' \
-    -e 's/^17 \+/󰘴  + 󰘶  + /g' \
-    -e 's/^4 \+/󰘴  + /g' \
-    -e 's/^5 \+/󰘴  + 󰘶  + /g' \
-    -e 's/modmask : //g' \
-    -e '/^[A-Z0-9]/ s/^(.{1,30})/&                              /; s/^(.{30}).*$/\1/' | \
-yad --list \
-    --title="Hyprland Keybinds HUD" \
-    --window-icon="preferences-desktop-keyboard-shortcuts" \
-    --column="Сочетание клавиш:C" \
-    --column="Описание / Действие:C" \
-    --expand-column=0 \
-    --column-align="cc" \
-    --width=$(hyprctl monitors -j | jq '.[] | select(.focused == true) | .width / 2') \
-    --height=$(hyprctl monitors -j | jq '.[] | select(.focused == true) | .height / 2') \
-    --directory \
-    --no-headers \
-    --search-column=2 \
-    --button="Закрыть":0 \
-    --center
-]]
+local help = "noctalia msg panel-toggle blackbartblues/keymap:panel"
 
 -------------------
 ---- AUTOSTART ----
@@ -240,7 +201,6 @@ if transparentenabled then
         hl.window_rule({ match = { class = value }, opacity = "1.0 override 0.5 override" })
     end
 end
-hl.window_rule({ match = { class = "yad", title = "Hyprland Keybinds HUD"}, float = true, pin = true, center = true })
 hl.layer_rule({ match = { namespace = "selection" }, blur = false })
 hl.layer_rule({ match = { namespace = "noctalia-bar-default" }, ignore_alpha = 0 })
 hl.layer_rule({ match = { namespace = "noctalia-bar-default" }, blur = true })

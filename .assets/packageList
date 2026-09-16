@@ -209,7 +209,6 @@ xdg-utils
 zbar 
 gnome-keyring
 seahorse
-yad
 
 app.zen_browser.zen
 com.usebottles.bottles

@@ -423,6 +423,11 @@ scale = 1.0
     volume_output = true
     wifi = true
 
+[plugin_settings."blackbartblues/keymap"]
+compositor = "hyprland"
+panel_layer = "overlay"
+panel_placement = "attached"
+
 [plugin_settings."tadomika_ari/w-engine"]
 w-engine-panel_open_near_click = true
 w-engine-panel_placement = "attached"
@@ -441,7 +446,8 @@ enabled = [
     "noctalia/timer",
     "alexander/screen-toolkit",
     "rylos/syncthing",
-    "rylos/tailnet"
+    "rylos/tailnet",
+    "blackbartblues/keymap"
 ]
 
     [[plugins.source]]
