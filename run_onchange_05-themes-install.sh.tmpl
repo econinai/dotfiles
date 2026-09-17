@@ -73,7 +73,3 @@ sudo grep "GRUB_GFXMODE=" /etc/default/grub 2>&1 >/dev/null && sudo sed -i '/GRU
 echo "GRUB_GFXMODE=\"1920x1080x32,auto\"" | sudo tee -a /etc/default/grub >> log.txt 2>&1
 
 update_grub
-
-### root bashrc
-
-sudo cp "{{ .chezmoi.sourceDir }}/dot_bashrc" "/root/.bashrc" >> log.txt 2>&1

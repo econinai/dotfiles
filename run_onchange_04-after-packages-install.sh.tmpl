@@ -100,6 +100,12 @@ if [[ $(awk "/^fish$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; t
   sudo cp {{ .chezmoi.sourceDir }}dot_config/private_fish/config.fish /etc/fish/config.fish >> log.txt 2>&1
 fi;
 
+### root bashrc
+
+if [[ $(awk "/^bash-completion$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
+  sudo cp "{{ .chezmoi.sourceDir }}/dot_bashrc" "/root/.bashrc" >> log.txt 2>&1
+fi;
+
 ### ark
 
 if [[ $(awk "/^ark$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
@@ -120,5 +126,3 @@ if [[ $(awk "/^vmware-workstation$/" {{ .chezmoi.sourceDir }}/.assets/packageLis
   manage_service "vmware-networks" "enable-now"
   manage_service "vmware-usbarbitrator" "enable-now"
 fi;
-
-
