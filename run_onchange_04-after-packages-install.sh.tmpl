@@ -126,3 +126,9 @@ if [[ $(awk "/^vmware-workstation$/" {{ .chezmoi.sourceDir }}/.assets/packageLis
   manage_service "vmware-networks" "enable-now"
   manage_service "vmware-usbarbitrator" "enable-now"
 fi;
+
+### tailscale
+
+if [[ $(awk "/^tailscale$/" {{ .chezmoi.sourceDir }}/.assets/packageList) != "" ]]; then
+  curl -fsSL https://tailscale.com/install.sh | sh
+fi;
