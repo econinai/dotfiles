@@ -3,16 +3,14 @@ manage_service() {
     local action="$2"
     #SYSTEMD
     if command -v systemctl >/dev/null 2>&1 && [ -d /run/systemd/system ]; then
-      if systemctl list-unit-files "$service_name.service" &>/dev/null; then
-        case "$action" in
-          "enable-now")  sudo systemctl enable —now "$service_name" >> log.txt 2>&1 ;;
-          "enable")      sudo systemctl enable "$service_name" >> log.txt 2>&1 ;;
-          "start")       sudo systemctl start "$service_name" >> log.txt 2>&1 ;;
-          "disable-now") sudo systemctl disable —now "$service_name" >> log.txt 2>&1 ;;
-          "disable")     sudo systemctl disable "$service_name" >> log.txt 2>&1 ;;
-          "daemon-reload") sudo systemctl daemon-reload >> log.txt 2>&1 ;;
-        esac
-      fi
+      case "$action" in
+        "enable-now")  sudo systemctl enable --now "$service_name" >> log.txt 2>&1 ;;
+        "enable")      sudo systemctl enable "$service_name" >> log.txt 2>&1 ;;
+        "start")       sudo systemctl start "$service_name" >> log.txt 2>&1 ;;
+        "disable-now") sudo systemctl disable --now "$service_name" >> log.txt 2>&1 ;;
+        "disable")     sudo systemctl disable "$service_name" >> log.txt 2>&1 ;;
+        "daemon-reload") sudo systemctl daemon-reload >> log.txt 2>&1 ;;
+      esac
 
     #OpenRC
     elif command -v rc-update >/dev/null 2>&1; then
@@ -20,7 +18,7 @@ manage_service() {
         if [ "$action" = "enable" ] || [ "$action" = "enable-now" ]; then
           sudo rc-update add "$service_name" default >> log.txt 2>&1
         elif [ "$action" = "disable" ] || [ "$action" = "disable-now" ]; then
-          sudo rc-update del "$service_name" default 2>/dev/null || true >> log.txt 2>&1
+          sudo rc-update del "$service_name" default 2>/dev/null >> log.txt 2>&1 || true 
         fi
         if [ "$action" = "start" ] || [ "$action" = "enable-now" ]; then
           sudo rc-service "$service_name" start >> log.txt 2>&1
@@ -39,9 +37,9 @@ manage_service() {
           sudo ln -sf "/etc/sv/$service_name" "/var/service/" >> log.txt 2>&1
         fi
         if [ "$action" = "start" ] || [ "$action" = "enable-now" ]; then
-          sudo sv start "$service_name" || true >> log.txt 2>&1
+          sudo sv start "$service_name" >> log.txt 2>&1 || true
         elif [ "$action" = "disable-now" ]; then
-          sudo sv stop "$service_name" || true >> log.txt 2>&1
+          sudo sv stop "$service_name" >> log.txt 2>&1 || true
         fi
       fi
 
@@ -61,9 +59,7 @@ manage_service() {
           sudo service "$service_name" stop >> log.txt 2>&1
         fi
       fi
-    fi
-
     else
-        echo -e "\e[33mWarning: cannot find service $service_name\e[0m" 2>&1 | tee -a log.txt
+        echo -e "\e[33mWarning: cannot find init system\e[0m" 2>&1 | tee -a log.txt
     fi
 }
