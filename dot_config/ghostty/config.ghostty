@@ -18,7 +18,7 @@ theme = noctalia
 keybind = ctrl+c=unbind
 keybind = ctrl+v=unbind
 keybind = ctrl+shift+c=unbind
-keybind = ctrl+key_c=copy_to_clipboard
+keybind = performable:ctrl+key_c=copy_to_clipboard
 keybind = ctrl+key_v=paste_from_clipboard
 keybind = ctrl+shift+key_c=text:\x03
 
