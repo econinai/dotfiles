@@ -1,3 +1,5 @@
+CHEZMOI_SOURCE_DIR="{{ .chezmoi.sourceDir }}"
+
 for PKG_MGR in pacman apt dnf zypper apk; do command -v $PKG_MGR &>/dev/null && break; done
 
 diff_words() {
