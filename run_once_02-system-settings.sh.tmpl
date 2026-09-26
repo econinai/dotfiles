@@ -17,6 +17,10 @@ SUBSYSTEM=="input", GROUP="input", MODE="0660"
 ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="on"
 EOF' >> log.txt 2>&1
 
+sudo bash -c 'cat <<EOF > /etc/udev/rules.d/99-kbd-leds.rules
+SUBSYSTEM=="leds", KERNEL=="*kbd_backlight", ACTION=="add", RUN+="/bin/chmod -R a+w /sys%p"
+EOF' >> log.txt 2>&1
+
 ### swap file
 
 echo "Installing swap file..." 2>&1 | tee -a log.txt
