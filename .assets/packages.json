@@ -255,7 +255,21 @@
       "manage_service \"vmware-usbarbitrator\" \"enable-now\"",
     ]
   },
-  "vscodium": {},
+  "vscodium": {
+  	"pre_install": [
+  	  "extensions=(",
+  	  "\"continue.continue\"",
+  	  "\"mhutchie.git-graph\"",
+  	  "\"rust-lang.rust-analyzer\"",
+  	  "\"ryanluker.vscode-coverage-gutters\"",
+  	  "\"usernamehw.errorlens\"",
+  	  "\"vadimcn.vscode-lldb\"",
+  	  ")",
+  	  "for ext in \"${extensions[@]}\"; do",
+  	  "codium --install-extension \"$ext\" --force",
+  	  "done"
+  	]
+  },
   "wayland": {},
   "wget": {},
   "wf-recorder": {},
@@ -279,12 +293,12 @@
   "seahorse": {},
   "app.zen_browser.zen": {
   	"pre_install": [
-      "awk '/^\[Install/ {in_section=1; next} /^\[/ {in_section=0} in_section && /^Default=/ {sub(/^Default=/, \"\"); print}' $HOME/.var/app/app.zen_browser.zen/.zen/profiles.ini | while read -r val; do \\",
-  	  "mkdir -p \"$HOME/.var/app/app.zen_browser.zen/.zen/$val/chrome\" \\",
-  	  "echo \"@import \\\"$HOME/.cache/noctalia/zen-browser/zen-userChrome.css\\\";\" > \"$HOME/.var/app/app.zen_browser.zen/.zen/$val/chrome/userChrome.css\" \\",
-  	  "echo \"@import \\\"$HOME/.cache/noctalia/zen-browser/zen-userContent.css\\\";\" > \"$HOME/.var/app/app.zen_browser.zen/.zen/$val/chrome/userContent.css\" \\",
-  	  "flatpak override --user --filesystem=$HOME/.cache/noctalia/zen-browser/zen-userContent.css app.zen_browser.zen \\",
-      "flatpak override --user --filesystem=$HOME/.cache/noctalia/zen-browser/zen-userChrome.css app.zen_browser.zen \\",
+      "awk '/^\[Install/ {in_section=1; next} /^\[/ {in_section=0} in_section && /^Default=/ {sub(/^Default=/, \"\"); print}' $HOME/.var/app/app.zen_browser.zen/.zen/profiles.ini | while read -r val; do",
+  	  "mkdir -p \"$HOME/.var/app/app.zen_browser.zen/.zen/$val/chrome\"",
+  	  "echo \"@import \\\"$HOME/.cache/noctalia/zen-browser/zen-userChrome.css\\\";\" > \"$HOME/.var/app/app.zen_browser.zen/.zen/$val/chrome/userChrome.css\"",
+  	  "echo \"@import \\\"$HOME/.cache/noctalia/zen-browser/zen-userContent.css\\\";\" > \"$HOME/.var/app/app.zen_browser.zen/.zen/$val/chrome/userContent.css\"",
+  	  "flatpak override --user --filesystem=$HOME/.cache/noctalia/zen-browser/zen-userContent.css app.zen_browser.zen",
+      "flatpak override --user --filesystem=$HOME/.cache/noctalia/zen-browser/zen-userChrome.css app.zen_browser.zen",
   	  "done"
   	]
   },
