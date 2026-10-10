@@ -38,7 +38,8 @@ fi
 case "$FS_TYPE" in
   f2fs)
     sudo touch "$SWAP_PATH" >> log.txt 2>&1
-    sudo chattr +C "$SWAP_PATH" >> log.txt 2>&1
+    sudo truncate -s 0 "$SWAP_PATH" >> log.txt 2>&1
+    sudo f2fs_io pinfile set "$SWAP_PATH" >> log.txt 2>&1
     sudo fallocate -l "$SWAP_SIZE" "$SWAP_PATH" >> log.txt 2>&1
     ;;
     
