@@ -309,8 +309,15 @@ enabled = true
     command = ""
 
 [idle]
-behavior_order = [ "screen-off", "lock", "lock-and-suspend" ]
-pre_action_fade_seconds = 2.0
+behavior_order = [ "Kbd backlight", "screen-off", "lock", "lock-and-suspend" ]
+pre_action_fade_seconds = 0.0
+
+	[idle.behavior."Kbd backlight"]
+	action = "command"
+	command = "brightnessctl -sd '*kbd_backlight' set 0"
+	enabled = true
+	resume_command = "brightnessctl -rd '*kbd_backlight'"
+	timeout = 10.0
 
     [idle.behavior.lock]
     action = "lock"
