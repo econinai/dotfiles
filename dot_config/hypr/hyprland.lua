@@ -94,8 +94,8 @@ if apperance_mode == "blur" then
 elseif apperance_mode == "liquid" then
     hyprglassenabled = true
     blurenabled = false
-    transparentenabled = false
-    inactive_opacityvalue = 1.0
+    transparentenabled = true
+    inactive_opacityvalue = 0.8
     isneedborder = false
     hl.exec_cmd("sed -i '/^[[:space:]]*\\[bar\\.default\\]/,/[[:space:]]*background_opacity/s/\\(background_opacity[[:space:]]*=[[:space:]]*\\)[0-9.]\\+/\\11.0/' ~/.config/noctalia/settings.toml")
     hl.exec_cmd("sed -i '/^[[:space:]]*\\[bar\\.bottom\\]/,/[[:space:]]*background_opacity/s/\\(background_opacity[[:space:]]*=[[:space:]]*\\)[0-9.]\\+/\\11.0/' ~/.config/noctalia/settings.toml")
@@ -154,9 +154,12 @@ if hl.plugin.hyprglass then
 
     hg.config({
         enabled = hyprglassenabled,
+        manage_window_blur = false,
+        skip_opaque_windows = false,
+        blur_fold = false,
+        xray = 0,
         
         default_theme = "dark",
-        default_preset = "default",
 
         brightness = 1.0,
         blur_strength = 2.0,
@@ -164,7 +167,7 @@ if hl.plugin.hyprglass then
         chromatic_aberration = 0.1,
         fresnel_strength = 0.3,
         specular_strength = 0.5,
-        glass_opacity = 1.4,
+        glass_opacity = 1.0,
         tint_color = 0x00000000,
         contrast = 1.0,
         saturation = 1.0,
@@ -172,7 +175,7 @@ if hl.plugin.hyprglass then
         refraction_strength = 10.0,
         lens_distortion = 5.0,
         edge_thickness = 0.05,
-    })
+    })  
 end
 
 -----------------------
@@ -183,7 +186,6 @@ if transparentenabled then
     local classes = {"vesktop", "org.telegram.desktop", "codium", "steam", "app.zen_browser.zen", "anytype"}
 
     for index, value in ipairs(classes) do
-        hl.window_rule({ match = { class = value }, tag = "+hyprglass_preset_clear" })
         hl.window_rule({ match = { class = value }, opacity = "1.0 override 0.5 override" })
     end
 end
