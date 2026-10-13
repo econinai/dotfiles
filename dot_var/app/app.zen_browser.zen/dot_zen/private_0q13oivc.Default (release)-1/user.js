@@ -63,3 +63,6 @@ user_pref("zen.view.show-newtab-button-top", false);
 user_pref("zen.view.sidebar-expanded", false);
 user_pref("zen.view.use-single-toolbar", false);
 user_pref("zen.welcome-screen.seen", true);
+
+user_pref("zen.widget.linux.transparency", true);
+user_pref("browser.tabs.allow_transparent_browser", true);

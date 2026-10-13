@@ -91,6 +91,13 @@ if apperance_mode == "blur" then
     hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\10.5\\2/g\" ~/.config/noctalia/templates/gtk/gtk4.css ")
     hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\10.5\\2/g\" ~/.config/noctalia/templates/gtk/gtk3.css ")
     hl.exec_cmd("sed -i -E \"s/(--window-bg-color: \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\10.5\\2/g\" ~/.config/noctalia/templates/gtk/gtk4.css ")
+	hl.exec_cmd([==[bash -c '
+	awk '"'"'/^\[Install/ {in_section=1; next} /^\[/ {in_section=0} in_section && /^Default=/ {sub(/^Default=/, ""); print}'"'"' "$HOME/.var/app/app.zen_browser.zen/.zen/profiles.ini" | while read -r val; do
+	  dir="$HOME/.var/app/app.zen_browser.zen/.zen/$val/chrome"
+	  rm "$dir/userChrome.css"
+	  rm "$dir/userContent.css"
+	done
+	']==])
 elseif apperance_mode == "liquid" then
     hyprglassenabled = true
     blurenabled = false
@@ -105,6 +112,13 @@ elseif apperance_mode == "liquid" then
     hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\10.5\\2/g\" ~/.config/noctalia/templates/gtk/gtk4.css ")
     hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\10.5\\2/g\" ~/.config/noctalia/templates/gtk/gtk3.css ")
     hl.exec_cmd("sed -i -E \"s/(--window-bg-color: \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\10.5\\2/g\" ~/.config/noctalia/templates/gtk/gtk4.css ")
+	hl.exec_cmd([==[bash -c '
+	awk '"'"'/^\[Install/ {in_section=1; next} /^\[/ {in_section=0} in_section && /^Default=/ {sub(/^Default=/, ""); print}'"'"' "$HOME/.var/app/app.zen_browser.zen/.zen/profiles.ini" | while read -r val; do
+	  dir="$HOME/.var/app/app.zen_browser.zen/.zen/$val/chrome"
+	  rm "$dir/userChrome.css"
+	  rm "$dir/userContent.css"
+	done
+	']==])
 else
     isneedborder = false
     hl.exec_cmd("sed -i '/^[[:space:]]*\\[bar\\.default\\]/,/[[:space:]]*background_opacity/s/\\(background_opacity[[:space:]]*=[[:space:]]*\\)[0-9.]\\+/\\11.0/' ~/.config/noctalia/settings.toml")
@@ -115,6 +129,16 @@ else
     hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\11.0\\2/g\" ~/.config/noctalia/templates/gtk/gtk4.css ")
     hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\11.0\\2/g\" ~/.config/noctalia/templates/gtk/gtk3.css ")
     hl.exec_cmd("sed -i -E \"s/(--window-bg-color: \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\11.0\\2/g\" ~/.config/noctalia/templates/gtk/gtk4.css ")
+	hl.exec_cmd([==[bash -c '
+	awk '"'"'/^\[Install/ {in_section=1; next} /^\[/ {in_section=0} in_section && /^Default=/ {sub(/^Default=/, ""); print}'"'"' "$HOME/.var/app/app.zen_browser.zen/.zen/profiles.ini" | while read -r val; do
+	  dir="$HOME/.var/app/app.zen_browser.zen/.zen/$val/chrome"
+	  mkdir -p "$dir"
+	  echo "@import \"$HOME/.cache/noctalia/zen-browser/zen-userChrome.css\";" > "$dir/userChrome.css"
+	  echo "@import \"$HOME/.cache/noctalia/zen-browser/zen-userContent.css\";" > "$dir/userContent.css"
+	  flatpak override --user --filesystem="$HOME/.cache/noctalia/zen-browser/zen-userContent.css" app.zen_browser.zen
+	  flatpak override --user --filesystem="$HOME/.cache/noctalia/zen-browser/zen-userChrome.css" app.zen_browser.zen
+	done
+	']==])
 end
 --transparentenabled = false
 
