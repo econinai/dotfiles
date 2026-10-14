@@ -30,6 +30,8 @@ if [[ $PKG_MGR == "pacman" ]]; then
   fi;
   echo "Updating pacman databases..." 2>&1 | tee -a log.txt
   sudo pacman -Sy --noconfirm >> log.txt 2>&1
+  ### python
+  sudo pacman -S --needed --noconfirm python >> log.txt 2>&1
   ### yay install
   echo "Installing yay..." 2>&1 | tee -a log.txt
   if [[ $(pacman -Qe yay 2>&1 | awk '{print $1}') == "error:" ]]; then

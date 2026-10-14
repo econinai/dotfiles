@@ -2,7 +2,13 @@
 
 {{ template "sudo.tmpl" . }}
 {{ template "pkg_install.tmpl" . }}
+{{ template "service.tmpl" . }}
 
-# {{ include ".assets/packageList" | sha256sum }}
+# {{ include ".assets/packages.json" | sha256sum }}
 
-pkg_install "$(awk '{for(i=1;i<=NF;i++) printf "%s ", $i; } END {print ""}' {{ .chezmoi.sourceDir }}/.assets/packageList)"
+PARSER="{{ .chezmoi.sourceDir }}/.scripts/pkg_install.py"
+JSON="{{ .chezmoi.sourceDir }}/.assets/packages.json"
+
+shellcode=$(python3 "$PARSER" --log log.txt -f "$JSON")
+
+eval "$shellcode"
