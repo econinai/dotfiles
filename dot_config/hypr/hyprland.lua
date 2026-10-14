@@ -3,23 +3,10 @@
 ------------------
 
 hl.monitor({
-    output   = "DP-1",
-    mode     = "3840x2160@160",
-    position = "0x0",
+    output   = "",
+    mode     = "highres highrr",
+    position = "auto",
     scale    = "1",
-})
-
-hl.monitor({
-    output   = "eDP-1",
-    mode     = "2560x1600@60",
-    position = "0x0",
-    scale    = "1",
-})
-
-hl.monitor({
-    output   = "HDMI-A-1",
-    mode     = "3840x2160@60",
-    mirror   = "DP-1",
 })
 
 ---------------------
@@ -61,7 +48,6 @@ end)
 -------------------------------
 
 hl.env("GDK_DPI_SCALE", "1")
-hl.env("GTK_FONT_NAME", "Manrope ExtraLight Regular 16")
 hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
 hl.env("XDG_CURRENT_DESKTOP", "Hyprland")
 hl.env("XDG_SESSION_DESKTOP", "Hyprland")
@@ -105,11 +91,18 @@ if apperance_mode == "blur" then
     hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\10.5\\2/g\" ~/.config/noctalia/templates/gtk/gtk4.css ")
     hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\10.5\\2/g\" ~/.config/noctalia/templates/gtk/gtk3.css ")
     hl.exec_cmd("sed -i -E \"s/(--window-bg-color: \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\10.5\\2/g\" ~/.config/noctalia/templates/gtk/gtk4.css ")
+	hl.exec_cmd([==[bash -c '
+	awk '"'"'/^\[Install/ {in_section=1; next} /^\[/ {in_section=0} in_section && /^Default=/ {sub(/^Default=/, ""); print}'"'"' "$HOME/.var/app/app.zen_browser.zen/.zen/profiles.ini" | while read -r val; do
+	  dir="$HOME/.var/app/app.zen_browser.zen/.zen/$val/chrome"
+	  rm "$dir/userChrome.css"
+	  rm "$dir/userContent.css"
+	done
+	']==])
 elseif apperance_mode == "liquid" then
     hyprglassenabled = true
     blurenabled = false
-    transparentenabled = false
-    inactive_opacityvalue = 1.0
+    transparentenabled = true
+    inactive_opacityvalue = 0.8
     isneedborder = false
     hl.exec_cmd("sed -i '/^[[:space:]]*\\[bar\\.default\\]/,/[[:space:]]*background_opacity/s/\\(background_opacity[[:space:]]*=[[:space:]]*\\)[0-9.]\\+/\\11.0/' ~/.config/noctalia/settings.toml")
     hl.exec_cmd("sed -i '/^[[:space:]]*\\[bar\\.bottom\\]/,/[[:space:]]*background_opacity/s/\\(background_opacity[[:space:]]*=[[:space:]]*\\)[0-9.]\\+/\\11.0/' ~/.config/noctalia/settings.toml")
@@ -119,6 +112,13 @@ elseif apperance_mode == "liquid" then
     hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\10.5\\2/g\" ~/.config/noctalia/templates/gtk/gtk4.css ")
     hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\10.5\\2/g\" ~/.config/noctalia/templates/gtk/gtk3.css ")
     hl.exec_cmd("sed -i -E \"s/(--window-bg-color: \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\10.5\\2/g\" ~/.config/noctalia/templates/gtk/gtk4.css ")
+	hl.exec_cmd([==[bash -c '
+	awk '"'"'/^\[Install/ {in_section=1; next} /^\[/ {in_section=0} in_section && /^Default=/ {sub(/^Default=/, ""); print}'"'"' "$HOME/.var/app/app.zen_browser.zen/.zen/profiles.ini" | while read -r val; do
+	  dir="$HOME/.var/app/app.zen_browser.zen/.zen/$val/chrome"
+	  rm "$dir/userChrome.css"
+	  rm "$dir/userContent.css"
+	done
+	']==])
 else
     isneedborder = false
     hl.exec_cmd("sed -i '/^[[:space:]]*\\[bar\\.default\\]/,/[[:space:]]*background_opacity/s/\\(background_opacity[[:space:]]*=[[:space:]]*\\)[0-9.]\\+/\\11.0/' ~/.config/noctalia/settings.toml")
@@ -129,6 +129,16 @@ else
     hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\11.0\\2/g\" ~/.config/noctalia/templates/gtk/gtk4.css ")
     hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\11.0\\2/g\" ~/.config/noctalia/templates/gtk/gtk3.css ")
     hl.exec_cmd("sed -i -E \"s/(--window-bg-color: \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\11.0\\2/g\" ~/.config/noctalia/templates/gtk/gtk4.css ")
+	hl.exec_cmd([==[bash -c '
+	awk '"'"'/^\[Install/ {in_section=1; next} /^\[/ {in_section=0} in_section && /^Default=/ {sub(/^Default=/, ""); print}'"'"' "$HOME/.var/app/app.zen_browser.zen/.zen/profiles.ini" | while read -r val; do
+	  dir="$HOME/.var/app/app.zen_browser.zen/.zen/$val/chrome"
+	  mkdir -p "$dir"
+	  echo "@import \"$HOME/.cache/noctalia/zen-browser/zen-userChrome.css\";" > "$dir/userChrome.css"
+	  echo "@import \"$HOME/.cache/noctalia/zen-browser/zen-userContent.css\";" > "$dir/userContent.css"
+	  flatpak override --user --filesystem="$HOME/.cache/noctalia/zen-browser/zen-userContent.css" app.zen_browser.zen
+	  flatpak override --user --filesystem="$HOME/.cache/noctalia/zen-browser/zen-userChrome.css" app.zen_browser.zen
+	done
+	']==])
 end
 --transparentenabled = false
 
@@ -168,9 +178,12 @@ if hl.plugin.hyprglass then
 
     hg.config({
         enabled = hyprglassenabled,
+        manage_window_blur = false,
+        skip_opaque_windows = false,
+        blur_fold = false,
+        xray = 0,
         
         default_theme = "dark",
-        default_preset = "default",
 
         brightness = 1.0,
         blur_strength = 2.0,
@@ -178,7 +191,7 @@ if hl.plugin.hyprglass then
         chromatic_aberration = 0.1,
         fresnel_strength = 0.3,
         specular_strength = 0.5,
-        glass_opacity = 1.4,
+        glass_opacity = 1.0,
         tint_color = 0x00000000,
         contrast = 1.0,
         saturation = 1.0,
@@ -186,7 +199,7 @@ if hl.plugin.hyprglass then
         refraction_strength = 10.0,
         lens_distortion = 5.0,
         edge_thickness = 0.05,
-    })
+    })  
 end
 
 -----------------------
@@ -197,10 +210,12 @@ if transparentenabled then
     local classes = {"vesktop", "org.telegram.desktop", "codium", "steam", "app.zen_browser.zen", "anytype"}
 
     for index, value in ipairs(classes) do
-        hl.window_rule({ match = { class = value }, tag = "+hyprglass_preset_clear" })
         hl.window_rule({ match = { class = value }, opacity = "1.0 override 0.5 override" })
     end
 end
+hl.window_rule({ match = { class = "org.telegram.desktop" }, suppress_event = "activatefocus" })
+hl.window_rule({ match = { class = "vesktop" }, suppress_event = "activatefocus" })
+hl.window_rule({ match = { class = "steam" }, suppress_event = "activatefocus" })
 hl.layer_rule({ match = { namespace = "selection" }, blur = false })
 hl.layer_rule({ match = { namespace = "noctalia-bar-default" }, ignore_alpha = 0 })
 hl.layer_rule({ match = { namespace = "noctalia-bar-default" }, blur = true })
@@ -334,6 +349,7 @@ hl.config({
     misc = {
         force_default_wallpaper = 1,    -- Set to 0 or 1 to disable the anime mascot wallpapers
         disable_hyprland_logo   = true, -- If true disables the random hyprland logo / anime girl background. :(
+        focus_on_activate = true,
     },
 })
 
@@ -372,15 +388,32 @@ hl.gesture({
 
 -- Example per-device config
 -- See https://wiki.hypr.land/Configuring/Advanced-and-Cool/Devices/ for more
-hl.device({
-    name        = "asue140d:00-04f3:31b9-touchpad",
-    sensitivity = 0.15,
-})
+local TOUCHPAD_SENSITIVITY = 0.15
 
-hl.device({
-    name        = "dualsense-wireless-controller-touchpad",
-    sensitivity = 0.15,
-})
+local function touchpad_names()
+    local names, seen = {}, {}
+    local f = io.open("/proc/bus/input/devices", "r")
+    if not f then return names end
+    for line in f:lines() do
+        local name = line:match('^N: Name="(.-)"')
+        if name then
+            local low = name:lower()
+            if low:find("touchpad", 1, true) or low:find("trackpad", 1, true) then
+                local id = low:gsub(" ", "-")
+                if not seen[id] then
+                    seen[id] = true
+                    table.insert(names, id)
+                end
+            end
+        end
+    end
+    f:close()
+    return names
+end
+
+for _, name in ipairs(touchpad_names()) do
+    hl.device({ name = name, sensitivity = TOUCHPAD_SENSITIVITY })
+end
 
 ---------------------
 ---- KEYBINDINGS ----
@@ -414,6 +447,7 @@ hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(terminal), { description = " 
 hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.window.close(), { description = "󰱞  (Close window)"})
 hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exec_cmd(exitHyprland), { description = "󰈆  (Exit hyprland)"})
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager), { description = "  (File manager)"})
+hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"), { description = "󰑓  (Reload config)" })
 hl.bind(mainMod .. " + T", hl.dsp.window.float({ action = "toggle" }), { description = "󰉨  (Float)"})
 hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(launcher), { description = "󰀻  (Launcher)"})
 
@@ -429,9 +463,9 @@ hl.bind(mainMod .. " + CTRL + W", hl.dsp.window.move({ direction = "up" }), { de
 hl.bind(mainMod .. " + CTRL + S", hl.dsp.window.move({ direction = "down" }), { description = "   (Move)"})
 
 hl.bind(mainMod .. " + SHIFT + CTRL + A", hl.dsp.workspace.move({ monitor = "left" }), { description = "󰍹   (Move)"})
-hl.bind(mainMod .. " + SHIFT + CTRL + D", hl.dsp.workspace.move({ monitor = "right" }), { description = "󰍹   (Move)"})
-hl.bind(mainMod .. " + SHIFT + CTRL + W", hl.dsp.workspace.move({ monitor = "up" }), { description = "󰍹   (Move)"})
-hl.bind(mainMod .. " + SHIFT + CTRL + S", hl.dsp.workspace.move({ monitor = "down" }), { description = "󰍹   (Move)"})
+hl.bind(mainMod .. " + SHIFT + CTRL + D", hl.dsp.workspace.move({ monitor = "right" }), { description = "󰍹   (Move)"})
+hl.bind(mainMod .. " + SHIFT + CTRL + W", hl.dsp.workspace.move({ monitor = "up" }), { description = "󰍹   (Move)"})
+hl.bind(mainMod .. " + SHIFT + CTRL + S", hl.dsp.workspace.move({ monitor = "down" }), { description = "󰍹   (Move)"})
 
 -- Switch workspaces with mainMod + [0-9]
 -- Move active window to a workspace with mainMod + SHIFT + [0-9]
