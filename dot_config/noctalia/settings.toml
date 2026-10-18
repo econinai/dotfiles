@@ -17,7 +17,7 @@ order = [ "default", "bottom" ]
 
     [bar.bottom]
     auto_hide = true
-    background_opacity = 1.0
+    background_opacity = 0.5
     capsule = true
     capsule_opacity = 0.0
 	center = [ "group:g6", "group:g5", "group:g4", "group:g3", "group:g2", "group:g1" ]
@@ -43,70 +43,76 @@ order = [ "default", "bottom" ]
         scroll_right = "workspace-switch prev"
         scroll_up = "workspace-switch prev"
 
-       	[[bar.bottom.capsule_group]]
-       	accordion = false
-       	accordion_direction = "end"
-       	enabled = true
-        fill = "surface_variant"
-       	id = "g1"
-       	members = [ "bar_3", "bar_4" ]
-       	opacity = 0.0
-       	padding = 6.0
-       	
-       	[[bar.bottom.capsule_group]]
-       	accordion = false
-       	accordion_direction = "end"
-       	enabled = true
-       	fill = "surface_variant"
-       	id = "g2"
-       	members = [ "settings", "launcher" ]
-       	opacity = 0.0
-       	padding = 6.0
-       	
-       	[[bar.bottom.capsule_group]]
-       	accordion = false
-       	accordion_direction = "end"
-       	enabled = true
-       	fill = "surface_variant"
-       	id = "g3"
-       	members = [ "apperance", "theme_mode", "wallpaper", "w_engine_widget_2" ]
-       	opacity = 0.0
-       	padding = 6.0
-       	
-       	[[bar.bottom.capsule_group]]
-       	accordion = false
-       	accordion_direction = "end"
-       	enabled = true
-       	fill = "surface_variant"
-       	id = "g4"
-       	members = [ "caffeine", "lid-suspender" ]
-       	opacity = 0.0
-       	padding = 6.0
-       	
-       	[[bar.bottom.capsule_group]]
-       	accordion = false
-       	accordion_direction = "end"
-       	enabled = true
-       	fill = "surface_variant"
-       	id = "g5"
-       	members = [ "screen", "widget_3" ]
-       	opacity = 0.0
-       	padding = 6.0
-       	
-       	[[bar.bottom.capsule_group]]
-       	accordion = false
-       	accordion_direction = "end"
-       	enabled = true
-       	fill = "surface_variant"
-       	id = "g6"
-       	members = [ "notifications", "clipboard", "virt_kbd", "bar_2", "bar" ]
-       	opacity = 0.0
-       	padding = 6.0
+    [[bar.bottom.capsule_group]]
+    accordion = false
+    accordion_direction = "end"
+    border_width = 1.0
+    enabled = true
+    fill = "surface_variant"
+    id = "g1"
+    members = [ "bar_3", "bar_4" ]
+    opacity = 0.0
+    padding = 6.0
+
+    [[bar.bottom.capsule_group]]
+    accordion = false
+    accordion_direction = "end"
+    border_width = 1.0
+    enabled = true
+    fill = "surface_variant"
+    id = "g2"
+    members = [ "widget", "launcher" ]
+    opacity = 0.0
+    padding = 6.0
+
+    [[bar.bottom.capsule_group]]
+    accordion = false
+    accordion_direction = "end"
+    border_width = 1.0
+    enabled = true
+    fill = "surface_variant"
+    id = "g3"
+    members = [ "apperance", "theme_mode", "wallpaper", "w_engine_widget_2" ]
+    opacity = 0.0
+    padding = 6.0
+
+    [[bar.bottom.capsule_group]]
+    accordion = false
+    accordion_direction = "end"
+    border_width = 1.0
+    enabled = true
+    fill = "surface_variant"
+    id = "g4"
+    members = [ "caffeine", "lid-suspender" ]
+    opacity = 0.0
+    padding = 6.0
+
+    [[bar.bottom.capsule_group]]
+    accordion = false
+    accordion_direction = "end"
+    border_width = 1.0
+    enabled = true
+    fill = "surface_variant"
+    id = "g5"
+    members = [ "screen", "widget_3" ]
+    opacity = 0.0
+    padding = 6.0
+
+    [[bar.bottom.capsule_group]]
+    accordion = false
+    accordion_direction = "end"
+    border_width = 1.0
+    enabled = true
+    fill = "surface_variant"
+    id = "g6"
+    members = [ "notifications", "clipboard", "virt_kbd", "bar_2", "bar" ]
+    opacity = 0.0
+    padding = 6.0
        	
 
     [bar.default]
     auto_hide = false
-    background_opacity = 1.0
+    background_opacity = 0.5
     border = "outline"
     border_width = 0.0
     capsule = true
@@ -201,23 +207,20 @@ width = 700
     show_events_card = true
     show_week_numbers = false
 
-    [[control_center.shortcuts]]
-    type = "wifi"
+[[control_center.shortcuts]]
+type = "yocraft/custom-shortcut:shortcut"
 
-    [[control_center.shortcuts]]
-    type = "bluetooth"
+[[control_center.shortcuts]]
+type = "yocraft/qrcode:shortcut"
 
-    [[control_center.shortcuts]]
-    type = "wallpaper"
+[[control_center.shortcuts]]
+type = "caffeine"
 
-    [[control_center.shortcuts]]
-    type = "dark_mode"
+[[control_center.shortcuts]]
+type = "nightlight"
 
-    [[control_center.shortcuts]]
-    type = "notification"
-
-    [[control_center.shortcuts]]
-    type = "caffeine"
+[[control_center.shortcuts]]
+type = "notification"
 
 [desktop_widgets]
 enabled = true
@@ -253,7 +256,6 @@ magnification_scale = 1.45
 main_axis_padding = 16
 margin_edge = 0
 margin_ends = 0
-monitors = []
 pinned = []
 position = "bottom"
 radius = 16
@@ -428,6 +430,18 @@ scale = 1.0
     volume_output = true
     wifi = true
 
+[plugin_settings."thaer99ob/default-apps"]
+manager_open_near_click = true
+manager_placement = "attached"
+
+[plugin_settings."yocraft/custom-shortcut"]
+icon = "apps"
+label = "Default Apps"
+onclick_cmd = "noctalia msg panel-toggle thaer99ob/default-apps:manager"
+
+[plugin_settings."yuuto/arch-updater"]
+terminal = "GDK_WAYLAND_DISABLE=ext_background_effect_manager_v1 ghostty"
+
 [plugin_settings."alexander/screen-toolkit"]
 record-audio-in = true
 record-audio-out = true
@@ -457,7 +471,11 @@ enabled = [
     "alexander/screen-toolkit",
     "rylos/syncthing",
     "rylos/tailnet",
-    "blackbartblues/keymap"
+    "blackbartblues/keymap",
+    "yuuto/arch-updater",
+    "yocraft/custom-shortcut",
+    "thaer99ob/default-apps",
+    "yocraft/qrcode"
 ]
 
     [[plugins.source]]
@@ -547,7 +565,7 @@ time_format = "{:%H:%M:%S}"
     polkit_position = "center"
     session_placement = "attached"
     session_position = "auto"
-    shadow = true
+    shadow = false
     transparency_mode = "solid"
     wallpaper_placement = "attached"
     wallpaper_position = "auto"
@@ -683,7 +701,7 @@ wallpaper_scheme = "m3-content"
 
     [theme.templates]
     builtin_ids = [ "gtk3", "gtk4", "ghostty", "hyprland", "kcolorscheme", "qt" ]
-    community_ids = [ "zen-browser", "discord", "telegram", "vscode", "steam" ]
+    community_ids = [ "zen-browser", "discord", "telegram", "inkscape", "micro", "vscode", "steam", "bat" ]
     enable_builtin_templates = true
     enable_community_templates = true
 
@@ -947,6 +965,10 @@ type = "custom_button"
 
 [widget.widget_3]
 type = "alexander/screen-toolkit:widget"
+
+
+[widget.widget]
+type = "yuuto/arch-updater:widget"
 
 
 [widget.virt_kbd]

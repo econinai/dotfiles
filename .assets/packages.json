@@ -282,6 +282,7 @@
   	  "\"ryanluker.vscode-coverage-gutters\"",
   	  "\"usernamehw.errorlens\"",
   	  "\"vadimcn.vscode-lldb\"",
+  	  "\"noctalia.noctaliatheme\"",
   	  ")",
   	  "for ext in \"${extensions[@]}\"; do",
   	  "codium --install-extension \"$ext\" --force",
