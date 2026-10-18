@@ -1,6 +1,6 @@
 {
     "terminal.integrated.fontFamily": "'Fira Code', 'Symbols Nerd Font Mono', monospace",
-    "workbench.colorTheme": "Visual Studio Dark",
+    "workbench.colorTheme": "NoctaliaTheme",
     "editor.fontSize": 18,
     "[rust]": {
     "editor.defaultFormatter": "rust-lang.rust-analyzer",
@@ -9,6 +9,26 @@
     "editor.cursorBlinking": "smooth",
     "editor.cursorSmoothCaretAnimation": "on",
     "editor.smoothScrolling": true,
-    "editor.cursorStyle": "line"
-}
+    "editor.cursorStyle": "line",
+
+
+},
+"editor.tokenColorCustomizations": {
+    "[NoctaliaTheme]": {
+        "textMateRules": [
+            {
+                "scope": "",
+                "settings": {
+                }
+            }
+        ],
+        "comments": "#57A64A",
+        "functions": "#DCDCAA",
+        "keywords": "#569CD6",
+        "numbers": "#B5CEA8",
+        "strings": "#D69D85",
+        "types": "#4EC9B0",
+        "variables": "#9CDCFE"
+    }
+  }
 }
