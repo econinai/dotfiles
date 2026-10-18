@@ -55,6 +55,7 @@ hl.env("XDG_SESSION_TYPE", "wayland")
 hl.env("XDG_MENU_PREFIX", "arch- kbuildsycoca6")
 hl.env("XDG_TERMINAL_SERVICE", "kitty.desktop")
 hl.env("SHELL", "/usr/bin/fish")
+hl.env("GDK_WAYLAND_DISABLE", "ext_background_effect_manager_v1")
 
 --------------------------
 ---- APPERANCE SCRIPT ----
