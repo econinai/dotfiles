@@ -10,7 +10,7 @@
   	  "xdg-mime default org.kde.ark.desktop application/x-gzip",
   	  "xdg-mime default org.kde.ark.desktop application/x-bzip2",
   	  "xdg-mime default org.kde.ark.desktop application/x-xz",
-  	  "xdg-mime default org.kde.ark.desktop application/x-compressed-tar",
+  	  "xdg-mime default org.kde.ark.desktop application/x-compressed-tar"
   	]
   },
   "auto-cpufreq": {
@@ -18,13 +18,13 @@
   	  "sudo cp $CHEZMOI_SOURCE_DIR/.assets/auto-cpufreq.conf /etc/auto-cpufreq.conf",
   	  "manage_service \"auto-cpufreq\" \"enable\""
   	],
-  	enabled: false
+  	"enabled": false
   },
   "base": {},
   "base-devel": {},
   "bash-completion": {
   	"pre_install": [
-  	  "sudo cp \"$CHEZMOI_SOURCE_DIR/dot_bashrc\" \"/root/.bashrc\"",
+  	  "sudo cp \"$CHEZMOI_SOURCE_DIR/dot_bashrc\" \"/root/.bashrc\""
   	]
   },
   "fish": {
@@ -79,7 +79,7 @@
   	"pre_install": [
   	  "xdg-mime default com.mitchellh.ghostty.desktop x-scheme-handler/terminal",
   	  "kwriteconfig6 --file kdeglobals --group General --key TerminalApplication ghostty"
-  	],
+  	]
   },
   "hyprland": {
   	"pre_install": [
@@ -277,7 +277,7 @@
     "pre_install": [
       "manage_service \"vmware-networks-configuration\" \"enable\"",
       "manage_service \"vmware-networks\" \"enable-now\"",
-      "manage_service \"vmware-usbarbitrator\" \"enable-now\"",
+      "manage_service \"vmware-usbarbitrator\" \"enable-now\""
     ]
   },
   "vscodium": {

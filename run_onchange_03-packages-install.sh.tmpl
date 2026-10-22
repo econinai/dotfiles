@@ -1,15 +1,25 @@
 #!/usr/bin/env bash
 
 {{ template "sudo.tmpl" . }}
-{{ template "pkg_install.tmpl" . }}
 {{ template "service.tmpl" . }}
-{{ template "gtub.tmpl" . }}
+{{ template "pkg_install.tmpl" . }}
 
 # {{ include ".assets/packages.json" | sha256sum }}
 
-PARSER="{{ .chezmoi.sourceDir }}/.scripts/pkg_install.py"
-JSON="{{ .chezmoi.sourceDir }}/.assets/packages.json"
+export CHEZMOI_SOURCE_DIR="{{ .chezmoi.sourceDir }}"
 
-shellcode=$(python3 "$PARSER" --log log.txt -f "$JSON")
+declare -a PKG_NAMES=()
+declare -A PKG_HOOKS=()
+{{- range $name, $cfg := (include ".assets/packages.json" | fromJson) }}
+{{- if or (not (hasKey $cfg "enabled")) $cfg.enabled }}
+PKG_NAMES+=({{ $name | quote }})
+{{- if hasKey $cfg "pre_install" }}
+IFS= read -r -d '' _hook <<'__PKG_HOOK__' || true
+{{ join "\n" $cfg.pre_install }}
+__PKG_HOOK__
+PKG_HOOKS[{{ $name | quote }}]=$_hook
+{{- end }}
+{{- end }}
+{{- end }}
 
-eval "$shellcode"
+pkg_install_json
