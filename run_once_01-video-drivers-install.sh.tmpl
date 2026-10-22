@@ -2,7 +2,7 @@
 
 {{ template "sudo.tmpl" . }}
 {{ template "pkg_install.tmpl" . }}
-{{ template "update_grub.tmpl" . }}
+{{ template "grub.tmpl" . }}
 {{ template "service.tmpl" . }}
 
 VIDEODEVICES=()
@@ -49,7 +49,7 @@ if [ "$NEEDS_NVIDIA_KMS" = true ]; then
     manage_service "nvidia-suspend" "enable"
     manage_service "nvidia-hibernate" "enable"
     manage_service "nvidia-resume" "enable"
-	sudo sed -i -e '/^GRUB_CMDLINE_LINUX_DEFAULT=/s/"$/ nvidia.NVreg_PreserveVideoMemoryAllocations=1"/' -e '/^GRUB_CMDLINE_LINUX_DEFAULT=/s/\([^"]\)$/\1 nvidia.NVreg_PreserveVideoMemoryAllocations=1/' /etc/default/grub >> log.txt 2>&1
+	grub_add_params "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
 	update_grub
 fi
 
