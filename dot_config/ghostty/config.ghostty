@@ -10,7 +10,7 @@ confirm-close-surface = false
 
 cursor-style = block
 cursor-style-blink = true
-shell-integration-features = cursor
+shell-integration-features = no-cursor
 custom-shader = "shaders/ghostty-cursor-shaders/cursor_warp.glsl"
 custom-shader-animation = true
 

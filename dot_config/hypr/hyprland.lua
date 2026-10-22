@@ -80,6 +80,7 @@ local active_bordervalue = {"rgba(eeeeeec0)", "rgba(eeeeee00)", "rgba(eeeeee00)"
 local inactive_bordervalue = {"rgba(909090c0)", "rgba(90909000)", "rgba(90909000)", "rgba(90909060)"}
 local anglevalue = 55
 local animationsenabled = true
+local dyncursorenabled = true
 if apperance_mode == "blur" then
     hyprglassenabled = false
     blurenabled = true
@@ -93,8 +94,8 @@ if apperance_mode == "blur" then
     
     hl.exec_cmd("sed -i 's/^background-opacity =.*/background-opacity = 0.5/' ~/.config/ghostty/config.ghostty")
     hl.exec_cmd("sed -i 's/^custom-shader-animation =.*/custom-shader-animation = true/' ~/.config/ghostty/config.ghostty")
-    hl.exec_cmd("sed -i 's/^shell-integration-features =.*/shell-integration-features = cursor/' ~/.config/ghostty/config.ghostty")
     hl.exec_cmd("sed -i 's/^cursor-style-blink =.*/cursor-style-blink = true/' ~/.config/ghostty/config.ghostty")
+    hl.exec_cmd("sed -i 's/^#custom-shader = /custom-shader = /' ~/.config/ghostty/config.ghostty")
 
     hl.exec_cmd("gsettings set org.gnome.desktop.interface enable-animations true")
     hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\10.5\\2/g\" ~/.config/noctalia/templates/gtk/gtk4.css ")
@@ -121,8 +122,8 @@ elseif apperance_mode == "liquid" then
 
     hl.exec_cmd("sed -i 's/^background-opacity =.*/background-opacity = 0.5/' ~/.config/ghostty/config.ghostty")
     hl.exec_cmd("sed -i 's/^custom-shader-animation =.*/custom-shader-animation = true/' ~/.config/ghostty/config.ghostty")
-    hl.exec_cmd("sed -i 's/^shell-integration-features =.*/shell-integration-features = cursor/' ~/.config/ghostty/config.ghostty")
     hl.exec_cmd("sed -i 's/^cursor-style-blink =.*/cursor-style-blink = true/' ~/.config/ghostty/config.ghostty")
+    hl.exec_cmd("sed -i 's/^#custom-shader = /custom-shader = /' ~/.config/ghostty/config.ghostty")
 
     hl.exec_cmd("gsettings set org.gnome.desktop.interface enable-animations true")
     hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\10.5\\2/g\" ~/.config/noctalia/templates/gtk/gtk4.css ")
@@ -138,6 +139,7 @@ elseif apperance_mode == "liquid" then
 elseif apperance_mode == "flat-noanims" then
     isneedborder = false
     animationsenabled = false
+    dyncursorenabled = false
     hl.exec_cmd("sed -i '/^[[:space:]]*\\[bar\\.default\\]/,/[[:space:]]*background_opacity/s/\\(background_opacity[[:space:]]*=[[:space:]]*\\)[0-9.]\\+/\\11.0/' ~/.config/noctalia/settings.toml")
     hl.exec_cmd("sed -i '/^[[:space:]]*\\[bar\\.bottom\\]/,/[[:space:]]*background_opacity/s/\\(background_opacity[[:space:]]*=[[:space:]]*\\)[0-9.]\\+/\\11.0/' ~/.config/noctalia/settings.toml")
     hl.exec_cmd("sed -i '/^[[:space:]]*\\[shell\\.panel\\]/,/[[:space:]]*shadow/s/\\(shadow[[:space:]]*=[[:space:]]*\\)\\(true\\|false\\)/\\1true/' ~/.config/noctalia/settings.toml")
@@ -146,8 +148,8 @@ elseif apperance_mode == "flat-noanims" then
 
     hl.exec_cmd("sed -i 's/^background-opacity =.*/background-opacity = 1.0/' ~/.config/ghostty/config.ghostty")
     hl.exec_cmd("sed -i 's/^custom-shader-animation =.*/custom-shader-animation = false/' ~/.config/ghostty/config.ghostty")
-    hl.exec_cmd("sed -i 's/^shell-integration-features =.*/shell-integration-features = no-cursor/' ~/.config/ghostty/config.ghostty")
     hl.exec_cmd("sed -i 's/^cursor-style-blink =.*/cursor-style-blink = false/' ~/.config/ghostty/config.ghostty")
+    hl.exec_cmd("sed -i 's/^custom-shader = /#custom-shader = /' ~/.config/ghostty/config.ghostty")
 
     hl.exec_cmd("gsettings set org.gnome.desktop.interface enable-animations false")
     hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\11.0\\2/g\" ~/.config/noctalia/templates/gtk/gtk4.css ")
@@ -172,8 +174,8 @@ else
 
     hl.exec_cmd("sed -i 's/^background-opacity =.*/background-opacity = 1.0/' ~/.config/ghostty/config.ghostty")
     hl.exec_cmd("sed -i 's/^custom-shader-animation =.*/custom-shader-animation = true/' ~/.config/ghostty/config.ghostty")
-    hl.exec_cmd("sed -i 's/^shell-integration-features =.*/shell-integration-features = cursor/' ~/.config/ghostty/config.ghostty")
     hl.exec_cmd("sed -i 's/^cursor-style-blink =.*/cursor-style-blink = true/' ~/.config/ghostty/config.ghostty")
+    hl.exec_cmd("sed -i 's/^#custom-shader = /custom-shader = /' ~/.config/ghostty/config.ghostty")
     
     hl.exec_cmd("gsettings set org.gnome.desktop.interface enable-animations true")
     hl.exec_cmd("perl -0777 -pi -e 's/(<rect[^>]*?id=\"window-normal\"[^>]*?style=\"[^\"]*?opacity:)[0-9.]*/${1}1.0/s' ~/.config/noctalia/templates/kvantum/noctalia.svg")
@@ -199,7 +201,7 @@ end
 
 if hl.plugin.dynamic_cursors then
 	hl.config { plugin = { dynamic_cursors = {
-	    enabled = true,
+	    enabled = dyncursorenabled,
 	    mode = "tilt",
 	    threshold = 2,
 	    rotate = {
