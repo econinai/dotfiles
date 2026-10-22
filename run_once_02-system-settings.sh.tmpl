@@ -3,6 +3,7 @@
 {{ template "sudo.tmpl" . }}
 {{ template "pkg_install.tmpl" . }}
 {{ template "service.tmpl" . }}
+{{ template "grub.tmpl" . }}
 
 ### udev
 
@@ -79,3 +80,7 @@ sudo cp "{{ .chezmoi.sourceDir }}/.assets/check_lid_after_wakeup.sh" "/usr/local
 sudo chmod +x /usr/local/bin/check_lid_after_wakeup.sh >> log.txt 2>&1
 manage_service "-" "daemon-reload"
 manage_service "check-lid" "enable-now"
+
+### grub settings
+grub_add_params "splash pcie_aspm=force pcie_aspm.policy=powersupersave nvme_core.default_ps_max_latency_us=5500"
+update_grub

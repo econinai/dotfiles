@@ -823,7 +823,7 @@ glyph = "layers-selected"
 type = "custom_button"
 
     [widget.apperance.actions]
-    left = "exec if [[ $(cat ~/.cache/sys_appearance) == \"blur\" ]]; then notify-send \"now is liquid\"; echo -n \"liquid\" > ~/.cache/sys_appearance; elif [[ $(cat ~/.cache/sys_appearance) == \"liquid\" ]]; then notify-send \"now is flat\"; echo -n \"flat\" > ~/.cache/sys_appearance; else notify-send \"now is blur\"; echo -n \"blur\" > ~/.cache/sys_appearance; fi; hyprctl reload;  noctalia msg theme-mode-toggle; noctalia msg theme-mode-toggle"
+    left = "exec case $(cat ~/.cache/sys_appearance) in blur) notify-send \"now is liquid\"; echo -n liquid > ~/.cache/sys_appearance;; liquid) notify-send \"now is flat\"; echo -n flat > ~/.cache/sys_appearance;; flat) notify-send \"now is flat-noanims\"; echo -n flat-noanims > ~/.cache/sys_appearance;; *) notify-send \"now is blur\"; echo -n blur > ~/.cache/sys_appearance;; esac; hyprctl reload; noctalia msg theme-mode-toggle; noctalia msg theme-mode-toggle"
 
 [widget.audio_visualizer]
 mirrored = false

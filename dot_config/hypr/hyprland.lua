@@ -79,6 +79,7 @@ local inactive_opacityvalue = 1.0
 local active_bordervalue = {"rgba(eeeeeec0)", "rgba(eeeeee00)", "rgba(eeeeee00)", "rgba(eeeeee60)"}
 local inactive_bordervalue = {"rgba(909090c0)", "rgba(90909000)", "rgba(90909000)", "rgba(90909060)"}
 local anglevalue = 55
+local animationsenabled = true
 if apperance_mode == "blur" then
     hyprglassenabled = false
     blurenabled = true
@@ -87,8 +88,15 @@ if apperance_mode == "blur" then
     hl.exec_cmd("sed -i '/^[[:space:]]*\\[bar\\.default\\]/,/[[:space:]]*background_opacity/s/\\(background_opacity[[:space:]]*=[[:space:]]*\\)[0-9.]\\+/\\10.5/' ~/.config/noctalia/settings.toml")
     hl.exec_cmd("sed -i '/^[[:space:]]*\\[bar\\.bottom\\]/,/[[:space:]]*background_opacity/s/\\(background_opacity[[:space:]]*=[[:space:]]*\\)[0-9.]\\+/\\10.5/' ~/.config/noctalia/settings.toml")
     hl.exec_cmd("sed -i '/^[[:space:]]*\\[shell\\.panel\\]/,/[[:space:]]*shadow/s/\\(shadow[[:space:]]*=[[:space:]]*\\)\\(true\\|false\\)/\\1false/' ~/.config/noctalia/settings.toml")
-    hl.exec_cmd("sed -i 's/^background-opacity =.*/background-opacity = 0.5/' ~/.config/ghostty/config.ghostty")
+    hl.exec_cmd("sed -i '/^[[:space:]]*\\[shell\\.animation\\]/,/[[:space:]]*enabled/s/\\(enabled[[:space:]]*=[[:space:]]*\\)\\(true\\|false\\)/\\1true/' ~/.config/noctalia/settings.toml")
     hl.exec_cmd("perl -0777 -pi -e 's/(<rect[^>]*?id=\"window-normal\"[^>]*?style=\"[^\"]*?opacity:)[0-9.]*/${1}0.5/s' ~/.config/noctalia/templates/kvantum/noctalia.svg")
+    
+    hl.exec_cmd("sed -i 's/^background-opacity =.*/background-opacity = 0.5/' ~/.config/ghostty/config.ghostty")
+    hl.exec_cmd("sed -i 's/^custom-shader-animation =.*/custom-shader-animation = true/' ~/.config/ghostty/config.ghostty")
+    hl.exec_cmd("sed -i 's/^shell-integration-features =.*/shell-integration-features = cursor/' ~/.config/ghostty/config.ghostty")
+    hl.exec_cmd("sed -i 's/^cursor-style-blink =.*/cursor-style-blink = true/' ~/.config/ghostty/config.ghostty")
+
+    hl.exec_cmd("gsettings set org.gnome.desktop.interface enable-animations true")
     hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\10.5\\2/g\" ~/.config/noctalia/templates/gtk/gtk4.css ")
     hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\10.5\\2/g\" ~/.config/noctalia/templates/gtk/gtk3.css ")
     hl.exec_cmd("sed -i -E \"s/(--window-bg-color: \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\10.5\\2/g\" ~/.config/noctalia/templates/gtk/gtk4.css ")
@@ -108,8 +116,15 @@ elseif apperance_mode == "liquid" then
     hl.exec_cmd("sed -i '/^[[:space:]]*\\[bar\\.default\\]/,/[[:space:]]*background_opacity/s/\\(background_opacity[[:space:]]*=[[:space:]]*\\)[0-9.]\\+/\\11.0/' ~/.config/noctalia/settings.toml")
     hl.exec_cmd("sed -i '/^[[:space:]]*\\[bar\\.bottom\\]/,/[[:space:]]*background_opacity/s/\\(background_opacity[[:space:]]*=[[:space:]]*\\)[0-9.]\\+/\\11.0/' ~/.config/noctalia/settings.toml")
     hl.exec_cmd("sed -i '/^[[:space:]]*\\[shell\\.panel\\]/,/[[:space:]]*shadow/s/\\(shadow[[:space:]]*=[[:space:]]*\\)\\(true\\|false\\)/\\1true/' ~/.config/noctalia/settings.toml")
-    hl.exec_cmd("sed -i 's/^background-opacity =.*/background-opacity = 0.5/' ~/.config/ghostty/config.ghostty")
+    hl.exec_cmd("sed -i '/^[[:space:]]*\\[shell\\.animation\\]/,/[[:space:]]*enabled/s/\\(enabled[[:space:]]*=[[:space:]]*\\)\\(true\\|false\\)/\\1true/' ~/.config/noctalia/settings.toml")
     hl.exec_cmd("perl -0777 -pi -e 's/(<rect[^>]*?id=\"window-normal\"[^>]*?style=\"[^\"]*?opacity:)[0-9.]*/${1}0.5/s' ~/.config/noctalia/templates/kvantum/noctalia.svg")
+
+    hl.exec_cmd("sed -i 's/^background-opacity =.*/background-opacity = 0.5/' ~/.config/ghostty/config.ghostty")
+    hl.exec_cmd("sed -i 's/^custom-shader-animation =.*/custom-shader-animation = true/' ~/.config/ghostty/config.ghostty")
+    hl.exec_cmd("sed -i 's/^shell-integration-features =.*/shell-integration-features = cursor/' ~/.config/ghostty/config.ghostty")
+    hl.exec_cmd("sed -i 's/^cursor-style-blink =.*/cursor-style-blink = true/' ~/.config/ghostty/config.ghostty")
+
+    hl.exec_cmd("gsettings set org.gnome.desktop.interface enable-animations true")
     hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\10.5\\2/g\" ~/.config/noctalia/templates/gtk/gtk4.css ")
     hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\10.5\\2/g\" ~/.config/noctalia/templates/gtk/gtk3.css ")
     hl.exec_cmd("sed -i -E \"s/(--window-bg-color: \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\10.5\\2/g\" ~/.config/noctalia/templates/gtk/gtk4.css ")
@@ -120,12 +135,47 @@ elseif apperance_mode == "liquid" then
 	  rm "$dir/userContent.css"
 	done
 	']==])
+elseif apperance_mode == "flat-noanims" then
+    isneedborder = false
+    animationsenabled = false
+    hl.exec_cmd("sed -i '/^[[:space:]]*\\[bar\\.default\\]/,/[[:space:]]*background_opacity/s/\\(background_opacity[[:space:]]*=[[:space:]]*\\)[0-9.]\\+/\\11.0/' ~/.config/noctalia/settings.toml")
+    hl.exec_cmd("sed -i '/^[[:space:]]*\\[bar\\.bottom\\]/,/[[:space:]]*background_opacity/s/\\(background_opacity[[:space:]]*=[[:space:]]*\\)[0-9.]\\+/\\11.0/' ~/.config/noctalia/settings.toml")
+    hl.exec_cmd("sed -i '/^[[:space:]]*\\[shell\\.panel\\]/,/[[:space:]]*shadow/s/\\(shadow[[:space:]]*=[[:space:]]*\\)\\(true\\|false\\)/\\1true/' ~/.config/noctalia/settings.toml")
+    hl.exec_cmd("sed -i '/^[[:space:]]*\\[shell\\.animation\\]/,/[[:space:]]*enabled/s/\\(enabled[[:space:]]*=[[:space:]]*\\)\\(true\\|false\\)/\\1false/' ~/.config/noctalia/settings.toml")
+    hl.exec_cmd("perl -0777 -pi -e 's/(<rect[^>]*?id=\"window-normal\"[^>]*?style=\"[^\"]*?opacity:)[0-9.]*/${1}1.0/s' ~/.config/noctalia/templates/kvantum/noctalia.svg")
+
+    hl.exec_cmd("sed -i 's/^background-opacity =.*/background-opacity = 1.0/' ~/.config/ghostty/config.ghostty")
+    hl.exec_cmd("sed -i 's/^custom-shader-animation =.*/custom-shader-animation = false/' ~/.config/ghostty/config.ghostty")
+    hl.exec_cmd("sed -i 's/^shell-integration-features =.*/shell-integration-features = no-cursor/' ~/.config/ghostty/config.ghostty")
+    hl.exec_cmd("sed -i 's/^cursor-style-blink =.*/cursor-style-blink = false/' ~/.config/ghostty/config.ghostty")
+
+    hl.exec_cmd("gsettings set org.gnome.desktop.interface enable-animations false")
+    hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\11.0\\2/g\" ~/.config/noctalia/templates/gtk/gtk4.css ")
+    hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\11.0\\2/g\" ~/.config/noctalia/templates/gtk/gtk3.css ")
+    hl.exec_cmd("sed -i -E \"s/(--window-bg-color: \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\11.0\\2/g\" ~/.config/noctalia/templates/gtk/gtk4.css ")
+	hl.exec_cmd([==[bash -c '
+	awk '"'"'/^\[Install/ {in_section=1; next} /^\[/ {in_section=0} in_section && /^Default=/ {sub(/^Default=/, ""); print}'"'"' "$HOME/.var/app/app.zen_browser.zen/.zen/profiles.ini" | while read -r val; do
+	  dir="$HOME/.var/app/app.zen_browser.zen/.zen/$val/chrome"
+	  mkdir -p "$dir"
+	  echo "@import \"$HOME/.cache/noctalia/zen-browser/zen-userChrome.css\";" > "$dir/userChrome.css"
+	  echo "@import \"$HOME/.cache/noctalia/zen-browser/zen-userContent.css\";" > "$dir/userContent.css"
+	  flatpak override --user --filesystem="$HOME/.cache/noctalia/zen-browser/zen-userContent.css" app.zen_browser.zen
+	  flatpak override --user --filesystem="$HOME/.cache/noctalia/zen-browser/zen-userChrome.css" app.zen_browser.zen
+	done
+	']==])
 else
     isneedborder = false
     hl.exec_cmd("sed -i '/^[[:space:]]*\\[bar\\.default\\]/,/[[:space:]]*background_opacity/s/\\(background_opacity[[:space:]]*=[[:space:]]*\\)[0-9.]\\+/\\11.0/' ~/.config/noctalia/settings.toml")
     hl.exec_cmd("sed -i '/^[[:space:]]*\\[bar\\.bottom\\]/,/[[:space:]]*background_opacity/s/\\(background_opacity[[:space:]]*=[[:space:]]*\\)[0-9.]\\+/\\11.0/' ~/.config/noctalia/settings.toml")
     hl.exec_cmd("sed -i '/^[[:space:]]*\\[shell\\.panel\\]/,/[[:space:]]*shadow/s/\\(shadow[[:space:]]*=[[:space:]]*\\)\\(true\\|false\\)/\\1true/' ~/.config/noctalia/settings.toml")
+    hl.exec_cmd("sed -i '/^[[:space:]]*\\[shell\\.animation\\]/,/[[:space:]]*enabled/s/\\(enabled[[:space:]]*=[[:space:]]*\\)\\(true\\|false\\)/\\1true/' ~/.config/noctalia/settings.toml")
+
     hl.exec_cmd("sed -i 's/^background-opacity =.*/background-opacity = 1.0/' ~/.config/ghostty/config.ghostty")
+    hl.exec_cmd("sed -i 's/^custom-shader-animation =.*/custom-shader-animation = true/' ~/.config/ghostty/config.ghostty")
+    hl.exec_cmd("sed -i 's/^shell-integration-features =.*/shell-integration-features = cursor/' ~/.config/ghostty/config.ghostty")
+    hl.exec_cmd("sed -i 's/^cursor-style-blink =.*/cursor-style-blink = true/' ~/.config/ghostty/config.ghostty")
+    
+    hl.exec_cmd("gsettings set org.gnome.desktop.interface enable-animations true")
     hl.exec_cmd("perl -0777 -pi -e 's/(<rect[^>]*?id=\"window-normal\"[^>]*?style=\"[^\"]*?opacity:)[0-9.]*/${1}1.0/s' ~/.config/noctalia/templates/kvantum/noctalia.svg")
     hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\11.0\\2/g\" ~/.config/noctalia/templates/gtk/gtk4.css ")
     hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\11.0\\2/g\" ~/.config/noctalia/templates/gtk/gtk3.css ")
@@ -288,7 +338,7 @@ hl.config({
     },
 
     animations = {
-        enabled = true,
+        enabled = animationsenabled,
     },
 })
 

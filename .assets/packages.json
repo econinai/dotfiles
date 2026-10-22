@@ -17,7 +17,8 @@
   	"pre_install": [
   	  "sudo cp $CHEZMOI_SOURCE_DIR/.assets/auto-cpufreq.conf /etc/auto-cpufreq.conf",
   	  "manage_service \"auto-cpufreq\" \"enable\""
-  	]
+  	],
+  	enabled: false
   },
   "base": {},
   "base-devel": {},
@@ -197,6 +198,12 @@
   "tesseract": {},
   "tesseract-data-eng": {},
   "tex-gyre-fonts": {},
+  "tlp": {
+  	"pre_install": [
+  	  "manage_service \"tlp\" \"enable-now\"",
+  	  "sudo cp \"$CHEZMOI_SOURCE_DIR/.assets/tlp.conf\" \"/etc/tlp.conf\""
+  	]
+  },
   "translate-shell": {},
   "ttf-0xproto-nerd": {},
   "ttf-3270-nerd": {},
