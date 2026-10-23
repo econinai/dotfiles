@@ -1,30 +1,35 @@
 #!/usr/bin/env bash
 
+{{ template "statusbar.tmpl" . }}
 {{ template "sudo.tmpl" . }}
 {{ template "pkg_install.tmpl" . }}
 {{ template "service.tmpl" . }}
 {{ template "grub.tmpl" . }}
 
+status_start
+
 ### udev
 
-echo "Installing udev rules..." 2>&1 | tee -a log.txt
+status "Adding udev rules"
+echo "Adding udev rules..."
 
 sudo bash -c 'cat <<EOF > /etc/udev/rules.d/99-usb-sync.rules
 SUBSYSTEMS=="usb", SUBSYSTEM=="block", ENV{ID_FS_USAGE}=="filesystem", ENV{UDISKS_MOUNT_OPTIONS_DEFAULTS}+="sync,dirsync", ENV{UDISKS_MOUNT_OPTIONS_ALLOW}+="sync,dirsync"
-EOF' >> log.txt 2>&1
+EOF'
 
 sudo bash -c 'cat <<EOF > /etc/udev/rules.d/99-usb-autosuspend.rules
 SUBSYSTEM=="input", GROUP="input", MODE="0660"
 ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="on"
-EOF' >> log.txt 2>&1
+EOF'
 
 sudo bash -c 'cat <<EOF > /etc/udev/rules.d/99-kbd-leds.rules
 SUBSYSTEM=="leds", KERNEL=="*kbd_backlight", ACTION=="add", RUN+="/bin/chmod -R a+w /sys%p"
-EOF' >> log.txt 2>&1
+EOF'
 
 ### swap file
 
-echo "Installing swap file..." 2>&1 | tee -a log.txt
+status "Creating swap file 16GB"
+echo "Creating swap file..."
 
 SWAP_SIZE="16G"
 SWAP_PATH="/swapfile"
@@ -32,55 +37,58 @@ SWAP_PATH="/swapfile"
 FS_TYPE=$(df -Th / | awk 'NR==2 {print $2}')
 
 if [ -f "$SWAP_PATH" ]; then
-  sudo swapoff "$SWAP_PATH" >> log.txt 2>&1
-  sudo rm -f "$SWAP_PATH" >> log.txt 2>&1
+  sudo swapoff "$SWAP_PATH"
+  sudo rm -f "$SWAP_PATH"
 fi
 
 case "$FS_TYPE" in
   f2fs)
-    sudo touch "$SWAP_PATH" >> log.txt 2>&1
-    sudo truncate -s 0 "$SWAP_PATH" >> log.txt 2>&1
-    sudo f2fs_io pinfile set "$SWAP_PATH" >> log.txt 2>&1
-    sudo fallocate -l "$SWAP_SIZE" "$SWAP_PATH" >> log.txt 2>&1
+    sudo touch "$SWAP_PATH"
+    sudo truncate -s 0 "$SWAP_PATH"
+    sudo f2fs_io pinfile set "$SWAP_PATH"
+    sudo fallocate -l "$SWAP_SIZE" "$SWAP_PATH"
     ;;
     
   btrfs)
-    sudo touch "$SWAP_PATH" >> log.txt 2>&1
-    sudo chattr +C "$SWAP_PATH" >> log.txt 2>&1
+    sudo touch "$SWAP_PATH"
+    sudo chattr +C "$SWAP_PATH"
     if command -v btrfs >/dev/null 2>&1; then
-        sudo btrfs property set "$SWAP_PATH" compression none >> log.txt 2>&1
+        sudo btrfs property set "$SWAP_PATH" compression none
     fi
-    sudo truncate -s 0 "$SWAP_PATH" >> log.txt 2>&1
-    sudo dd if=/dev/zero of="$SWAP_PATH" bs=1M count=$(echo "$SWAP_SIZE" | sed 's/G//')000 status=progress >> log.txt 2>&1
+    sudo truncate -s 0 "$SWAP_PATH"
+    sudo dd if=/dev/zero of="$SWAP_PATH" bs=1M count=$(echo "$SWAP_SIZE" | sed 's/G//')000 status=progress
     ;;
     
   ext4|xfs)
-    sudo fallocate -l "$SWAP_SIZE" "$SWAP_PATH" >> log.txt 2>&1
+    sudo fallocate -l "$SWAP_SIZE" "$SWAP_PATH"
     ;;
     
   *)
-    sudo dd if=/dev/zero of="$SWAP_PATH" bs=1M count=$(echo "$SWAP_SIZE" | sed 's/G//')000 status=progress >> log.txt 2>&1
+    sudo dd if=/dev/zero of="$SWAP_PATH" bs=1M count=$(echo "$SWAP_SIZE" | sed 's/G//')000 status=progress
     ;;
 esac
 
-sudo chmod 600 "$SWAP_PATH" >> log.txt 2>&1
-sudo mkswap "$SWAP_PATH" >> log.txt 2>&1
-sudo swapon "$SWAP_PATH" >> log.txt 2>&1
+sudo chmod 600 "$SWAP_PATH"
+sudo mkswap "$SWAP_PATH"
+sudo swapon "$SWAP_PATH"
 
 if ! grep -q "$SWAP_PATH" /etc/fstab; then
   echo "$SWAP_PATH none swap sw 0 0" | sudo tee -a /etc/fstab > /dev/null
 fi
 
-sudo cp "{{ .chezmoi.sourceDir }}/.assets/logind.conf" "/etc/systemd/logind.conf" >> log.txt 2>&1
-
 ### suspend check
 
-sudo cp "{{ .chezmoi.sourceDir }}/.assets/check-lid.service" "/etc/systemd/system/check-lid.service" >> log.txt 2>&1
-sudo cp "{{ .chezmoi.sourceDir }}/.assets/check_lid_after_wakeup.sh" "/usr/local/bin/check_lid_after_wakeup.sh" >> log.txt 2>&1
-sudo chmod +x /usr/local/bin/check_lid_after_wakeup.sh >> log.txt 2>&1
+status "Creating suspend checker daemon for closed lid"
+sudo cp "{{ .chezmoi.sourceDir }}/.assets/logind.conf" "/etc/systemd/logind.conf"
+sudo cp "{{ .chezmoi.sourceDir }}/.assets/check-lid.service" "/etc/systemd/system/check-lid.service"
+sudo cp "{{ .chezmoi.sourceDir }}/.assets/check_lid_after_wakeup.sh" "/usr/local/bin/check_lid_after_wakeup.sh"
+sudo chmod +x /usr/local/bin/check_lid_after_wakeup.sh
 manage_service "-" "daemon-reload"
 manage_service "check-lid" "enable-now"
 
 ### grub settings
+status "Adding grub params to increase energy efficiency"
 grub_add_params "splash pcie_aspm=force pcie_aspm.policy=powersupersave nvme_core.default_ps_max_latency_us=5500"
 update_grub
+
+status_stop

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+{{ template "statusbar.tmpl" . }}
 {{ template "sudo.tmpl" . }}
 {{ template "pkg_install.tmpl" . }}
 {{ template "grub.tmpl" . }}
@@ -8,68 +9,76 @@
 # {{ include ".assets/themes/icons/ColorFlow.tar.xz" | sha256sum }}
 # {{ include ".assets/themes/cursor/aosp-cursor.tar.xz" | sha256sum }}
 
+status_start
+
 ### cursor theme
 
-echo "Installing cursor theme..." 2>&1 | tee -a log.txt
+status "Installing cursor theme"
+echo "Installing cursor theme..."
 
-[[ -d /usr/share/icons/cursor-theme ]] && sudo rm -rf /usr/share/icons/cursor-theme >> log.txt 2>&1
-sudo mkdir -p "/usr/share/icons/cursor-theme" >> log.txt 2>&1
+[[ -d /usr/share/icons/cursor-theme ]] && sudo rm -rf /usr/share/icons/cursor-theme
+sudo mkdir -p "/usr/share/icons/cursor-theme"
 
-sudo tar -xf "{{ .chezmoi.sourceDir }}/.assets/themes/cursor/aosp-cursor.tar.xz" -C "/usr/share/icons/cursor-theme" >> log.txt 2>&1
-sudo chmod -R 755 /usr/share/icons/cursor-theme >> log.txt 2>&1
+sudo tar -xf "{{ .chezmoi.sourceDir }}/.assets/themes/cursor/aosp-cursor.tar.xz" -C "/usr/share/icons/cursor-theme"
+sudo chmod -R 755 /usr/share/icons/cursor-theme
 
-sudo mkdir -p /usr/share/icons/default >> log.txt 2>&1
+sudo mkdir -p /usr/share/icons/default
 sudo bash -c 'cat <<EOF > /usr/share/icons/default/index.theme
 [Icon Theme]
 Inherits=cursor-theme
-EOF' >> log.txt 2>&1
+EOF'
 
 sudo bash -c 'cat <<EOF > /etc/profile.d/cursor.sh
 export XCURSOR_THEME="cursor-theme"
 export XCURSOR_SIZE="18"
 export HYPRCURSOR_THEME="cursor-theme"
 export HYPRCURSOR_SIZE="18"
-EOF' >> log.txt 2>&1
+EOF'
 
-sudo chmod +x /etc/profile.d/cursor.sh >> log.txt 2>&1
+sudo chmod +x /etc/profile.d/cursor.sh
 
 ### icons theme
 
-echo "Installing icons theme..." 2>&1 | tee -a log.txt
+status "Installing icons theme"
+echo "Installing icons theme..."
 
-[[ -d /usr/share/icons/icons-theme ]] && sudo rm -rf /usr/share/icons/icons-theme >> log.txt 2>&1
-sudo mkdir -p "/usr/share/icons/icons-theme" >> log.txt 2>&1
+[[ -d /usr/share/icons/icons-theme ]] && sudo rm -rf /usr/share/icons/icons-theme
+sudo mkdir -p "/usr/share/icons/icons-theme"
 
-sudo tar -xf "{{ .chezmoi.sourceDir }}/.assets/themes/icons/ColorFlow.tar.xz" -C "/usr/share/icons/icons-theme" >> log.txt 2>&1
+sudo tar -xf "{{ .chezmoi.sourceDir }}/.assets/themes/icons/ColorFlow.tar.xz" -C "/usr/share/icons/icons-theme"
 
 ### gtk themes
 
-echo "Installing gtk themes..." 2>&1 | tee -a log.txt
+status "Installing gtk theme settings"
+echo "Installing gtk themes..."
 
-gsettings set org.gnome.desktop.interface font-name 'Manrope ExtraLight Medium Regular 14' >> log.txt 2>&1
-gsettings set org.gnome.desktop.interface icon-theme 'icons-theme' >> log.txt 2>&1
-gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3-dark' >> log.txt 2>&1
-gsettings set org.gnome.desktop.interface cursor-theme 'cursor-theme' >> log.txt 2>&1
-gsettings set org.gnome.desktop.interface cursor-size 18 >> log.txt 2>&1
+gsettings set org.gnome.desktop.interface font-name 'Manrope ExtraLight Medium Regular 14'
+gsettings set org.gnome.desktop.interface icon-theme 'icons-theme'
+gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3-dark'
+gsettings set org.gnome.desktop.interface cursor-theme 'cursor-theme'
+gsettings set org.gnome.desktop.interface cursor-size 18
 
 ### grub theme
 
-echo "Installing grub theme..." 2>&1 | tee -a log.txt
+status "Installing grub theme"
+echo "Installing grub theme..."
 
-[[ -d /boot/grub/themes/grub-theme ]] && sudo rm -rf /boot/grub/themes/grub-theme >> log.txt 2>&1
-sudo mkdir -p "/boot/grub/themes/grub-theme" >> log.txt 2>&1
+[[ -d /boot/grub/themes/grub-theme ]] && sudo rm -rf /boot/grub/themes/grub-theme
+sudo mkdir -p "/boot/grub/themes/grub-theme"
 
-sudo tar --no-same-owner -xf "{{ .chezmoi.sourceDir }}/.assets/themes/grub/Particle-circle-window.tar.xz" -C "/boot/grub/themes/grub-theme" >> log.txt 2>&1
+sudo tar --no-same-owner -xf "{{ .chezmoi.sourceDir }}/.assets/themes/grub/Particle-circle-window.tar.xz" -C "/boot/grub/themes/grub-theme"
 
-sudo cp -an /etc/default/grub /etc/default/grub.bak >> log.txt 2>&1
+sudo cp -an /etc/default/grub /etc/default/grub.bak
 
 sudo grep "GRUB_THEME=" /etc/default/grub 2>&1 >/dev/null && sudo sed -i '/GRUB_THEME=/d' /etc/default/grub 
-echo "GRUB_THEME=\"/boot/grub/themes/grub-theme/theme.txt\"" | sudo tee -a /etc/default/grub >> log.txt 2>&1
+echo "GRUB_THEME=\"/boot/grub/themes/grub-theme/theme.txt\"" | sudo tee -a /etc/default/grub
 
 sudo grep "GRUB_TIMEOUT=" /etc/default/grub 2>&1 >/dev/null && sudo sed -i '/GRUB_TIMEOUT=/d' /etc/default/grub 
-echo "GRUB_TIMEOUT=1" | sudo tee -a /etc/default/grub >> log.txt 2>&1
+echo "GRUB_TIMEOUT=1" | sudo tee -a /etc/default/grub
 
 sudo grep "GRUB_GFXMODE=" /etc/default/grub 2>&1 >/dev/null && sudo sed -i '/GRUB_GFXMODE=/d' /etc/default/grub 
-echo "GRUB_GFXMODE=\"1920x1080x32,auto\"" | sudo tee -a /etc/default/grub >> log.txt 2>&1
+echo "GRUB_GFXMODE=\"1920x1080x32,auto\"" | sudo tee -a /etc/default/grub
 
 update_grub
+
+status_stop

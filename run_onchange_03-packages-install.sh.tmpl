@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
 
+{{ template "statusbar.tmpl" . }}
 {{ template "sudo.tmpl" . }}
 {{ template "service.tmpl" . }}
 {{ template "pkg_install.tmpl" . }}
 
 # {{ include ".assets/packages.json" | sha256sum }}
+
+status_start
+status "Installing packages from packages.json"
 
 export CHEZMOI_SOURCE_DIR="{{ .chezmoi.sourceDir }}"
 
@@ -23,3 +27,5 @@ PKG_HOOKS[{{ $name | quote }}]=$_hook
 {{- end }}
 
 pkg_install_json
+
+status_stop

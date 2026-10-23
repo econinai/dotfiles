@@ -1,0 +1,42 @@
+STATUS_MSG=""
+STATUS_ON=false
+
+_status_draw() {
+  [[ $STATUS_ON == true ]] || return 0
+  local rows cols
+  rows=$(tput lines); cols=$(tput cols)
+  printf '\e7\e[%d;1H\e[7m\e[2K %-*s\e[0m\e8' "$rows" $((cols - 1)) "${STATUS_MSG:0:$((cols - 1))}"
+}
+
+_status_resize() {
+  [[ $STATUS_ON == true ]] || return 0
+  local rows; rows=$(tput lines)
+  printf '\e[1;%dr' $((rows - 1))
+  _status_draw
+}
+
+status_start() {
+  [[ -t 1 ]] || return 0
+  STATUS_ON=true
+  local rows; rows=$(tput lines)
+  printf '\n'
+  printf '\e[1;%dr' $((rows - 1))
+  printf '\e[%d;1H' $((rows - 1))
+  trap _status_resize WINCH
+  trap 'status_stop' EXIT
+  _status_draw
+}
+
+status() {
+  STATUS_MSG="$*"
+  _status_draw
+}
+
+status_stop() {
+  [[ $STATUS_ON == true ]] || return 0
+  STATUS_ON=false
+  local rows; rows=$(tput lines)
+  printf '\e[r'
+  printf '\e[%d;1H\e[2K' "$rows"
+  printf '\e[%d;1H' "$rows"
+}

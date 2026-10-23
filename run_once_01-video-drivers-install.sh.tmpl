@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 
+{{ template "statusbar.tmpl" . }}
 {{ template "sudo.tmpl" . }}
 {{ template "pkg_install.tmpl" . }}
 {{ template "grub.tmpl" . }}
 {{ template "service.tmpl" . }}
+
+status_start
 
 VIDEODEVICES=()
 while IFS= read -r line; do
@@ -13,7 +16,8 @@ done < <(lspci -nn | grep -E "(VGA|3D|Display)")
 NEEDS_NVIDIA_KMS=false
 
 for device in "${VIDEODEVICES[@]}"; do
-  echo "Installing video drivers for $device" 2>&1 | tee -a log.txt
+  status "Installing video drivers for $device"
+  echo "Installing video drivers for $device"
   if [[ $(echo "$device" | grep -Ei "\[10de\]|\[10de:") != "" ]]; then ### NVIDIA
     NEEDS_NVIDIA_KMS=true
     case "$(echo "$device" | grep -oP '[A-Z]{2}(?=[0-9]{3})' | head -n 1)" in 
@@ -34,17 +38,18 @@ for device in "${VIDEODEVICES[@]}"; do
 done
 
 if [ "$NEEDS_NVIDIA_KMS" = true ]; then
-	echo "Making initramfs..." 2>&1 | tee -a log.txt
+    status "Making initramfs for nvidia driver"
+	echo "Making initramfs..."
     if command -v mkinitcpio &> /dev/null; then
-        sudo sed -i 's/^MODULES=(.*/MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf  >> log.txt 2>&1
-        sudo mkinitcpio -P >> log.txt 2>&1
+        sudo sed -i 's/^MODULES=(.*/MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf
+        sudo mkinitcpio -P
     elif command -v update-initramfs &> /dev/null; then
-        sudo update-initramfs -u -k all >> log.txt 2>&1
+        sudo update-initramfs -u -k all
     elif command -v dracut &> /dev/null; then
-        echo 'force_drivers+=" nvidia nvidia_modeset nvidia_uvm nvidia_drm "' | sudo tee /etc/dracut.conf.d/nvidia.conf > /dev/null  >> log.txt 2>&1
-        sudo dracut --force --regenerate-all >> log.txt 2>&1
+        echo 'force_drivers+=" nvidia nvidia_modeset nvidia_uvm nvidia_drm "' | sudo tee /etc/dracut.conf.d/nvidia.conf > /dev/null
+        sudo dracut --force --regenerate-all
     else
-        echo "Warning: not found initramfs." 2>&1 | tee -a log.txt
+        echo "Warning: not found initramfs."
     fi
     manage_service "nvidia-suspend" "enable"
     manage_service "nvidia-hibernate" "enable"
@@ -53,4 +58,5 @@ if [ "$NEEDS_NVIDIA_KMS" = true ]; then
 	update_grub
 fi
 
+status_stop
 

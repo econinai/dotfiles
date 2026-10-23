@@ -4,26 +4,26 @@ manage_service() {
     #SYSTEMD
     if command -v systemctl >/dev/null 2>&1 && [ -d /run/systemd/system ]; then
       case "$action" in
-        "enable-now")  sudo systemctl enable --now "$service_name" >> log.txt 2>&1 ;;
-        "enable")      sudo systemctl enable "$service_name" >> log.txt 2>&1 ;;
-        "start")       sudo systemctl start "$service_name" >> log.txt 2>&1 ;;
-        "disable-now") sudo systemctl disable --now "$service_name" >> log.txt 2>&1 ;;
-        "disable")     sudo systemctl disable "$service_name" >> log.txt 2>&1 ;;
-        "daemon-reload") sudo systemctl daemon-reload >> log.txt 2>&1 ;;
+        "enable-now")  sudo systemctl enable --now "$service_name" ;;
+        "enable")      sudo systemctl enable "$service_name" ;;
+        "start")       sudo systemctl start "$service_name" ;;
+        "disable-now") sudo systemctl disable --now "$service_name" ;;
+        "disable")     sudo systemctl disable "$service_name" ;;
+        "daemon-reload") sudo systemctl daemon-reload ;;
       esac
 
     #OpenRC
     elif command -v rc-update >/dev/null 2>&1; then
       if [ -f "/etc/init.d/$service_name" ]; then
         if [ "$action" = "enable" ] || [ "$action" = "enable-now" ]; then
-          sudo rc-update add "$service_name" default >> log.txt 2>&1
+          sudo rc-update add "$service_name" default
         elif [ "$action" = "disable" ] || [ "$action" = "disable-now" ]; then
-          sudo rc-update del "$service_name" default 2>/dev/null >> log.txt 2>&1 || true 
+          sudo rc-update del "$service_name" default 2>/dev/null || true 
         fi
         if [ "$action" = "start" ] || [ "$action" = "enable-now" ]; then
-          sudo rc-service "$service_name" start >> log.txt 2>&1
+          sudo rc-service "$service_name" start
         elif [ "$action" = "disable-now" ]; then
-          sudo rc-service "$service_name" stop >> log.txt 2>&1
+          sudo rc-service "$service_name" stop
         fi
       fi
 
@@ -31,15 +31,15 @@ manage_service() {
     elif [ -d /etc/sv ] && [ -d /var/service ]; then
       if [ -d "/etc/sv/$service_name" ]; then
         if [ "$action" = "disable" ] || [ "$action" = "disable-now" ]; then
-          sudo rm -f "/var/service/$service_name" >> log.txt 2>&1
+          sudo rm -f "/var/service/$service_name"
         fi
         if [ "$action" = "enable" ] || [ "$action" = "enable-now" ]; then
-          sudo ln -sf "/etc/sv/$service_name" "/var/service/" >> log.txt 2>&1
+          sudo ln -sf "/etc/sv/$service_name" "/var/service/"
         fi
         if [ "$action" = "start" ] || [ "$action" = "enable-now" ]; then
-          sudo sv start "$service_name" >> log.txt 2>&1 || true
+          sudo sv start "$service_name" || true
         elif [ "$action" = "disable-now" ]; then
-          sudo sv stop "$service_name" >> log.txt 2>&1 || true
+          sudo sv stop "$service_name" || true
         fi
       fi
 
@@ -47,19 +47,19 @@ manage_service() {
     elif [ -d /etc/init.d ] && command -v service >/dev/null 2>&1; then
       if [ -f "/etc/init.d/$service_name" ]; then
         if [ "$action" = "enable" ] || [ "$action" = "enable-now" ]; then
-          if command -v update-rc.d >/dev/null 2>&1; then sudo update-rc.d "$service_name" defaults >> log.txt 2>&1
-          elif command -v chkconfig >/dev/null 2>&1; then sudo chkconfig "$service_name" on >> log.txt 2>&1; fi
+          if command -v update-rc.d >/dev/null 2>&1; then sudo update-rc.d "$service_name" defaults
+          elif command -v chkconfig >/dev/null 2>&1; then sudo chkconfig "$service_name" on; fi
         elif [ "$action" = "disable" ] || [ "$action" = "disable-now" ]; then
-          if command -v update-rc.d >/dev/null 2>&1; then sudo update-rc.d -f "$service_name" remove >> log.txt 2>&1
-          elif command -v chkconfig >/dev/null 2>&1; then sudo chkconfig "$service_name" off >> log.txt 2>&1; fi
+          if command -v update-rc.d >/dev/null 2>&1; then sudo update-rc.d -f "$service_name" remove
+          elif command -v chkconfig >/dev/null 2>&1; then sudo chkconfig "$service_name" off; fi
         fi
         if [ "$action" = "start" ] || [ "$action" = "enable-now" ]; then
-          sudo service "$service_name" start >> log.txt 2>&1
+          sudo service "$service_name" start
         elif [ "$action" = "disable-now" ]; then
-          sudo service "$service_name" stop >> log.txt 2>&1
+          sudo service "$service_name" stop
         fi
       fi
     else
-        echo -e "\e[33mWarning: cannot find init system\e[0m" 2>&1 | tee -a log.txt
+        echo -e "\e[33mWarning: cannot find init system\e[0m"
     fi
 }

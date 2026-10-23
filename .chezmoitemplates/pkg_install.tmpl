@@ -25,41 +25,42 @@ filter_installed() {
 }
 
 pkg_install() {
-  echo -e "\e[32mInstalling packages:\e[0m" 2>&1 | tee -a log.txt
+  echo -e "\e[32mInstalling packages:\e[0m"
+  
   if [[ $PKG_MGR == "pacman" ]]; then
     notfound="$1"
     
     ### pacman
     local pacmanpkgs=$(filter_pacman "$notfound")
-    echo -e "\e[32m\t::Installing via pacman: $pacmanpkgs\e[0m" 2>&1 | tee -a log.txt
-    [[ -n $pacmanpkgs ]] && sudo pacman -S --needed --noconfirm $pacmanpkgs >> log.txt 2>&1
+    echo -e "\e[32m\t::Installing via pacman: $pacmanpkgs\e[0m"
+    [[ -n $pacmanpkgs ]] && sudo pacman -S --needed --noconfirm $pacmanpkgs
     notfound=$(diff_words "$notfound" "$pacmanpkgs")
     
     local installedpkgs=$(filter_installed "$pacmanpkgs")
     local notinstalledpkg=$(diff_words "$pacmanpkgs" "$installedpkgs")
     if [[ $notinstalledpkg != "" ]]; then
-      echo -e "\e[31m\t::Not installing via pacman by unknown errors: $notinstalledpkg\e[0m" 2>&1 | tee -a log.txt
+      echo -e "\e[31m\t::Not installing via pacman by unknown errors: $notinstalledpkg\e[0m"
     fi;
 
     ### yay
     if [[ $notfound != "" ]]; then
       local yaypkgs=$(filter_yay "$notfound")
-      echo -e "\e[32m\t::Installing via AUR: $yaypkgs\e[0m" 2>&1 | tee -a log.txt
-      [[ -n $yaypkgs ]] && yay -S --needed --noconfirm $yaypkgs >> log.txt 2>&1
+      echo -e "\e[32m\t::Installing via AUR: $yaypkgs\e[0m"
+      [[ -n $yaypkgs ]] && yay -S --needed --noconfirm $yaypkgs
       notfound=$(diff_words "$notfound" "$yaypkgs")
       
       local installedpkgs=$(filter_installed "$yaypkgs")
       local notinstalledpkg=$(diff_words "$yaypkgs" "$installedpkgs")
       if [[ $notinstalledpkg != "" ]]; then
-      	echo -e "\e[31m\t::Not installing via AUR by unknown errors: $notinstalledpkg\e[0m" 2>&1 | tee -a log.txt
+      	echo -e "\e[31m\t::Not installing via AUR by unknown errors: $notinstalledpkg\e[0m"xt
       fi;
     fi;
-    
-    ### flathak
+
+    ### flatpak
     if [[ $notfound != "" ]]; then
       local flatpakpkgs=$(flatpak remote-ls flathub --app --columns=application 2>/dev/null | grep -Fxf <(printf '%s\n' $notfound) | xargs)
-      echo -e "\e[32m\t::Installing via flatpak: $flatpakpkgs\e[0m" 2>&1 | tee -a log.txt
-      flatpak install flathub -y --or-update $flatpakpkgs >> log.txt 2>&1
+      echo -e "\e[32m\t::Installing via flatpak: $flatpakpkgs\e[0m"
+      flatpak install flathub -y --or-update $flatpakpkgs
       notfound=$(diff_words "$notfound" "$flatpakpkgs")
       
       local installedpkgs=$(flatpak list --app --columns=application | xargs)
@@ -70,7 +71,7 @@ pkg_install() {
     fi;
 
     if [[ $notfound != "" ]]; then
-      echo -e "\e[31m\t::Not found at all: $notfound\e[0m" 2>&1 | tee -a log.txt
+      echo -e "\e[31m\t::Not found at all: $notfound\e[0m"
     fi;
   fi;
 }
@@ -81,7 +82,7 @@ pkg_install_json() {
 
   pkg_install "${names[*]}"
 
-  echo -e "\e[32mRunning pre_install hooks:\e[0m" 2>&1 | tee -a log.txt
+  echo -e "\e[32mRunning pre_install hooks:\e[0m"
   local flatpaks name
   flatpaks=$(flatpak list --app --columns=application 2>/dev/null)
 
@@ -89,13 +90,13 @@ pkg_install_json() {
     [[ -n ${PKG_HOOKS[$name]:-} ]] || continue
 
     if ! pacman -Qq "$name" &>/dev/null && ! grep -qxF "$name" <<<"$flatpaks"; then
-      echo -e "\e[33m\t::Skip hook for $name (not installed)\e[0m" 2>&1 | tee -a log.txt
+      echo -e "\e[33m\t::Skip hook for $name (not installed)\e[0m"
       continue
     fi
 
-    echo -e "\e[32m\t::Hook: $name\e[0m" 2>&1 | tee -a log.txt
+    echo -e "\e[32m\t::Hook: $name\e[0m"
     if ! ( eval "${PKG_HOOKS[$name]}" ); then
-      echo -e "\e[31m\t::Hook failed: $name\e[0m" 2>&1 | tee -a log.txt
+      echo -e "\e[31m\t::Hook failed: $name\e[0m"
     fi
   done
 }

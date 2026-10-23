@@ -1,64 +1,72 @@
 #!/usr/bin/env bash
 
+{{ template "statusbar.tmpl" . }}
 {{ template "sudo.tmpl" . }}
 {{ template "pkg_install.tmpl" . }}
 
+status_start
 if [[ $PKG_MGR == "pacman" ]]; then
   ### pacman theming
   sudo grep "Color" /etc/pacman.conf 2>&1 >/dev/null && sudo sed -i '/Color/d' /etc/pacman.conf
   sudo grep "ILoveCandy" /etc/pacman.conf 2>&1 >/dev/null && sudo sed -i '/ILoveCandy/d' /etc/pacman.conf
-  sudo sed -i '/^\[options\]$/a Color\nILoveCandy' /etc/pacman.conf >> log.txt 2>&1
+  sudo sed -i '/^\[options\]$/a Color\nILoveCandy' /etc/pacman.conf
   ### reflector
-  echo "Installing reflector..." 2>&1 | tee -a log.txt
+  status "Installing reflector and choosing best mirrors"
+  echo "Installing reflector..."
   if ! pacman -Qi reflector &>/dev/null; then
-    sudo pacman -S --needed --noconfirm reflector >> log.txt 2>&1
+    sudo pacman -S --needed --noconfirm reflector
   fi
-  sudo reflector --latest 15 --protocol https --sort rate --save /etc/pacman.d/mirrorlist >> log.txt 2>&1
-  sudo systemctl enable --now reflector.timer >> log.txt 2>&1
-  sudo pacman -Sy --noconfirm archlinux-keyring  >> log.txt 2>&1
+  sudo reflector --latest 15 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+  sudo systemctl enable --now reflector.timer
+  sudo pacman -Sy --noconfirm archlinux-keyring
   if [ -f /etc/os-release ] && grep -q 'ID="artix"' /etc/os-release; then
       sudo pacman -S --noconfirm artix-archlinux-support
       sudo pacman-key --populate archlinux
   fi
   ### multilib
-  echo "Installing multilib..." 2>&1 | tee -a log.txt
+  status "Adding multilib to pacman.conf"
+  echo "Installing multilib..."
   if [[ $(awk 'prev == "#[multilib]" && $0 == "#Include = /etc/pacman.d/mirrorlist" {print "0"; exit 0} {prev = $0} END {exit 1}' /etc/pacman.conf ) == "0" ]]; then
     sudo sed -i -z 's/#\[multilib\]\n#Include = \/etc\/pacman.d\/mirrorlist/\[multilib\]\nInclude = \/etc\/pacman.d\/mirrorlist/g' /etc/pacman.conf
   elif [[ $(awk 'prev == "[multilib]" && $0 == "Include = /etc/pacman.d/mirrorlist" {print "0"; exit 0} {prev = $0} END {exit 1}' /etc/pacman.conf ) != "0" ]]; then 
     echo "[multilib]" | sudo tee -a /etc/pacman.conf > /dev/null
     echo "Include = /etc/pacman.d/mirrorlist" | sudo tee -a /etc/pacman.conf > /dev/null
   fi;
-  echo "Updating pacman databases..." 2>&1 | tee -a log.txt
-  sudo pacman -Sy --noconfirm >> log.txt 2>&1
-  ### python
-  sudo pacman -S --needed --noconfirm python >> log.txt 2>&1
+  status "Updating pacman databases"
+  echo "Updating pacman databases..."
+  sudo pacman -Sy --noconfirm
   ### yay install
-  echo "Installing yay..." 2>&1 | tee -a log.txt
+  status "Installing AUR helper yay"
+  echo "Installing yay..."
   if [[ $(pacman -Qe yay 2>&1 | awk '{print $1}') == "error:" ]]; then
-    sudo pacman -S --needed --noconfirm base-devel git >> log.txt 2>&1
+    sudo pacman -S --needed --noconfirm base-devel git
     if [ -d "/tmp/yay" ]; then
-      git -C /tmp/yay pull >> log.txt 2>&1
+      git -C /tmp/yay pull
     else
-      git clone https://aur.archlinux.org/yay.git /tmp/yay 2>/dev/null
+      git clone https://aur.archlinux.org/yay.git /tmp/yay
     fi;
-    makepkg -D /tmp/yay -si --noconfirm >> log.txt 2>&1
-    rm -rf /tmp/yay >> log.txt 2>&1
+    makepkg -D /tmp/yay -si --noconfirm
+    rm -rf /tmp/yay
   fi;
   ### flatpak install
-  echo "Installing flatpak..." 2>&1 | tee -a log.txt
-  sudo pacman -S --needed --noconfirm flatpak >> log.txt 2>&1
-  flatpak remote-add --if-not-exists flathub https://flathub.org >> log.txt 2>&1
+  status "Installing flatpak"
+  echo "Installing flatpak..."
+  sudo pacman -S --needed --noconfirm flatpak
+  flatpak remote-add --if-not-exists flathub https://flathub.org
   ### xdg
-  echo "Installing xdg menu..." 2>&1 | tee -a log.txt
-  sudo pacman -S --needed --noconfirm archlinux-xdg-menu kservice >> log.txt 2>&1
-  sudo ln -sf /etc/xdg/menus/arch-applications.menu /etc/xdg/menus/applications.menu >> log.txt 2>&1
-  rm -f ~/.cache/ksycoca6_* >> log.txt 2>&1
+  status "Installing xdg menu"
+  echo "Installing xdg menu..."
+  sudo pacman -S --needed --noconfirm archlinux-xdg-menu kservice
+  sudo ln -sf /etc/xdg/menus/arch-applications.menu /etc/xdg/menus/applications.menu
+  rm -f ~/.cache/ksycoca6_*
   ### updating all
-  echo "Final updating..." 2>&1 | tee -a log.txt
-  sudo pacman -Syu --noconfirm >> log.txt 2>&1
+  status "Updating pacman packages"
+  echo "Updating pacman packages..."
+  sudo pacman -Syu --noconfirm
 fi;
 
-echo "Installing headers..." 2>&1 | tee -a log.txt
+status "Installing linux headers"
+echo "Installing headers..."
 if [[ $(uname -r | grep "lts") != "" ]]; then 
   pkg_install "linux-lts-headers"
 elif [[ $(uname -r | grep "zen") != "" ]]; then
@@ -66,3 +74,4 @@ elif [[ $(uname -r | grep "zen") != "" ]]; then
 else
   pkg_install "linux-headers"
 fi
+status_stop
