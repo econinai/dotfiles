@@ -1,0 +1,32 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "Cargo Build (Global)",
+            "command": "cargo",
+            "args": ["build"],
+            "problemMatcher": ["$rustc"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "type": "shell",
+            "label": "Cargo Run (Global)",
+            "command": "cargo",
+            "args": ["run"],
+            "problemMatcher": ["$rustc"],
+            "group": "none"
+        },
+        {
+            "type": "shell",
+            "label": "Cargo Test (Global)",
+            "command": "cargo",
+            "args": ["test"],
+            "problemMatcher": ["$rustc"],
+            "group": "none"
+        }
+    ]
+}

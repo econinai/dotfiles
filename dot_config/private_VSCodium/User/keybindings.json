@@ -14,5 +14,23 @@
         "command": "workbench.action.terminal.sendSequence",
         "args": { "text": "\u0003" },
         "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+shift+v",
+        "command": "workbench.action.tasks.runTask",
+        "args": "Cargo Run (Global)",
+        "when": "editorLangId == rust"
+    },
+    {
+        "key": "ctrl+shift+n",
+        "command": "workbench.action.tasks.runTask",
+        "args": "Cargo Test (Global)",
+        "when": "editorLangId == rust"
+    },
+    {
+        "key": "ctrl+shift+b",
+        "command": "workbench.action.tasks.runTask",
+        "args": "Cargo Build (Global)",
+        "when": "editorLangId == rust"
     }
 ]
