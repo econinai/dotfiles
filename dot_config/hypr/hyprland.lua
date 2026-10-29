@@ -260,14 +260,14 @@ end
 -----------------------
 
 if transparentenabled then
-    local classes = {"vesktop", "org.telegram.desktop", "codium", "steam", "app.zen_browser.zen", "anytype"}
+    local classes = {"dev.vencord.Vesktop", "org.telegram.desktop", "codium", "steam", "app.zen_browser.zen", "anytype"}
 
     for index, value in ipairs(classes) do
         hl.window_rule({ match = { class = value }, opacity = "1.0 override 0.5 override" })
     end
 end
 hl.window_rule({ match = { class = "org.telegram.desktop" }, suppress_event = "activatefocus" })
-hl.window_rule({ match = { class = "vesktop" }, suppress_event = "activatefocus" })
+hl.window_rule({ match = { class = "dev.vencord.Vesktop" }, suppress_event = "activatefocus" })
 hl.window_rule({ match = { class = "steam" }, suppress_event = "activatefocus" })
 hl.layer_rule({ match = { namespace = "selection" }, blur = false })
 hl.layer_rule({ match = { namespace = "noctalia-bar-default" }, ignore_alpha = 0 })
@@ -583,7 +583,7 @@ hl.bind("XF86AudioPause", hl.dsp.exec_cmd(mediaToggle), { locked = true, descrip
 hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd(mediaToggle), { locked = true, description = "󰐎  (Play/Pause)" })
 hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd(mediaPrev),   { locked = true, description = "󰒮  (Previous)" })
 
-hl.bind("CTRL + SHIFT + M", hl.dsp.pass({ window = "class:^(vesktop)$" }), { transparent = true, description = "  (Mute)" })
+hl.bind("CTRL + SHIFT + M", hl.dsp.pass({ window = "class:^(dev.vencord.Vesktop)$" }), { transparent = true, description = "  (Mute)" })
 
 local isneedlidguard = "0"
 local file = io.open(os.getenv("HOME") .. "/.cache/lid_guard", "r")
