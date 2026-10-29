@@ -277,6 +277,15 @@ hl.layer_rule({ match = { namespace = "noctalia-attached-panel" }, ignore_alpha 
 hl.layer_rule({ match = { namespace = "wvkbd" }, blur = true })
 hl.layer_rule({ match = { namespace = "wvkbd" }, ignore_alpha = 0 })
 
+local function set_natural_scroll(enabled)
+    hl.config({ input = { touchpad = { natural_scroll = enabled } } })
+end
+
+hl.on("window.active", function(win)
+    local class = win and win.class and win.class:lower() or ""
+    set_natural_scroll(class ~= "blender")
+end)
+
 if isneedborder then
 	hl.config({
 		general = {
