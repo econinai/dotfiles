@@ -27,6 +27,8 @@ local switchLocal = "cur=$(hyprctl devices -j | jq '[.keyboards[] | select(.main
 local mediaPrev = "noctalia msg media previous"
 local mediaNext = "noctalia msg media next"
 local mediaToggle = "noctalia msg media playPause"
+local mediaPlay = "noctalia msg media play"
+local mediaPause = "noctalia msg media pause"
 local taskmng = "missioncenter"
 local showInfo = "notify-send \"all is ok\""
 local help = "noctalia msg panel-toggle blackbartblues/keymap:panel"
@@ -225,6 +227,20 @@ if hl.plugin.dynamic_cursors then
 	}}}
 end
 
+hl.config({
+  plugin = {
+    overview = {
+      autoScroll = false,
+      panelHeight = 250,
+      panelBorderWidth = 2,
+      drawActiveWorkspace = true,
+      autoDrag = true,
+      exitOnClick = true,
+      showSpecialWorkspace = false,
+      disableGestures = true,
+    },
+  },
+})
 
 if hl.plugin.hyprglass then
     local hg = hl.plugin.hyprglass
@@ -477,27 +493,27 @@ end
 local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 
 hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })
-hl.gesture({ fingers = 3, direction = "up",   mods = mainMod, scale = 1.5, action = "fullscreen" })
-hl.gesture({ fingers = 3, direction = "down", mods = mainMod,   action = "close" })
-hl.gesture({ fingers = 3, direction = "up",   mods = "ALT",   action = "float" })
+hl.gesture({ fingers = 3, direction = "down", action = function() hl.plugin.overview.close() end })
+hl.gesture({ fingers = 3, direction = "up",   action = function() hl.plugin.overview.open() end })
 
-hl.gesture({ fingers = 4, direction = "up",    action = function() hl.exec_cmd(launcher) end })
-hl.gesture({ fingers = 4, direction = "down",  action = function() hl.exec_cmd(mediaToggle) end })
-hl.gesture({ fingers = 4, direction = "left",  action = function() hl.exec_cmd(mediaPrev) end })
-hl.gesture({ fingers = 4, direction = "right", action = function() hl.exec_cmd(mediaNext) end })
+hl.gesture({ fingers = 3, direction = "up",    mods = mainMod, action = "fullscreen" })
+hl.gesture({ fingers = 3, direction = "down",  mods = mainMod, action = "fullscreen" })
+hl.gesture({ fingers = 3, direction = "left",  mods = mainMod, action = function() hl.dispatch(hl.dsp.window.move({ workspace = "-1", follow = true })) end })
+hl.gesture({ fingers = 3, direction = "right", mods = mainMod, action = function() hl.dispatch(hl.dsp.window.move({ workspace = "+1", follow = true })) end })
+
+hl.gesture({ fingers = 4, direction = "up",    action = function() hl.exec_cmd(mediaPlay) end })
+hl.gesture({ fingers = 4, direction = "down",  action = function() hl.exec_cmd(mediaPause) end })
+hl.gesture({ fingers = 4, direction = "right",  action = function() hl.exec_cmd(mediaNext) end })
+hl.gesture({ fingers = 4, direction = "left", action = function() hl.exec_cmd(mediaPrev) end })
+
+hl.gesture({ fingers = 4, direction = "up",    mods = mainMod, action = function() hl.exec_cmd(launcher) end })
+hl.gesture({ fingers = 4, direction = "down",  mods = mainMod, action = "close" })
+--hl.gesture({ fingers = 4, direction = "left",  mods = mainMod, action = function() hl.dispatch(hl.dsp.window.move({ workspace = "-1", follow = true })) end })
+--hl.gesture({ fingers = 4, direction = "right", mods = mainMod, action = function() hl.dispatch(hl.dsp.window.move({ workspace = "+1", follow = true })) end })
+
 
 hl.gesture({ fingers = 2, direction = "pinch", mods = mainMod,
              action = "cursor_zoom", zoom_level = 1, mode = "live" })
-
-hl.gesture({ fingers = 3, direction = "right", mods = mainMod,
-    action = function()
-        hl.dispatch(hl.dsp.window.move({ workspace = "+1", follow = true }))
-    end })
-
-hl.gesture({ fingers = 3, direction = "left", mods = mainMod,
-    action = function()
-        hl.dispatch(hl.dsp.window.move({ workspace = "-1", follow = true }))
-    end })
 
 
 hl.bind(mainMod .. " + P", function()
@@ -528,6 +544,7 @@ hl.bind("CTRL + SHIFT + escape", hl.dsp.exec_cmd(taskmng), { description = " 
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }), { description = "  (Fullscreen)"})
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(terminal), { description = "  (Terminal)"})
 hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.window.close(), { description = "󰱞  (Close window)"})
+hl.bind(mainMod .. " + SHIFT + W", function() hl.plugin.overview.toggle() end, { description = "󰨝  (Workspaces overview)" })
 hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exec_cmd(exitHyprland), { description = "󰈆  (Exit hyprland)"})
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager), { description = "  (File manager)"})
 hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"), { description = "󰑓  (Reload config)" })
@@ -582,8 +599,9 @@ hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_S
 hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),   { locked = true, repeating = true, description = "󰍭  (Volume)" })
 hl.bind("XF86MonBrightnessUp",  hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"),                  { locked = true, repeating = true, description = "󰃠  (More)" })
 hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"),                  { locked = true, repeating = true, description = "󰃞  (Less)" })
-hl.bind(mainMod .. " + CTRL + mouse_up",   hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, description = "󰝝  (More)" })
-hl.bind(mainMod .. " + CTRL + mouse_down", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),      { locked = true, description = "󰝞  (Less)" })
+hl.bind("XF86TouchpadToggle",   function() hl.plugin.overview.toggle() end,                  { description = "󰨝  (Workspaces overview)" })
+hl.bind(mainMod .. " + CTRL + mouse_up",   hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true, description = "󰝝  (More)" })
+hl.bind(mainMod .. " + CTRL + mouse_down", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),      { locked = true, repeating = true, description = "󰝞  (Less)" })
              
 
 -- Requires playerctl

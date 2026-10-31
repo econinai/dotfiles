@@ -96,6 +96,8 @@
   	  "hyprpm enable hyprglass",
   	  "hyprpm add https://github.com/virtcode/hypr-dynamic-cursors",
   	  "hyprpm enable dynamic-cursors",
+  	  "hyprpm add https://github.com/KZDKM/Hyprspace",
+  	  "hyprpm enable Hyprspace",
   	  "if [ \"$STARTED_NOW\" = true ]; then",
   	  "kill \"$HYPR_PID\"",
   	  "fi"
