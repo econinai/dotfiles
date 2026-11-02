@@ -600,8 +600,8 @@ hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_S
 hl.bind("XF86MonBrightnessUp",  hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"),                  { locked = true, repeating = true, description = "󰃠  (More)" })
 hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"),                  { locked = true, repeating = true, description = "󰃞  (Less)" })
 hl.bind("XF86TouchpadToggle",   function() hl.plugin.overview.toggle() end,                  { description = "󰨝  (Workspaces overview)" })
-hl.bind(mainMod .. " + CTRL + mouse_up",   hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true, description = "󰝝  (More)" })
-hl.bind(mainMod .. " + CTRL + mouse_down", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),      { locked = true, repeating = true, description = "󰝞  (Less)" })
+hl.bind(mainMod .. " + CTRL + mouse_up",   hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, description = "󰝝  (More)" })
+hl.bind(mainMod .. " + CTRL + mouse_down", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),      { locked = true, description = "󰝞  (Less)" })
              
 
 -- Requires playerctl
