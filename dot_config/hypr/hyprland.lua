@@ -454,6 +454,9 @@ hl.config({
             disable_while_typing = false,
         },
     },
+    cursor = {
+        zoom_detached_camera = false,
+    },
     
 })
 
