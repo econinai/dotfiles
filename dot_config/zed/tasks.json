@@ -59,31 +59,28 @@
     // * `create_worktree` — run this task after creating a new git worktree (e.g. to install dependencies or copy untracked config files into it)
     // "hooks": ["create_worktree"]
   },
-  {
-    "label": "build",
-    "command": "cargo",
-    "args": ["build"],
-    "cwd": "$ZED_WORKTREE_ROOT",
-    "use_new_terminal": false,
-    "allow_concurrent_runs": false,
-    "reveal": "always"
-  },
-  {
-    "label": "run",
-    "command": "cargo",
-    "args": ["run"],
-    "cwd": "$ZED_WORKTREE_ROOT",
-    "use_new_terminal": false,
-    "allow_concurrent_runs": false,
-    "reveal": "always"
-  },
-  {
-    "label": "test",
-    "command": "cargo",
-    "args": ["test"],
-    "cwd": "$ZED_WORKTREE_ROOT",
-    "use_new_terminal": false,
-    "allow_concurrent_runs": false,
-    "reveal": "always"
-  }
-]
+    {
+      "label": "build",
+      "command": "bash -c 'if [ -f .zed/build.sh ]; then bash .zed/build.sh; elif [ -f Cargo.toml ]; then cargo build; else echo no build config; fi'",
+      "cwd": "$ZED_WORKTREE_ROOT",
+      "use_new_terminal": false,
+      "allow_concurrent_runs": false,
+      "reveal": "always"
+    },
+    {
+      "label": "run",
+      "command": "bash -c 'if [ -f .zed/run.sh ]; then bash .zed/run.sh; elif [ -f Cargo.toml ]; then cargo run; else echo no run config; fi'",
+      "cwd": "$ZED_WORKTREE_ROOT",
+      "use_new_terminal": false,
+      "allow_concurrent_runs": false,
+      "reveal": "always"
+    },
+    {
+      "label": "test",
+      "command": "bash -c 'if [ -f .zed/test.sh ]; then bash .zed/test.sh; elif [ -f Cargo.toml ]; then cargo test; else echo no test config; fi'",
+      "cwd": "$ZED_WORKTREE_ROOT",
+      "use_new_terminal": false,
+      "allow_concurrent_runs": false,
+      "reveal": "always"
+    }
+  ]
