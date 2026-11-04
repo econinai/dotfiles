@@ -1,0 +1,101 @@
+{
+  "scrollbar": {
+    "diagnostics": "all"
+  },
+  "base_keymap": "VSCode",
+  "ui_font_size": 16,
+  "buffer_font_size": 18,
+  "cursor_shape": "bar",
+
+  "buffer_font_family": "Fira Code",
+  "buffer_font_features": { "calt": true },
+  "buffer_line_height": "comfortable",
+  "autosave": "on_focus_change",
+  "relative_line_numbers": "disabled",
+  "show_whitespaces": "selection",
+  "scroll_beyond_last_line": "one_page",
+  "use_smartcase_search": true,
+  "git": { "inline_blame": { "enabled": true } },
+  "indent_guides": {
+    "enabled": true,
+    "coloring": "indent_aware",
+    "background_coloring": "disabled"
+  },
+
+  "terminal": {
+    "font_family": "Fira Code"
+  },
+  "diagnostics": {
+    "include_warnings": true,
+    "inline": {
+      "enabled": true,
+      "update_debounce_ms": 150,
+      "padding": 4,
+      "min_column": 0,
+      "max_severity": null
+    }
+  },
+  "inlay_hints": {
+    "enabled": true
+  },
+  "lsp": {
+    "rust-analyzer": {
+      "initialization_options": {
+        "check": { "command": "clippy" }
+      }
+    }
+  },
+
+  "colorize_brackets": true,
+
+  "theme": {
+    "mode": "system",
+    "light": "Noctalia Light",
+    "dark": "Noctalia Dark"
+  },
+
+  "languages": {
+    "Rust": {
+      "formatter": "language_server",
+      "format_on_save": "on"
+    }
+  },
+
+  "experimental.theme_overrides": {
+    "error": "#F44747",
+    "error.border": "#F44747",
+    "warning": "#FFD400",
+    "warning.border": "#FFD400",
+    "info": "#3794FF",
+    "info.border": "#3794FF",
+    "players": [
+      {
+        "cursor": "#AEAFAD",
+        "background": "#264F78",
+        "selection": "#264F7880"
+      }
+    ],
+    "hint": "#6A737D",
+    "hint.background": "#2A2D3300",
+    "accents": ["#FFD700", "#DA70D6", "#179FFF", "#FFD700", "#DA70D6", "#179FFF"],
+
+    "syntax": {
+      "comment":  { "color": "#57A64A" },
+      "function": { "color": "#DCDCAA" },
+      "keyword":  { "color": "#569CD6" },
+      "number":   { "color": "#B5CEA8" },
+      "string":   { "color": "#D69D85" },
+      "type":     { "color": "#4EC9B0" },
+      "variable": { "color": "#9CDCFE" },
+      "hint": { "color": "#6A737D" }
+    },
+    "editor.document_highlight.bracket_background": "#FFFFFF40"
+  },
+  "gutter": {
+    "line_numbers": true,
+    "breakpoints": false,
+    "runnables": false,
+    "folds": false,
+    "min_line_number_digits": 2
+  }
+}

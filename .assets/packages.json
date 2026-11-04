@@ -296,7 +296,8 @@
   	  "for ext in \"${extensions[@]}\"; do",
   	  "codium --install-extension \"$ext\" --force",
   	  "done"
-  	]
+  	],
+  	"enabled": false
   },
   "wayland": {},
   "wget": {},
@@ -317,6 +318,7 @@
   "xdg-user-dirs": {},
   "xdg-utils": {},
   "zbar": {},
+  "zed": {},
   "gnome-keyring": {},
   "seahorse": {},
   "app.zen_browser.zen": {

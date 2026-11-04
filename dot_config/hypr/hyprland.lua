@@ -99,6 +99,8 @@ if apperance_mode == "blur" then
     hl.exec_cmd("sed -i 's/^cursor-style-blink =.*/cursor-style-blink = true/' ~/.config/ghostty/config.ghostty")
     hl.exec_cmd("sed -i 's/^#custom-shader = /custom-shader = /' ~/.config/ghostty/config.ghostty")
 
+    hl.exec_cmd([=[sed -i -E '/"theme": *\{/,/\}/{/"(light|dark)":/{s/ Transparent"/"/;s/("(light|dark)": *"[^"]*)"/\1 Transparent"/}}' "$HOME/.config/zed/settings.json"]=])
+
     hl.exec_cmd("gsettings set org.gnome.desktop.interface enable-animations true")
     hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\10.5\\2/g\" ~/.config/noctalia/templates/gtk/gtk4.css ")
     hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\10.5\\2/g\" ~/.config/noctalia/templates/gtk/gtk3.css ")
@@ -127,6 +129,8 @@ elseif apperance_mode == "liquid" then
     hl.exec_cmd("sed -i 's/^cursor-style-blink =.*/cursor-style-blink = true/' ~/.config/ghostty/config.ghostty")
     hl.exec_cmd("sed -i 's/^#custom-shader = /custom-shader = /' ~/.config/ghostty/config.ghostty")
 
+    hl.exec_cmd([=[sed -i -E '/"theme": *\{/,/\}/{/"(light|dark)":/{s/ Transparent"/"/;s/("(light|dark)": *"[^"]*)"/\1 Transparent"/}}' "$HOME/.config/zed/settings.json"]=])
+
     hl.exec_cmd("gsettings set org.gnome.desktop.interface enable-animations true")
     hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\10.5\\2/g\" ~/.config/noctalia/templates/gtk/gtk4.css ")
     hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\10.5\\2/g\" ~/.config/noctalia/templates/gtk/gtk3.css ")
@@ -153,6 +157,8 @@ elseif apperance_mode == "flat-noanims" then
     hl.exec_cmd("sed -i 's/^cursor-style-blink =.*/cursor-style-blink = false/' ~/.config/ghostty/config.ghostty")
     hl.exec_cmd("sed -i 's/^custom-shader = /#custom-shader = /' ~/.config/ghostty/config.ghostty")
 
+    hl.exec_cmd([=[sed -i -E '/"theme": *\{/,/\}/{/"(light|dark)":/s/ Transparent"/"/}' "$HOME/.config/zed/settings.json"]=])
+
     hl.exec_cmd("gsettings set org.gnome.desktop.interface enable-animations false")
     hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\11.0\\2/g\" ~/.config/noctalia/templates/gtk/gtk4.css ")
     hl.exec_cmd("sed -i -E \"s/(@define-color window_bg_color \\{\\{colors\\.surface\\.default\\.rgba \\| set_alpha )[0-9.]+(\\}\\};)/\\11.0\\2/g\" ~/.config/noctalia/templates/gtk/gtk3.css ")
@@ -178,6 +184,8 @@ else
     hl.exec_cmd("sed -i 's/^custom-shader-animation =.*/custom-shader-animation = true/' ~/.config/ghostty/config.ghostty")
     hl.exec_cmd("sed -i 's/^cursor-style-blink =.*/cursor-style-blink = true/' ~/.config/ghostty/config.ghostty")
     hl.exec_cmd("sed -i 's/^#custom-shader = /custom-shader = /' ~/.config/ghostty/config.ghostty")
+    
+    hl.exec_cmd([=[sed -i -E '/"theme": *\{/,/\}/{/"(light|dark)":/s/ Transparent"/"/}' "$HOME/.config/zed/settings.json"]=])
     
     hl.exec_cmd("gsettings set org.gnome.desktop.interface enable-animations true")
     hl.exec_cmd("perl -0777 -pi -e 's/(<rect[^>]*?id=\"window-normal\"[^>]*?style=\"[^\"]*?opacity:)[0-9.]*/${1}1.0/s' ~/.config/noctalia/templates/kvantum/noctalia.svg")

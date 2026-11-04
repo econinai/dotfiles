@@ -17,7 +17,7 @@ order = [ "default", "bottom" ]
 
     [bar.bottom]
     auto_hide = true
-    background_opacity = 0.5
+    background_opacity = 1.0
     capsule = true
     capsule_opacity = 0.0
 	center = [ "group:g6", "group:g5", "group:g4", "group:g3", "group:g2", "group:g1" ]
@@ -112,7 +112,7 @@ order = [ "default", "bottom" ]
 
     [bar.default]
     auto_hide = false
-    background_opacity = 0.5
+    background_opacity = 1.0
     border = "outline"
     border_width = 0.0
     capsule = true
@@ -565,7 +565,7 @@ time_format = "{:%H:%M:%S}"
     polkit_position = "center"
     session_placement = "attached"
     session_position = "auto"
-    shadow = false
+    shadow = true
     transparency_mode = "solid"
     wallpaper_placement = "attached"
     wallpaper_position = "auto"
@@ -701,7 +701,7 @@ wallpaper_scheme = "m3-content"
 
     [theme.templates]
     builtin_ids = [ "gtk3", "gtk4", "ghostty", "hyprland", "kcolorscheme", "qt" ]
-    community_ids = [ "zen-browser", "discord", "telegram", "inkscape", "micro", "vscode", "steam", "bat" ]
+    community_ids = [ "zen-browser", "discord", "telegram", "blender", "inkscape", "micro", "vscode", "zed", "steam", "bat" ]
     enable_builtin_templates = true
     enable_community_templates = true
 
