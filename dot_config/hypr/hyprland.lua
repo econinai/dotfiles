@@ -222,20 +222,22 @@ if hl.plugin.dynamic_cursors then
 	}}}
 end
 
-hl.config({
-  plugin = {
-    overview = {
-      autoScroll = false,
-      panelHeight = 250,
-      panelBorderWidth = 2,
-      drawActiveWorkspace = true,
-      autoDrag = true,
-      exitOnClick = true,
-      showSpecialWorkspace = false,
-      disableGestures = true,
+if hl.plugin.overview then
+  hl.config({
+    plugin = {
+      overview = {
+        autoScroll = false,
+        panelHeight = 250,
+        panelBorderWidth = 2,
+        drawActiveWorkspace = true,
+        autoDrag = true,
+        exitOnClick = true,
+        showSpecialWorkspace = false,
+        disableGestures = true,
+      },
     },
-  },
-})
+  })
+end
 
 if hl.plugin.hyprglass then
     local hg = hl.plugin.hyprglass
