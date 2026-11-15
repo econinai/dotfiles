@@ -48,7 +48,7 @@ order = [ "default", "bottom" ]
     accordion_direction = "end"
     border_width = 1.0
     enabled = true
-    fill = "surface_variant"
+    fill = "surface_container"
     id = "g1"
     members = [ "bar_3", "bar_4" ]
     opacity = 0.0
@@ -59,7 +59,7 @@ order = [ "default", "bottom" ]
     accordion_direction = "end"
     border_width = 1.0
     enabled = true
-    fill = "surface_variant"
+    fill = "surface_container"
     id = "g2"
     members = [ "widget", "launcher" ]
     opacity = 0.0
@@ -70,7 +70,7 @@ order = [ "default", "bottom" ]
     accordion_direction = "end"
     border_width = 1.0
     enabled = true
-    fill = "surface_variant"
+    fill = "surface_container"
     id = "g3"
     members = [ "apperance", "theme_mode", "wallpaper", "w_engine_widget_2" ]
     opacity = 0.0
@@ -81,7 +81,7 @@ order = [ "default", "bottom" ]
     accordion_direction = "end"
     border_width = 1.0
     enabled = true
-    fill = "surface_variant"
+    fill = "surface_container"
     id = "g4"
     members = [ "caffeine", "lid-suspender" ]
     opacity = 0.0
@@ -92,7 +92,7 @@ order = [ "default", "bottom" ]
     accordion_direction = "end"
     border_width = 1.0
     enabled = true
-    fill = "surface_variant"
+    fill = "surface_container"
     id = "g5"
     members = [ "screen", "widget_3" ]
     opacity = 0.0
@@ -103,7 +103,7 @@ order = [ "default", "bottom" ]
     accordion_direction = "end"
     border_width = 1.0
     enabled = true
-    fill = "surface_variant"
+    fill = "surface_container"
     id = "g6"
     members = [ "notifications", "clipboard", "virt_kbd", "bar_2", "bar" ]
     opacity = 0.0
@@ -113,7 +113,7 @@ order = [ "default", "bottom" ]
     [bar.default]
     auto_hide = false
     background_opacity = 1.0
-    border = "outline"
+    border = "outline_variant"
     border_width = 0.0
     capsule = true
     capsule_fill = "surface"
@@ -174,7 +174,7 @@ order = [ "default", "bottom" ]
         opacity = 0.0
         padding = 6.0
 
-	[[bar.default.dead_zone.actions]]
+	[bar.default.dead_zone.actions]
     	middle = "panel-toggle launcher"
         scroll_down = "workspace-switch next"
         scroll_left = "workspace-switch next"
@@ -237,7 +237,7 @@ active_opacity = 1.0
 active_scale = 1.0
 auto_hide = false
 background_opacity = 0.88
-border = "outline"
+border = "outline_variant"
 border_width = 0.0
 concave_edge_corners = true
 cross_axis_padding = 8
@@ -525,7 +525,7 @@ telemetry_enabled = false
 time_format = "{:%H:%M:%S}"
 
     [shell.animation]
-    enabled = true
+    enabled = false
     speed = 1.0
 
     [shell.greeter_sync]
@@ -783,9 +783,9 @@ wallpaper_scheme = "m3-content"
         pre_hook = ""
 
 [wallpaper]
-directory = "~/Pictures"
-directory_dark = "~/Pictures"
-directory_light = "~/Pictures"
+directory = "~/Pictures/Wallpapers"
+directory_dark = "~/Pictures/Wallpapers"
+directory_light = "~/Pictures/Wallpapers"
 edge_smoothness = 0.3
 enabled = true
 fill_color = ""
