@@ -39,8 +39,8 @@
       "  fi",
       "  [ \"$app\" = launcher ] && continue",
       "  flatpak override --user --filesystem=home --filesystem=/run/media --nofilesystem=~/.ssh --nofilesystem=~/.gnupg --nofilesystem=~/.local/share/Steam --nofilesystem=~/.config --nofilesystem=~/.cache --nofilesystem=~/.steam \"$id\"",
-      "  flatpak override --user --nosocket=wayland --socket=x11 ai.storyteller.photocraft"
-      "done",
+      "  flatpak override --user --nosocket=wayland --socket=x11 ai.storyteller.photocraft",
+      "done"
     ]
   },
   "fish": {
