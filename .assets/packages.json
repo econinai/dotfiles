@@ -27,6 +27,22 @@
   	  "sudo cp \"$CHEZMOI_SOURCE_DIR/dot_bashrc\" \"/root/.bashrc\""
   	]
   },
+  "flatpak": {
+    "pre_install": [
+      "flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo",
+      "",
+      "for app in launcher photocraft pdfcraft vectorcraft wordcraft deckcraft gridcraft; do",
+      "  if [ \"$app\" = launcher ]; then repo=craft-launcher; id=ai.storyteller.artcraft-launcher; else repo=$app; id=ai.storyteller.$app; fi",
+      "  if ! flatpak info --user \"$id\" >/dev/null 2>&1; then",
+      "    url=$(curl -fsSL \"https://api.github.com/repos/storytold/$repo/releases/latest\" | jq -r '.assets[] | select(.name | endswith(\"linux-x86_64.flatpak\")) | .browser_download_url')",
+      "    curl -fsSL \"$url\" -o \"/tmp/$app.flatpak\" && flatpak install --user -y \"/tmp/$app.flatpak\"",
+      "  fi",
+      "  [ \"$app\" = launcher ] && continue",
+      "  flatpak override --user --filesystem=home --filesystem=/run/media --nofilesystem=~/.ssh --nofilesystem=~/.gnupg --nofilesystem=~/.local/share/Steam --nofilesystem=~/.config --nofilesystem=~/.cache --nofilesystem=~/.steam \"$id\"",
+      "  flatpak override --user --nosocket=wayland --socket=x11 ai.storyteller.photocraft"
+      "done",
+    ]
+  },
   "fish": {
   	"pre_install": [
   	  "chsh -s $(which fish)",
@@ -56,7 +72,6 @@
   "eza": {},
   "f2fs-tools": {},
   "ffmpeg": {},
-  "firefox": {},
   "fuse2": {},
   "fzf": {},
   "galculator": {},
@@ -332,11 +347,12 @@
   	  "done"
   	]
   },
+  "org.mozilla.firefox": {},
   "com.usebottles.bottles": {},
   "dev.vencord.Vesktop": {},
   "io.anytype.anytype": {},
   "org.telegram.desktop": {},
-  "org.onlyoffice.desktopeditors": {},
   "org.vinegarhq.Sober": {},
-  "org.inkscape.Inkscape": {}
+  "org.onlyoffice.desktopeditors": { "enabled": false },
+  "org.inkscape.Inkscape": { "enabled": false }
 }
